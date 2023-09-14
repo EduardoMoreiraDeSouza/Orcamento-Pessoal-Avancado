@@ -14,10 +14,18 @@ function criarBancoDados() {
     $DBname = "orcamentoPessoal";
     $conexaoDB = mysqli_connect($servidor, $usuario, $senhaServidor, $DBname);
 
-    $codigoMySql = "CREATE TABLE bancos_e_corretoras(
+    $codigoMySql = "CREATE TABLE bancosCorretoras(
        
         nome VARCHAR(60) PRIMARY KEY,
         saldo DECIMAL(12, 2) NOT NULL
+    
+    ) DEFAULT CHARSET = utf8;";
+    mysqli_query($conexaoDB, $codigoMySql);
+
+    $codigoMySql = "CREATE TABLE usuarios(
+       
+        cpf VARCHAR(11) PRIMARY KEY,
+        senha VARCHAR(64) NOT NULL
     
     ) DEFAULT CHARSET = utf8;";
     mysqli_query($conexaoDB, $codigoMySql);

@@ -1,3 +1,10 @@
+<?php
+
+require_once __DIR__ . "/./backEnd/site/Globais.php";
+$globais = new Globais;
+
+?>
+
 <!doctype html>
 <html lang="pt-br">
 
@@ -19,7 +26,7 @@
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary text-secondary">
         <div class="container">
-            <h4 class="navbar-brand text-light mt-2" href="#">Orçamento Pessoal</h4>
+            <h4 class="navbar-brand text-light mt-2">Orçamento Pessoal</h4>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -28,27 +35,44 @@
             <div class="collapse navbar-collapse" id="navbarNav">
 
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active text-light" aria-current="page" href="#">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="#">Tipos de Gastos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="./paginas/bancos_e_corretoras.php">Bancos e Corretoras</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="#">Crédito</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="#">Rendimentos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="#">Receita</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="#">Investimentos</a>
-                    </li>
+
+                    <?php if (empty($globais -> getSessao())) {?>
+
+                        <li class="nav-item">
+                            <a class="nav-link active text-light" aria-current="page" href="paginas/entrar.php">Entrar</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link active text-light" aria-current="page" href="paginas/cadastrar.php">Cadastrar</a>
+                        </li>
+
+                    <?php } else {?>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link active text-light" aria-current="page" href="#">Sair</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="#">Tipos de Gastos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="paginas/bancosCorretoras.php">Bancos e Corretoras</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="#">Crédito</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="#">Rendimentos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="#">Receita</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="#">Investimentos</a>
+                        </li>
+
+                    <?php } ?>
+
                     <li class="nav-item">
                         <a class="nav-link text-light" href="./dev/index.html">Desenvolvedor</a>
                     </li>

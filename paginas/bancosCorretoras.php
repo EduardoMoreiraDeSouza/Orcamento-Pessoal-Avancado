@@ -20,11 +20,11 @@
     <a href="../index.php" class="btn btn-close bg-light" name="fechar"></a>
     <a href="../index.php" class="text-light" style="text-decoration: none;">Fechar</a>
 
-    <h1 class="text-center">Bancos e Corretoras</h1>
-
   </header>
   
-  <main class="container">
+<main class="container">
+
+  <h1 class="text-center">Bancos e Corretoras</h1>
 
     <p>
         <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
@@ -32,14 +32,15 @@
         </button>
     </p>
         
-    <div style="min-height: 120px;">
+    <div style="min-height: 160px;">
         <div class="collapse collapse-horizontal" id="collapseWidthExample">
-            <div class="card card-body" style="width: 300px;">
+            <div class="card card-body" style="width: 500px;">
 
-            <form action="../backEnd/bancos_e_corretoras.php" method="post" class="form hstack gap-3">
+            <form action="../backEnd/interacaoUsuario/novoBancoCorretora.php" method="post" class="form hstack gap-3">
 
                 <label for=""></label>
-                <input type="text" class="container input-group-text" id="nome">
+                <input type="text" class="container input-group-text" id="nome" placeholder="Nome:">
+                <input type="number" class="container input-group-text" id="valor" placeholder="R$:." step="0.01">
 
                 <input type="submit" class="container btn btn-dark" value="Criar">
 
