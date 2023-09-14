@@ -39,7 +39,7 @@ $globais = new Globais;
                     <?php if (empty($globais -> getSessao())) {?>
 
                         <li class="nav-item">
-                            <a class="nav-link active text-light" aria-current="page" href="paginas/entrar.php">Entrar</a>
+                            <a class="nav-link active text-light" aria-current="page" href="./paginas/entrar.php">Entrar</a>
                         </li>
 
                         <li class="nav-item">
@@ -50,13 +50,13 @@ $globais = new Globais;
 
 
                         <li class="nav-item">
-                            <a class="nav-link active text-light" aria-current="page" href="#">Sair</a>
+                            <a class="nav-link active text-light" aria-current="page" href="./backEnd/interacaoUsuario/sair.php">Sair</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" href="#">Tipos de Gastos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" href="paginas/bancosCorretoras.php">Bancos e Corretoras</a>
+                            <a class="nav-link text-light" href="./paginas/bancosCorretoras.php">Bancos e Corretoras</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" href="#">Crédito</a>

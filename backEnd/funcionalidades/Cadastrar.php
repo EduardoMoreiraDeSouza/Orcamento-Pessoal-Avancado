@@ -1,6 +1,5 @@
 <?php
 
-require_once __DIR__ . "/./Entrar.php";
 require_once __DIR__ . "/./NovoBancoCorretora.php";
 
 class Cadastrar extends NovoBancoCorretora
