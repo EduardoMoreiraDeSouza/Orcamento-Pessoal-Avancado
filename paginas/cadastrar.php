@@ -13,7 +13,7 @@
 
 </head>
 
-<body class="bg-success">
+<body class="bg-success d-grid vh-100">
 
     <header class="container-fluid mt-2 h-50">
 
@@ -22,11 +22,11 @@
 
     </header>
 
-    <main class="container w-50 bg-light p-5 rounded border border-secondary shadow-lg">
+    <main class="container w-50 bg-light p-5 rounded border border-secondary shadow-lg d-grid">
 
         <h1 class="text-center">Cadastrar</h1>
 
-        <form class="mt-5" action="../backEnd/interacaoUsuario/cadastrar.php" method="POST">
+        <form class="mt-5" action="../backEnd/interacaoComUsuario/cadastrar.php" method="POST">
 
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Seu CPF:</label>

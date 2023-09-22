@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . "/./Entrar.php";
+require_once __DIR__ . "/./Cadastrar.php";
 
-class Sair extends Entrar
+class Sair extends Cadastrar
 {
 
     public function __construct()

@@ -5,37 +5,42 @@ require_once __DIR__ . "/../verificacoes/VerificarSenha.php";
 class FormatacaoDados extends VerificarSenha
 {
 
-    protected function somenteNumeros($numeros): int
+    public function somenteNumerosPontos($numeros)
+    {
+        return trim(preg_replace('/[^0-9.,]/', '', $numeros));
+    }
+
+    public function somenteNumeros($numeros)
     {
         return trim(preg_replace('/[^0-9]/', '', $numeros));
     }
 
-    protected function somenteLetrasAcento($letras): int
+    public function somenteLetrasAcento($letras): int
     {
         return trim(preg_replace('/[^A-Za-zá-üÁ-Ü]/', '', $letras));
     }
 
-    protected function somenteLetras($letras): string
+    public function somenteLetras($letras): string
     {
         return trim(preg_replace('/[^A-Za-z]/', '', $letras));
     }
 
-    protected function fraseMaiuscula($frase): string
+    public function fraseMaiuscula($frase): string
     {
         return trim(ucwords($frase));
     }
 
-    protected function fraseMinuscula($frase): string
+    public function fraseMinuscula($frase): string
     {
         return trim(strtolower($frase));
     }
 
-    protected function formatarValorDB($valor): float
+    public function formatarValorDB($valor): float | string
     {
-        return number_format($valor,2,".","");
+        return str_replace(',',".", $this -> somenteNumerosPontos($valor));
     }
 
-    protected function formatarValor($valor): float
+    public function formatarValor($valor): string
     {
         return number_format($valor,2,",",".");
     }

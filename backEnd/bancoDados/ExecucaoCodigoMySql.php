@@ -6,7 +6,7 @@ class ExecucaoCodigoMySql extends ConexaoDB
 {
     private $execucaoCodigoMySql;
 
-    protected function ExecutarCodigoMySql()
+    public function ExecutarCodigoMySql()
     {
 
         $this -> setExecucaoCodigoMySql(mysqli_query($this -> ConexaoDB(), $this -> getCodigoMySql()));

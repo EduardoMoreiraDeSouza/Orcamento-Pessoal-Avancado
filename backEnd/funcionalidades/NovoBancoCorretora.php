@@ -6,14 +6,41 @@ class NovoBancoCorretora extends DadosEntradaFormulario
 {
 
     private $nome;
-    private $valor;
+    private $saldo;
 
     public function __construct()
     {
 
-        $this -> setNome($this -> nome());
-        $this -> setValor($this -> valor());
+        if (empty($this -> getSessao())){
+            $this -> Comunicar('entrar');
+            $this -> Redirecionar('entrar');
+            return false;
+        }
 
+        $this -> setPaginaPai('bancosCorretoras');
+        $this -> setNome($this -> nome());
+        $this -> setSaldo($this -> saldo());
+
+        if (
+            !$this-> getNome()
+        ) {
+            $this -> Redirecionar($this -> getPaginaPai());
+            return false;
+        }
+
+        if ($this -> SaidaDadosBancosCorretoras($this -> getNome(), $this -> getSessao())){
+            $this -> Comunicar('x2bancosCorretoras');
+            $this -> Redirecionar($this -> getPaginaPai());
+            return false;
+        }
+
+        if (!$this -> EntradaDadosBancosCorretoras($this -> getNome(), $this -> getSessao(), $this -> getSaldo())) {
+            $this -> Redirecionar($this -> getPaginaPai());
+            return false;
+        }
+
+        $this -> Redirecionar($this -> getPaginaPai());
+        return true;
     }
 
 
@@ -27,13 +54,13 @@ class NovoBancoCorretora extends DadosEntradaFormulario
         $this->nome = $nome;
     }
 
-    protected function getValor()
+    protected function getSaldo()
     {
-        return $this->valor;
+        return $this->saldo;
     }
 
-    protected function setValor($valor)
+    protected function setSaldo($valor)
     {
-        $this->valor = $valor;
+        $this->saldo = $valor;
     }
 }

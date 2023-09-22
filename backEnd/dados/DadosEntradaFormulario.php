@@ -10,7 +10,55 @@ abstract class DadosEntradaFormulario extends VerificarCpf
     protected function nome()
     {
 
-        $this -> setDados(addslashes($_POST['nome']));
+        $this -> setDados($this -> fraseMaiuscula($this -> fraseMinuscula(addslashes($_POST['nome']))));
+
+        if ($this -> dadosDefinidos())
+            return $this -> getDados();
+
+        return false;
+
+    }
+
+    protected function bancoCorretora()
+    {
+
+        $this -> setDados(addslashes($_POST['bancoCorretora']));
+
+        if ($this -> dadosDefinidos())
+            return $this -> getDados();
+
+        return false;
+
+    }
+
+    protected function classificacao()
+    {
+
+        $this -> setDados(addslashes($_POST['clasificacao']));
+
+        if ($this -> dadosDefinidos())
+            return $this -> getDados();
+
+        return false;
+
+    }
+
+    protected function dataEfetivacao()
+    {
+
+        $this -> setDados(addslashes($_POST['dataEfetivacao']));
+
+        if ($this -> dadosDefinidos())
+                return $this -> getDados();
+
+        return false;
+
+    }
+
+    protected function nomeId()
+    {
+
+        $this -> setDados($this -> fraseMaiuscula($this -> fraseMinuscula(addslashes($_POST['nameId']))));
 
         if ($this -> dadosDefinidos())
             return $this -> getDados();
@@ -25,9 +73,18 @@ abstract class DadosEntradaFormulario extends VerificarCpf
         $this -> setDados(addslashes($_POST['valor']));
 
         if ($this -> dadosDefinidos())
-            return $this -> formatarValor($this -> getDados());
+            return $this -> formatarValorDB($this -> getDados());
 
         return false;
+
+    }
+
+    protected function saldo()
+    {
+
+        $this -> setDados(addslashes($_POST['saldo']));
+
+        return $this -> formatarValorDB($this -> getDados());
 
     }
 
@@ -69,7 +126,8 @@ abstract class DadosEntradaFormulario extends VerificarCpf
 
         if (!$this -> getDados() or empty($this -> getDados())) {
             $this -> setDados(null);
-            return $this -> RetornarFalha(null, 'vazio');
+            $this -> Comunicar('vazio');
+            return false;
         }
 
         return true;

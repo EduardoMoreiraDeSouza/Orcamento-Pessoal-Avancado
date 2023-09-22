@@ -7,7 +7,7 @@ abstract class ConexaoDB extends Servidor
 
     private $conexaoDB;
 
-    protected function ConexaoDB()
+    public function ConexaoDB()
     {
 
         $this -> setConexaoDB(

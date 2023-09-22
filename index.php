@@ -25,8 +25,10 @@ $globais = new Globais;
   <header class="container">
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary text-secondary">
+
         <div class="container">
-            <h4 class="navbar-brand text-light mt-2">Orçamento Pessoal</h4>
+
+            <p class="navbar-brand text-light mt-0 h4">Orçamento Pessoal</p>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -38,42 +40,42 @@ $globais = new Globais;
 
                     <?php if (empty($globais -> getSessao())) {?>
 
-                        <li class="nav-item">
+                        <li class="nav-item h6">
                             <a class="nav-link active text-light" aria-current="page" href="./paginas/entrar.php">Entrar</a>
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item h6">
                             <a class="nav-link active text-light" aria-current="page" href="paginas/cadastrar.php">Cadastrar</a>
                         </li>
 
                     <?php } else {?>
 
 
-                        <li class="nav-item">
-                            <a class="nav-link active text-light" aria-current="page" href="./backEnd/interacaoUsuario/sair.php">Sair</a>
+                        <li class="nav-item h6">
+                            <a class="nav-link active text-light" aria-current="page" href="backEnd/interacaoComUsuario/sair.php">Sair</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" href="#">Tipos de Gastos</a>
+                        <li class="nav-item h6">
+                            <a class="nav-link text-light" href="#">Gastos</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item h6">
                             <a class="nav-link text-light" href="./paginas/bancosCorretoras.php">Bancos e Corretoras</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item h6">
                             <a class="nav-link text-light" href="#">Crédito</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item h6">
                             <a class="nav-link text-light" href="#">Rendimentos</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item h6">
                             <a class="nav-link text-light" href="#">Receita</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item h6">
                             <a class="nav-link text-light" href="#">Investimentos</a>
                         </li>
 
                     <?php } ?>
 
-                    <li class="nav-item">
+                    <li class="nav-item h6">
                         <a class="nav-link text-light" href="./dev/index.html">Desenvolvedor</a>
                     </li>
 

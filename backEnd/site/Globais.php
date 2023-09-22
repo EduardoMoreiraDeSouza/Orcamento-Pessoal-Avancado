@@ -1,7 +1,5 @@
 <?php
 
-use site\Usuario;
-
 class Globais{
 
     private $codigoMySql;
@@ -11,12 +9,12 @@ class Globais{
 
     private $localServidor;
 
-    protected function getCodigoMySql()
+    public function getCodigoMySql()
     {
         return $this -> codigoMySql;
     }
 
-    protected function setCodigoMySql($codigoMySql): void
+    public function setCodigoMySql($codigoMySql): void
     {
         $this -> codigoMySql = $codigoMySql;
     }

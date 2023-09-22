@@ -18,8 +18,12 @@ abstract class Mensagens extends ScriptJS
             'erroSql' => 'Erro ao tentar acessar o banco de dados',
             'cadastro' => 'Agora você está cadastrado em nosso sitema!',
             'cpfFalso' => 'CPF inválido!',
-            'entrarSucesso' => 'Você agora está logado!',
-            'cadastrar' => 'Você não está cadastrado em nosso sistema!'
+            'entrarSucesso' => 'Você entrou com seu CPF!',
+            'cadastrar' => 'Você não está cadastrado em nosso sistema!',
+            'entrar' => 'Para continuar é nescessário entrar com seu CPF!',
+            'x2bancosCorretoras' => 'Este Banco/Corretora já está cadastrado!',
+            'sucesso' => 'Comando executado com sucesso!',
+            'naoBancoCorretora' => 'O banco/corretora selecionado não existe!'
 
         ]);
 

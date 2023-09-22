@@ -14,14 +14,6 @@ function criarBancoDados() {
     $DBname = "orcamentoPessoal";
     $conexaoDB = mysqli_connect($servidor, $usuario, $senhaServidor, $DBname);
 
-    $codigoMySql = "CREATE TABLE bancosCorretoras(
-       
-        nome VARCHAR(60) PRIMARY KEY,
-        saldo DECIMAL(12, 2) NOT NULL
-    
-    ) DEFAULT CHARSET = utf8;";
-    mysqli_query($conexaoDB, $codigoMySql);
-
     $codigoMySql = "CREATE TABLE usuarios(
        
         cpf VARCHAR(11) PRIMARY KEY,
@@ -30,6 +22,25 @@ function criarBancoDados() {
     ) DEFAULT CHARSET = utf8;";
     mysqli_query($conexaoDB, $codigoMySql);
 
+    $codigoMySql = "CREATE TABLE bancosCorretoras(
+       
+        nome VARCHAR(60) PRIMARY KEY,
+        cpf VARCHAR(11) NOT NULL,
+        saldo DECIMAL(12, 2) NULL
+    
+    ) DEFAULT CHARSET = utf8;";
+    mysqli_query($conexaoDB, $codigoMySql);
+
+    $codigoMySql = "CREATE TABLE gastos(
+        cpf VARCHAR(11) NOT NULL,
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        tipo VARCHAR(7) NOT NULL,
+        bancoCorretora VARCHAR(60) NOT NULL,
+        classificacao VARCHAR(11) NOT NULL,
+        valor DECIMAL(12, 2) NULL,
+        dataEfetivacao DATE
+    ) DEFAULT CHARSET = utf8;";
+    mysqli_query($conexaoDB, $codigoMySql);
 
 }
 
