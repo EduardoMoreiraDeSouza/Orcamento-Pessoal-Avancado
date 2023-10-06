@@ -24,10 +24,10 @@ abstract class Servidor extends Redirecionar
 
         elseif ($this -> getLocalServidor() == 'global') {
 
-            /*
-             *
-             *
-             */
+            $this -> setServidor('localhost');
+            $this -> setUsuario('moreirasza');
+            $this -> setSenhaServidor('eD&%&&15');
+            $this -> setDBname('id21320139_orcamentopessoal043557');
 
         }
 
