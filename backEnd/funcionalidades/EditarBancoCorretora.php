@@ -14,8 +14,9 @@ class EditarBancoCorretora extends Entrar
         $this -> setNome($this -> nome());
         $this -> setSaldo($this -> formatarValorDB($this -> saldo()));
 
+        $dbName = $this-> Servidor('DBname');
         $this -> setCodigoMySql(
-"UPDATE orcamentopessoal.bancosCorretoras SET
+"UPDATE $dbName.bancosCorretoras SET
                 nome = '". $this -> getNome() ."',
                 cpf = '". $this -> getSessao() ."',
                 saldo = '". $this -> getSaldo() ."'
