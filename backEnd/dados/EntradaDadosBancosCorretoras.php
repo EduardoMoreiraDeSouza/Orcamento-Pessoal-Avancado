@@ -8,7 +8,8 @@ class EntradaDadosBancosCorretoras extends SaidaDadosBancosCorretoras
     protected function EntradaDadosBancosCorretoras($nome, $cpf, $saldo)
     {
 
-        $this -> setCodigoMySql("INSERT INTO orcamentopessoal.bancoscorretoras VALUES ('$nome', '$cpf', '$saldo');");
+        $dbName = $this-> Servidor('DBname');
+        $this -> setCodigoMySql("INSERT INTO $dbName.bancoscorretoras VALUES ('$nome', '$cpf', '$saldo');");
 
         if (!$this -> ExecutarCodigoMySql()) {
             $this -> Comunicar('erroSql');

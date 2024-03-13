@@ -8,7 +8,8 @@ class EntradaGastos extends EntradaDadosBancosCorretoras
     public function EntradaGastos($bancoCorretora, $tipo, $classificacao, $dataEfetivacao, $valor)
     {
 
-        $this -> setCodigoMySql("INSERT INTO orcamentopessoal.gastos VALUES ('". $this -> getSessao() ."', '0', '$tipo', '$bancoCorretora', '$classificacao', '$valor', '$dataEfetivacao');");
+        $dbName = $this-> Servidor('DBname');
+        $this -> setCodigoMySql("INSERT INTO $dbName.gastos VALUES ('". $this -> getSessao() ."', '0', '$tipo', '$bancoCorretora', '$classificacao', '$valor', '$dataEfetivacao');");
 
         if (!$this -> ExecutarCodigoMySql())
             return false;

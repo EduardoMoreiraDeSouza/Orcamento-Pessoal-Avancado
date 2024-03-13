@@ -11,7 +11,8 @@ class SaidaDadosBancosCorretoras extends EntradaDadosUsuarios
     protected function SaidaDadosBancosCorretoras($nome, $cpf)
     {
 
-        $this -> setCodigoMySql("SELECT * FROM orcamentoPessoal.bancoscorretoras WHERE nome LIKE '$nome' AND cpf LIKE '$cpf';");
+        $dbName = $this-> Servidor('DBname');
+        $this -> setCodigoMySql("SELECT * FROM $dbName.bancoscorretoras WHERE nome LIKE '$nome' AND cpf LIKE '$cpf';");
         $this -> setExecucaoMySqlBancosCorretoras($this -> ExecutarCodigoMySql());
 
         if (!$this -> getExecucaoMySqlBancosCorretoras())

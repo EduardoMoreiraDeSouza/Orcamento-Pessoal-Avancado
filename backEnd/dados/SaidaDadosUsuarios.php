@@ -11,7 +11,8 @@ class SaidaDadosUsuarios extends ExecucaoCodigoMySql
     protected function SaidaDadosUsuarios($cpf)
     {
 
-        $this -> setCodigoMySql("SELECT * FROM orcamentoPessoal.usuarios WHERE cpf LIKE '$cpf';");
+        $dbName = $this-> Servidor('DBname');
+        $this -> setCodigoMySql("SELECT * FROM $dbName.usuarios WHERE cpf LIKE '$cpf';");
         $this -> setExecucaoMySqlUsuarios($this -> ExecutarCodigoMySql());
 
         if (!$this -> getExecucaoMySqlUsuarios())
