@@ -35,9 +35,10 @@ class FormatacaoDados extends VerificarSenha
         return trim(strtolower($frase));
     }
 
-    public function formatarValorDB($valor): float | string
+    public function formatarValorDB($valor): float
     {
-        return str_replace(',',".", $this -> somenteNumerosPontos($valor));
+        $valor = str_replace(',', '.', str_replace('R$ ', '', $valor));
+        return number_format(floatval($valor), 2, ".", "");
     }
 
     public function formatarValor($valor): string
