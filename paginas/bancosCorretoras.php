@@ -8,7 +8,7 @@ if ($login -> VerificarLogin()) {
 require_once __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
 
 $classes = new FormatacaoDados();
-$codigoMySql = "SELECT * FROM orcamentoPessoal.bancoscorretoras WHERE cpf LIKE '". $classes -> getSessao() ."';";
+$codigoMySql = "SELECT * FROM orcamentoPessoal.bancosCorretoras WHERE cpf LIKE '". $classes -> getSessao() ."';";
 $classes -> setCodigoMySql($codigoMySql);
 $resultadoExecucao = $classes -> ExecutarCodigoMySql();
 
