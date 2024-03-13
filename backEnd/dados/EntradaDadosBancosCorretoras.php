@@ -9,7 +9,7 @@ class EntradaDadosBancosCorretoras extends SaidaDadosBancosCorretoras
     {
 
         $dbName = $this-> Servidor('DBname');
-        $this -> setCodigoMySql("INSERT INTO $dbName.bancoscorretoras VALUES ('$nome', '$cpf', '$saldo');");
+        $this -> setCodigoMySql("INSERT INTO $dbName.bancosCorretoras VALUES ('$nome', '$cpf', '$saldo');");
 
         if (!$this -> ExecutarCodigoMySql()) {
             $this -> Comunicar('erroSql');

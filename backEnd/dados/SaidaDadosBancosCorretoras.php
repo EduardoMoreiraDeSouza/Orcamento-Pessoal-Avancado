@@ -12,7 +12,7 @@ class SaidaDadosBancosCorretoras extends EntradaDadosUsuarios
     {
 
         $dbName = $this-> Servidor('DBname');
-        $this -> setCodigoMySql("SELECT * FROM $dbName.bancoscorretoras WHERE nome LIKE '$nome' AND cpf LIKE '$cpf';");
+        $this -> setCodigoMySql("SELECT * FROM $dbName.bancosCorretoras WHERE nome LIKE '$nome' AND cpf LIKE '$cpf';");
         $this -> setExecucaoMySqlBancosCorretoras($this -> ExecutarCodigoMySql());
 
         if (!$this -> getExecucaoMySqlBancosCorretoras())
