@@ -8,7 +8,7 @@ class EntradaDadosUsuarios extends SaidaDadosUsuarios
     protected function EntradaDadosUsuario($cpf, $senha)
     {
 
-        $this -> setCodigoMySql("INSERT INTO orcamentopessoal.usuarios VALUES ('$cpf', '$senha');");
+        $this -> setCodigoMySql("INSERT INTO orcamentoPessoal.usuarios('cpf', 'senha') VALUES ('$cpf', '$senha');");
 
         if (!$this -> ExecutarCodigoMySql()) {
             $this -> Comunicar('erroSql');

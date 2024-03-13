@@ -8,7 +8,7 @@ class NovoBancoCorretora extends DadosEntradaFormulario
     private $nome;
     private $saldo;
 
-   /*  public function __construct()
+    public function __construct()
     {
 
         if (empty($this -> getSessao())){
@@ -42,7 +42,7 @@ class NovoBancoCorretora extends DadosEntradaFormulario
         $this -> Redirecionar($this -> getPaginaPai());
         return true;
     }
- */
+
 
     protected function getNome()
     {
