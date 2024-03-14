@@ -5,9 +5,15 @@ $login = new VerificarLogin();
 
 if ($login -> VerificarLogin()) {
 
-require_once __DIR__ . "/../backEnd/dados/SaidaDadosBancosCorretoras.php";
+require_once __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
+require_once __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
 
-$resultadoExecucao = new SaidaDadosBancosCorretoras(null, $login -> getSessao());
+$formatacao =  new FormatacaoDados();
+$execucao = new ExecucaoCodigoMySql();
+
+$codigoMySql = "SELECT * FROM orcamentoPessoal.bancosCorretoras WHERE cpf LIKE '". $login -> getSessao() ."';";
+$execucao -> setCodigoMySql($codigoMySql);
+$resultadoExecucao = $execucao-> ExecutarCodigoMySql();
 
 if (
     isset($_GET['excluir']) and
@@ -16,8 +22,9 @@ if (
 ) {
 
     require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirBancoCorretora.php";
-    $exluir = new ExcluirBancoCorretora($_GET['nome'], $login-> getSessao());
-    $login -> Redirecionar('bancosCorretoras', true);
+    $exluir = new ExcluirBancoCorretora();
+    $exluir -> ExcluirBancoCorretora($_GET['nome'], $login -> getSessao());
+    $exluir -> Redirecionar('bancosCorretoras', true);
 
 }
 
@@ -166,8 +173,8 @@ date_default_timezone_set('America/Sao_Paulo');
 
                                     <?php
 
-                                    $classes -> setCodigoMySql($codigoMySql);
-                                    $resultadoExecucao = $classes -> ExecutarCodigoMySql();
+                                    $execucao -> setCodigoMySql($codigoMySql);
+                                    $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
                                     
                                     while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
 
@@ -220,8 +227,8 @@ date_default_timezone_set('America/Sao_Paulo');
 
             <?php
 
-            $classes -> setCodigoMySql($codigoMySql);
-            $resultadoExecucao = $classes -> ExecutarCodigoMySql();
+            $execucao -> setCodigoMySql($codigoMySql);
+            $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
 
             $quantidade = 0;
             $saldoTotal = 0;
@@ -231,7 +238,7 @@ date_default_timezone_set('America/Sao_Paulo');
                 $quantidade++;
                 $nome = $dadosBancosCorretoras['nome'];
                 $saldoTotal += $dadosBancosCorretoras['saldo'];
-                $saldo = $classes -> formatarValor($dadosBancosCorretoras['saldo']);
+                $saldo = $formatacao -> formatarValor($dadosBancosCorretoras['saldo']);
 
             ?>
 
@@ -268,7 +275,7 @@ date_default_timezone_set('America/Sao_Paulo');
 
             <th scope="row">#</th>
             <td>Total</td>
-            <td>R$ <?= $classes -> formatarValor($saldoTotal) ?></td>
+            <td>R$ <?= $formatacao -> formatarValor($saldoTotal) ?></td>
             <td></td>
 
             </tbody>

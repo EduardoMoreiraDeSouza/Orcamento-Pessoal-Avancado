@@ -18,6 +18,7 @@ class SaidaDadosBancosCorretoras extends EntradaDadosUsuarios
             return false;
 
         $this -> setDadosBancosCorretoras(mysqli_fetch_assoc($this -> getExecucaoMySqlBancosCorretoras()));
+
         if (!empty($this -> getDadosBancosCorretoras()))
             return $this -> getDadosBancosCorretoras();
 
@@ -29,12 +30,12 @@ class SaidaDadosBancosCorretoras extends EntradaDadosUsuarios
 
         $dbName = $this-> Servidor('DBname');
 
-        $codigo = "SELECT * FROM $dbName.bancosCorretoras WHERE";
+        $codigo = "SELECT * FROM $dbName.bancosCorretoras WHERE ";
 
         if ($nome == null and $cpf == null)
             return false;
         elseif ($nome != null and $cpf != null)
-            $codigoVariante = "nome LIKE '$nome' AND cpf LIKE 'cpf';";
+            $codigoVariante = "nome LIKE '$nome' AND cpf LIKE '$cpf';";
         elseif ($nome != null and $cpf == null)
             $codigoVariante = "nome LIKE '$nome';";
         elseif ($nome == null and $cpf != null)

@@ -14,16 +14,14 @@ class EditarBancoCorretora extends Entrar
         $this -> setNome($this -> nome());
         $this -> setSaldo($this -> formatarValorDB($this -> saldo()));
 
-        $dbName = $this-> Servidor('DBname');
-        $this -> setCodigoMySql(
-"UPDATE $dbName.bancosCorretoras SET
-                nome = '". $this -> getNome() ."',
-                cpf = '". $this -> getSessao() ."',
-                saldo = '". $this -> getSaldo() ."'
-            WHERE nome LIKE '". $this -> getNomeId() ."' AND cpf LIKE '". $this -> getSessao() ."';"
-        );
-
-        if (!$this -> ExecutarCodigoMySql()) {
+        if (
+            !$this-> EditarBancosCorretoras(
+                $this-> getNome(),
+                $this-> getNomeId(),
+                $this-> getSessao(),
+                $this-> getSaldo()
+            )
+        ) {
             $this->Redirecionar('bancosCorretoras');
             return false;
         }

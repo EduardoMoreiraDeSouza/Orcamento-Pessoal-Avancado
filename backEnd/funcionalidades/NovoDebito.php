@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . "/../dados/DadosEntradaFormulario.php";
+require_once __DIR__ . "/../funcionalidades/EditarBancoCorretora.php";
 
-class NovoDebito extends DadosEntradaFormulario
+class NovoDebito extends EditarBancoCorretora
 {
 
     private $bancoCorretora;
@@ -44,6 +44,17 @@ class NovoDebito extends DadosEntradaFormulario
         if (!$this -> EntradaGastos($this -> getBancoCorretora(), 'debito', $this -> getClassificacao(), $this -> getDataEfetivacao(), $this -> getValor())) {
             $this -> Redirecionar($this -> getPaginaPai());
             return false;
+        }
+
+        else {
+
+            $this-> EditarBancosCorretoras(
+                $this-> getBancoCorretora(),
+                $this-> getBancoCorretora(),
+                $this-> getSessao(),
+                $this-> SaidaDadosBancosCorretoras($this-> getBancoCorretora(), $this-> getSessao())['saldo'] - $this-> getValor()
+            );
+
         }
 
         $this -> Redirecionar($this -> getPaginaPai());
