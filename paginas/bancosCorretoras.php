@@ -5,12 +5,9 @@ $login = new VerificarLogin();
 
 if ($login -> VerificarLogin()) {
 
-require_once __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
+require_once __DIR__ . "/../backEnd/dados/SaidaDadosBancosCorretoras.php";
 
-$classes = new FormatacaoDados();
-$codigoMySql = "SELECT * FROM orcamentoPessoal.bancosCorretoras WHERE cpf LIKE '". $classes -> getSessao() ."';";
-$classes -> setCodigoMySql($codigoMySql);
-$resultadoExecucao = $classes -> ExecutarCodigoMySql();
+$resultadoExecucao = new SaidaDadosBancosCorretoras(null, $login -> getSessao());
 
 if (
     isset($_GET['excluir']) and
@@ -19,9 +16,8 @@ if (
 ) {
 
     require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirBancoCorretora.php";
-    $exluir = new ExcluirBancoCorretora();
-    $exluir -> ExcluirBancoCorretora($_GET['nome'], $classes -> getSessao());
-    $classes -> Redirecionar('bancosCorretoras', true);
+    $exluir = new ExcluirBancoCorretora($_GET['nome'], $login-> getSessao());
+    $login -> Redirecionar('bancosCorretoras', true);
 
 }
 

@@ -8,11 +8,10 @@ class SaidaDadosBancosCorretoras extends EntradaDadosUsuarios
     private $execucaoMySqlBancosCorretoras;
     private $dadosBancosCorretoras;
 
-    protected function SaidaDadosBancosCorretoras($nome, $cpf)
+    public function SaidaDadosBancosCorretoras($nome, $cpf)
     {
 
-        $dbName = $this-> Servidor('DBname');
-        $this -> setCodigoMySql("SELECT * FROM $dbName.bancosCorretoras WHERE nome LIKE '$nome' AND cpf LIKE '$cpf';");
+        $this-> gerarCodigoMySql($nome, $cpf);
         $this -> setExecucaoMySqlBancosCorretoras($this -> ExecutarCodigoMySql());
 
         if (!$this -> getExecucaoMySqlBancosCorretoras())
@@ -25,6 +24,26 @@ class SaidaDadosBancosCorretoras extends EntradaDadosUsuarios
         return false;
     }
 
+    private function gerarCodigoMySql($nome, $cpf)
+    {
+
+        $dbName = $this-> Servidor('DBname');
+
+        $codigo = "SELECT * FROM $dbName.bancosCorretoras WHERE";
+
+        if ($nome == null and $cpf == null)
+            return false;
+        elseif ($nome != null and $cpf != null)
+            $codigoVariante = "nome LIKE '$nome' AND cpf LIKE 'cpf';";
+        elseif ($nome != null and $cpf == null)
+            $codigoVariante = "nome LIKE '$nome';";
+        elseif ($nome == null and $cpf != null)
+            $codigoVariante = "cpf LIKE '$cpf';";
+
+        $this-> setCodigoMySql($codigo . $codigoVariante);
+        return true;
+
+    }
 
     private function getDadosBancosCorretoras()
     {
