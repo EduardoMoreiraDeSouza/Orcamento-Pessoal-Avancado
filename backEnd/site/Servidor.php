@@ -10,7 +10,7 @@ abstract class Servidor extends VerificarLogin
     private $senhaServidor;
     private $DBname;
 
-    protected function Servidor($informacao)
+    public function Servidor($informacao)
     {
 
         if ($this -> getLocalServidor() == 'local') {

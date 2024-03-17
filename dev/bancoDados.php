@@ -31,6 +31,17 @@ function criarBancoDados() {
     ) DEFAULT CHARSET = utf8;";
     mysqli_query($conexaoDB, $codigoMySql);
 
+    $codigoMySql = "CREATE TABLE cartoesCredito(
+       
+        nome VARCHAR(60) PRIMARY KEY,
+        cpf VARCHAR(11) NOT NULL,
+        limite DECIMAL(12, 2) NULL,
+        fechamento INT(2),
+        vencimento INT(2)
+    
+    ) DEFAULT CHARSET = utf8;";
+    mysqli_query($conexaoDB, $codigoMySql);
+
     $codigoMySql = "CREATE TABLE gastos(
         cpf VARCHAR(11) NOT NULL,
         id INT AUTO_INCREMENT PRIMARY KEY,

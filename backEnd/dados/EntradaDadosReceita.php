@@ -1,11 +1,11 @@
 <?php
 
-require_once __DIR__ . "/./EntradaGastos.php";
+require_once __DIR__ . "/./EntradaDadosGastos.php";
 
-class EntradaReceita extends EntradaGastos
+abstract class EntradaDadosReceita extends EntradaDadosGastos
 {
 
-    public function EntradaReceita($bancoCorretora, $classificacao, $dataEfetivacao, $valor)
+    public function EntradaDadosReceita($bancoCorretora, $classificacao, $dataEfetivacao, $valor)
     {
 
         $dbName = $this-> Servidor('DBname');

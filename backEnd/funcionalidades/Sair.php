@@ -7,9 +7,7 @@ class Sair extends Cadastrar
 
     public function __construct()
     {
-
         $this -> sair();
-
     }
 
     protected function sair(): true

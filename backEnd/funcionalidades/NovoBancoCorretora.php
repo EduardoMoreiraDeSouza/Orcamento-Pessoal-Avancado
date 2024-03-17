@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../dados/DadosEntradaFormulario.php";
+require_once __DIR__ . "/../formulario/DadosEntradaFormulario.php";
 
 class NovoBancoCorretora extends DadosEntradaFormulario
 {
@@ -11,11 +11,7 @@ class NovoBancoCorretora extends DadosEntradaFormulario
     public function __construct()
     {
 
-        if (empty($this -> getSessao())){
-            $this -> Comunicar('entrar');
-            $this -> Redirecionar('entrar');
-            return false;
-        }
+        if (!$this-> VerificarLogin()) return false;
 
         $this -> setPaginaPai('bancosCorretoras');
         $this -> setNome($this -> nome());
@@ -28,13 +24,17 @@ class NovoBancoCorretora extends DadosEntradaFormulario
             return false;
         }
 
-        if ($this -> SaidaDadosBancosCorretoras($this -> getNome(), $this -> getSessao())){
+        if ($this -> SaidaDadosBancosCorretoras($this -> getNome(), $this -> getSessao())) {
             $this -> Comunicar('x2bancosCorretoras');
             $this -> Redirecionar($this -> getPaginaPai());
             return false;
         }
 
-        if (!$this -> EntradaDadosBancosCorretoras($this -> getNome(), $this -> getSessao(), $this -> getSaldo())) {
+        if (!$this -> EntradaDadosBancosCorretoras(
+            $this -> getNome(),
+            $this -> getSessao(),
+            $this -> getSaldo())
+        ) {
             $this -> Redirecionar($this -> getPaginaPai());
             return false;
         }

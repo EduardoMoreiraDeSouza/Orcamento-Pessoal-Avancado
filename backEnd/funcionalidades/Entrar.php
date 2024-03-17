@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . "/./NovoBancoCorretora.php";
+require_once __DIR__ . "/./NovoCartaoCredito.php";
 
-class Entrar extends NovoBancoCorretora
+class Entrar extends NovoCartaoCredito
 {
 
     private $cpf;

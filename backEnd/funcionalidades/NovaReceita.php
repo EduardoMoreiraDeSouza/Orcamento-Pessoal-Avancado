@@ -8,11 +8,7 @@ class NovaReceita extends NovoDebito
     public function __construct()
     {
 
-        if (empty($this -> getSessao())){
-            $this -> Comunicar('entrar');
-            $this -> Redirecionar('entrar');
-            return false;
-        }
+        if (!$this-> VerificarLogin()) return false;
 
         $this -> setPaginaPai('bancosCorretoras');
         $this -> setBancoCorretora($this -> bancoCorretora());
@@ -36,7 +32,7 @@ class NovaReceita extends NovoDebito
             return false;
         }
 
-        if (!$this -> EntradaReceita($this -> getBancoCorretora(), $this -> getClassificacao(), $this -> getDataEfetivacao(), $this -> getValor())) {
+        if (!$this -> EntradaDadosReceita($this -> getBancoCorretora(), $this -> getClassificacao(), $this -> getDataEfetivacao(), $this -> getValor())) {
             $this -> Redirecionar($this -> getPaginaPai());
             return false;
         }
@@ -46,7 +42,7 @@ class NovaReceita extends NovoDebito
             date_default_timezone_set('America/Sao_Paulo');
 
             if ($this-> getDataEfetivacao() <= date('Y-m-d')) {
-                $this->EditarBancosCorretoras(
+                $this->EditarDadosBancosCorretoras(
                     $this->getBancoCorretora(),
                     $this->getBancoCorretora(),
                     $this->getSessao(),

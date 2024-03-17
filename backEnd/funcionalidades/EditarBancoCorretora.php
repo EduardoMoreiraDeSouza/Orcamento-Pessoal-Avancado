@@ -10,23 +10,33 @@ class EditarBancoCorretora extends Entrar
     public function __construct()
     {
 
+        if (!$this-> VerificarLogin()) return false;
+
+        $this -> setPaginaPai('bancosCorretoras');
         $this -> setNomeId($this -> nomeId());
         $this -> setNome($this -> nome());
         $this -> setSaldo($this -> formatarValorDB($this -> saldo()));
 
         if (
-            !$this-> EditarBancosCorretoras(
+            !$this-> getNome()
+        ) {
+            $this -> Redirecionar($this -> getPaginaPai());
+            return false;
+        }
+
+        if (
+            !$this-> EditarDadosBancosCorretoras(
                 $this-> getNome(),
                 $this-> getNomeId(),
                 $this-> getSessao(),
                 $this-> getSaldo()
             )
         ) {
-            $this->Redirecionar('bancosCorretoras');
+            $this->Redirecionar($this-> getPaginaPai());
             return false;
         }
 
-        $this->Redirecionar('bancosCorretoras');
+        $this->Redirecionar($this-> getPaginaPai());
         return true;
     }
 

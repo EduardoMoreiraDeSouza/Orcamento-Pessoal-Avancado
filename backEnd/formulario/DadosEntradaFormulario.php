@@ -55,6 +55,30 @@ abstract class DadosEntradaFormulario extends VerificarCpf
 
     }
 
+    protected function fechamento()
+    {
+
+        $this -> setDados(addslashes($_POST['fechamento']));
+
+        if ($this -> dadosDefinidos())
+            return $this -> getDados();
+
+        return false;
+
+    }
+
+    protected function vencimento()
+    {
+
+        $this -> setDados(addslashes($_POST['vencimento']));
+
+        if ($this -> dadosDefinidos())
+            return $this -> getDados();
+
+        return false;
+
+    }
+
     protected function nomeId()
     {
 

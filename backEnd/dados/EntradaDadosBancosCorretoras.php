@@ -2,7 +2,7 @@
 
 require_once __DIR__ . "/./SaidaDadosBancosCorretoras.php";
 
-class EntradaDadosBancosCorretoras extends SaidaDadosBancosCorretoras
+abstract class EntradaDadosBancosCorretoras extends SaidaDadosBancosCorretoras
 {
 
     protected function EntradaDadosBancosCorretoras($nome, $cpf, $saldo)

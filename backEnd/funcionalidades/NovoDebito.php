@@ -13,7 +13,7 @@ class NovoDebito extends EditarBancoCorretora
     public function __construct()
     {
 
-        $this-> VerificarLogin();
+        if (!$this-> VerificarLogin()) return false;
 
         $this -> setPaginaPai('bancosCorretoras');
         $this -> setBancoCorretora($this -> bancoCorretora());
@@ -47,7 +47,7 @@ class NovoDebito extends EditarBancoCorretora
             return false;
         }
 
-        if (!$this -> EntradaGastos($this -> getBancoCorretora(), 'debito', $this -> getClassificacao(), $this -> getDataEfetivacao(), $this -> getValor())) {
+        if (!$this -> EntradaDadosGastos($this -> getBancoCorretora(), 'debito', $this -> getClassificacao(), $this -> getDataEfetivacao(), $this -> getValor())) {
             $this -> Redirecionar($this -> getPaginaPai());
             return false;
         }
@@ -57,7 +57,7 @@ class NovoDebito extends EditarBancoCorretora
             date_default_timezone_set('America/Sao_Paulo');
 
             if ($this-> getDataEfetivacao() <= $dataAtual) {
-                $this->EditarBancosCorretoras(
+                $this->EditarDadosBancosCorretoras(
                     $this->getBancoCorretora(),
                     $this->getBancoCorretora(),
                     $this->getSessao(),

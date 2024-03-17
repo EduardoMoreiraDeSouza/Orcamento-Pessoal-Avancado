@@ -2,9 +2,8 @@
 
 require_once __DIR__ . "/./SaidaDadosUsuarios.php";
 
-class EntradaDadosUsuarios extends SaidaDadosUsuarios
+abstract class EntradaDadosUsuarios extends SaidaDadosUsuarios
 {
-
     protected function EntradaDadosUsuario($cpf, $senha)
     {
 

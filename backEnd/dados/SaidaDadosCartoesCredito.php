@@ -1,14 +1,14 @@
 <?php
 
-require_once __DIR__ . "/./EntradaDadosUsuarios.php";
+require_once __DIR__ . "/./EditarDadosBancosCorretoras.php";
 
-abstract class SaidaDadosBancosCorretoras extends EntradaDadosUsuarios
+abstract class SaidaDadosCartoesCredito extends EditarDadosBancosCorretoras
 {
 
     private $execucaoMySql;
     private $dados;
 
-    public function SaidaDadosBancosCorretoras($nome, $cpf)
+    public function SaidaDadosCartoesCredito($nome, $cpf)
     {
 
         $this-> gerarCodigoMySql($nome, $cpf);
@@ -30,7 +30,7 @@ abstract class SaidaDadosBancosCorretoras extends EntradaDadosUsuarios
 
         $dbName = $this-> Servidor('DBname');
 
-        $codigo = "SELECT * FROM $dbName.bancosCorretoras WHERE ";
+        $codigo = "SELECT * FROM $dbName.cartoesCredito WHERE ";
 
         if ($nome == null and $cpf == null)
             return false;
@@ -65,4 +65,5 @@ abstract class SaidaDadosBancosCorretoras extends EntradaDadosUsuarios
     {
         $this -> execucaoMySql = $execucaoMySql;
     }
+
 }

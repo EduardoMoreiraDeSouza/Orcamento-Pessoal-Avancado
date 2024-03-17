@@ -61,7 +61,7 @@ $globais = new Globais;
                             <a class="nav-link text-light" href="./paginas/bancosCorretoras.php">Bancos e Corretoras</a>
                         </li>
                         <li class="nav-item h6">
-                            <a class="nav-link text-light" href="#">Crédito</a>
+                            <a class="nav-link text-light" href="./paginas/credito.php">Crédito</a>
                         </li>
                         <li class="nav-item h6">
                             <a class="nav-link text-light" href="#">Rendimentos</a>

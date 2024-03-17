@@ -17,7 +17,6 @@ $resultadoExecucao = $execucao-> ExecutarCodigoMySql();
 
 if (
     isset($_GET['excluir']) and
-    $_GET['excluir'] and
     isset($_GET['nome'])
 ) {
 
@@ -78,7 +77,7 @@ date_default_timezone_set('America/Sao_Paulo');
                             <form action="../backEnd/interacaoComUsuario/novoBancoCorretora.php" method="POST" class="form hstack gap-3">
 
                                 <input type="text" class="container input-group-text" name="nome" placeholder="Nome:" required>
-                                <input type="text" class="container input-group-text" name="saldo" placeholder="Saldo:" step="0.01" value="R$ ">
+                                <input type="number" class="container input-group-text" name="saldo" placeholder="Saldo:" step="0.01">
 
                                 <input type="submit" class="container btn btn-dark" value="Criar">
 
@@ -106,7 +105,6 @@ date_default_timezone_set('America/Sao_Paulo');
 
                             <form action="../backEnd/interacaoComUsuario/novoDebito.php" method="POST" class="form hstack gap-3">
 
-
                                 <select class="form-select" name="bancoCorretora" required>
 
                                     <option value="" selected>Banco | Corretora</option>
@@ -132,13 +130,14 @@ date_default_timezone_set('America/Sao_Paulo');
                                     <option value="nescessario">Necessário</option>
                                     <option value="reserva">Reserva</option>
                                     <option value="dividas">Dívidas</option>
+                                    <option value="faturas">Faturas</option>
                                     <option value="arca">A.R.C.A</option>
                                     <option value="boasAcoes">Boas Ações</option>
                                 </select>
 
                                 <input type="date" class="container input-group-text" name="dataEfetivacao" value="<?=date('Y-m-d')?>" required>
 
-                                <input type="text" class="container input-group-text" name="valor" placeholder="Valor" step="0.01" value="" required>
+                                <input type="number" class="container input-group-text" name="valor" placeholder="Valor" step="0.01" min="0.01" required>
 
                                 <input type="submit" class="container btn btn-dark" value="Debitar">
 
@@ -166,7 +165,6 @@ date_default_timezone_set('America/Sao_Paulo');
 
                             <form action="../backEnd/interacaoComUsuario/novaReceita.php" method="POST" class="form hstack gap-3">
 
-
                                 <select class="form-select" name="bancoCorretora" required>
 
                                     <option value="" selected>Banco | Corretora</option>
@@ -180,7 +178,7 @@ date_default_timezone_set('America/Sao_Paulo');
 
                                         $nome = $dadosBancosCorretoras['nome'];
 
-                                        ?>
+                                    ?>
 
                                         <option value="<?= $nome ?>"><?= $nome ?></option>
 
@@ -195,12 +193,13 @@ date_default_timezone_set('America/Sao_Paulo');
                                     <option value="rendimentos">Rendimentos</option>
                                     <option value="empreendimentos">Empreendimentos</option>
                                     <option value="emprestimos">Empréstimos</option>
+                                    <option value="reserva">Reserva</option>
                                     <option value="outros">Outros</option>
                                 </select>
 
                                 <input type="date" class="container input-group-text" name="dataEfetivacao" value="<?=date('Y-m-d')?>" required>
 
-                                <input type="text" class="container input-group-text" name="valor" placeholder="Valor" step="0.01" value="" required>
+                                <input type="number" class="container input-group-text" name="valor" placeholder="Valor" step="0.01" min="0.01" required>
 
                                 <input type="submit" class="container btn btn-dark" value="Depositar">
 
