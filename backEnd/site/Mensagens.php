@@ -23,7 +23,8 @@ abstract class Mensagens extends ScriptJS
             'entrar' => 'Para continuar é nescessário entrar com seu CPF!',
             'x2bancosCorretoras' => 'Este Banco/Corretora já está cadastrado!',
             'sucesso' => 'Comando executado com sucesso!',
-            'naoBancoCorretora' => 'O banco/corretora selecionado não existe!'
+            'naoBancoCorretora' => 'O banco/corretora selecionado não existe!',
+            'saldoInsuficiente' => 'O saldo disponível não é suficiente para debitar o valor!'
 
         ]);
 

@@ -13,11 +13,7 @@ class NovoDebito extends EditarBancoCorretora
     public function __construct()
     {
 
-        if (empty($this -> getSessao())){
-            $this -> Comunicar('entrar');
-            $this -> Redirecionar('entrar');
-            return false;
-        }
+        $this-> VerificarLogin();
 
         $this -> setPaginaPai('bancosCorretoras');
         $this -> setBancoCorretora($this -> bancoCorretora());
@@ -41,6 +37,16 @@ class NovoDebito extends EditarBancoCorretora
             return false;
         }
 
+        $saldoBanco = $this->SaidaDadosBancosCorretoras($this->getBancoCorretora(), $this->getSessao())['saldo'];
+        $valorFinal = $saldoBanco - $this->getValor();
+        $dataAtual = date('Y-m-d');
+
+        if ($valorFinal < 0 and $this-> getDataEfetivacao() <= $dataAtual) {
+            $this -> Comunicar('saldoInsuficiente');
+            $this -> Redirecionar($this -> getPaginaPai());
+            return false;
+        }
+
         if (!$this -> EntradaGastos($this -> getBancoCorretora(), 'debito', $this -> getClassificacao(), $this -> getDataEfetivacao(), $this -> getValor())) {
             $this -> Redirecionar($this -> getPaginaPai());
             return false;
@@ -48,12 +54,16 @@ class NovoDebito extends EditarBancoCorretora
 
         else {
 
-            $this-> EditarBancosCorretoras(
-                $this-> getBancoCorretora(),
-                $this-> getBancoCorretora(),
-                $this-> getSessao(),
-                $this-> SaidaDadosBancosCorretoras($this-> getBancoCorretora(), $this-> getSessao())['saldo'] - $this-> getValor()
-            );
+            date_default_timezone_set('America/Sao_Paulo');
+
+            if ($this-> getDataEfetivacao() <= $dataAtual) {
+                $this->EditarBancosCorretoras(
+                    $this->getBancoCorretora(),
+                    $this->getBancoCorretora(),
+                    $this->getSessao(),
+                    $valorFinal
+                );
+            }
 
         }
 
@@ -63,42 +73,42 @@ class NovoDebito extends EditarBancoCorretora
     }
 
 
-    private function getBancoCorretora()
+    protected function getBancoCorretora()
     {
         return $this -> bancoCorretora;
     }
 
-    private function setBancoCorretora($bancoCorretora)
+    protected function setBancoCorretora($bancoCorretora)
     {
         $this -> bancoCorretora = $bancoCorretora;
     }
 
-    private function getClassificacao()
+    protected function getClassificacao()
     {
         return $this -> classificacao;
     }
 
-    private function setClassificacao($classificacao)
+    protected function setClassificacao($classificacao)
     {
         $this -> classificacao = $classificacao;
     }
 
-    private function getDataEfetivacao()
+    protected function getDataEfetivacao()
     {
         return $this -> dataEfetivacao;
     }
 
-    private function setDataEfetivacao($dataEfetivacao)
+    protected function setDataEfetivacao($dataEfetivacao)
     {
         $this -> dataEfetivacao = $dataEfetivacao;
     }
 
-    private function getValor()
+    protected function getValor()
     {
         return $this -> valor;
     }
 
-    public function setValor($valor)
+    protected function setValor($valor)
     {
         $this -> valor = $valor;
     }

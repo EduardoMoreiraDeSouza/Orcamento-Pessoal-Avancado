@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../backEnd/funcionalidades/VerificarLogin.php";
+require_once __DIR__ . "/../backEnd/verificacoes/VerificarLogin.php";
 $login = new VerificarLogin();
 
 if ($login -> VerificarLogin()) {
@@ -194,14 +194,15 @@ date_default_timezone_set('America/Sao_Paulo');
                                     <option value="salario">Salário</option>
                                     <option value="rendimentos">Rendimentos</option>
                                     <option value="empreendimentos">Empreendimentos</option>
-                                    <option value="terceiros">Terceiros</option>
+                                    <option value="emprestimos">Empréstimos</option>
+                                    <option value="outros">Outros</option>
                                 </select>
 
                                 <input type="date" class="container input-group-text" name="dataEfetivacao" value="<?=date('Y-m-d')?>" required>
 
                                 <input type="text" class="container input-group-text" name="valor" placeholder="Valor" step="0.01" value="" required>
 
-                                <input type="submit" class="container btn btn-dark" value="Debitar">
+                                <input type="submit" class="container btn btn-dark" value="Depositar">
 
                             </form>
 

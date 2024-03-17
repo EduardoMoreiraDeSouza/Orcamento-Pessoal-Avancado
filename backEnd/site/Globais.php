@@ -3,8 +3,6 @@
 class Globais{
 
     private $codigoMySql;
-    private $erro;
-    private $acesso;
     private $paginaPai;
 
     private $localServidor;

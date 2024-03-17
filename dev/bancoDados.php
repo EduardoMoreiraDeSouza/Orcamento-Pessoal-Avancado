@@ -42,6 +42,17 @@ function criarBancoDados() {
     ) DEFAULT CHARSET = utf8;";
     mysqli_query($conexaoDB, $codigoMySql);
 
+    $codigoMySql = "CREATE TABLE receitas(
+        cpf VARCHAR(11) NOT NULL,
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        bancoCorretora VARCHAR(60) NOT NULL,
+        classificacao VARCHAR(11) NOT NULL,
+        valor DECIMAL(12, 2) NULL,
+        dataEfetivacao DATE
+    ) DEFAULT CHARSET = utf8;";
+    mysqli_query($conexaoDB, $codigoMySql);
+
+
 }
 
 function excluirBancoDados() {

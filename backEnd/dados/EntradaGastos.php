@@ -9,7 +9,7 @@ class EntradaGastos extends EditarBancosCorretoras
     {
 
         $dbName = $this-> Servidor('DBname');
-        $this -> setCodigoMySql("INSERT INTO $dbName.gastos VALUES ('". $this -> getSessao() ."', '0', '$tipo', '$bancoCorretora', '$classificacao', '$valor', '$dataEfetivacao');");
+        $this -> setCodigoMySql("INSERT INTO $dbName.gastos VALUES ('". $this -> getSessao() ."', 'default', '$tipo', '$bancoCorretora', '$classificacao', '$valor', '$dataEfetivacao');");
 
         if (!$this -> ExecutarCodigoMySql())
             return false;

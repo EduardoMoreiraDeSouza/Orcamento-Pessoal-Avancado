@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . "/./Redirecionar.php";
+require_once __DIR__ . "/../verificacoes/VerificarLogin.php";
 
-abstract class Servidor extends Redirecionar
+abstract class Servidor extends VerificarLogin
 {
 
     private $servidor;
