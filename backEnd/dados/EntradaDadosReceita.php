@@ -9,7 +9,7 @@ abstract class EntradaDadosReceita extends EntradaDadosGastos
     {
 
         $dbName = $this-> Servidor('DBname');
-        $this -> setCodigoMySql("INSERT INTO $dbName.receitas VALUES ('". $this -> getSessao() ."', 'default', '$bancoCorretora', '$classificacao', '$valor', '$dataEfetivacao');");
+        $this -> setCodigoMySql("INSERT INTO $dbName.receitas VALUES ('". $this -> getSessao() ."', '0', '$bancoCorretora', '$classificacao', '$valor', '$dataEfetivacao');");
 
         if (!$this -> ExecutarCodigoMySql())
             return false;
