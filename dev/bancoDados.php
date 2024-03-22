@@ -46,7 +46,7 @@ function criarBancoDados() {
         cpf VARCHAR(11) NOT NULL,
         id INT AUTO_INCREMENT PRIMARY KEY,
         tipo VARCHAR(7) NOT NULL,
-        bancoCorretora VARCHAR(60) NOT NULL,
+        fiador VARCHAR(60) NOT NULL,
         classificacao VARCHAR(11) NOT NULL,
         valor DECIMAL(12, 2) NULL,
         dataEfetivacao DATE

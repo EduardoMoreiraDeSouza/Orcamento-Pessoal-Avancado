@@ -104,11 +104,11 @@ if ($login -> VerificarLogin()) {
 
                         <div class="card card-body border border-dark bg-secondary" style="width: 700px;">
 
-                            <form action="../backEnd/interacaoComUsuario/novoDebito.php" method="POST" class="form hstack gap-3">
+                            <form action="../backEnd/interacaoComUsuario/novoCredito.php" method="POST" class="form hstack gap-3">
 
-                                <select class="form-select" name="bancoCorretora" required>
+                                <select class="form-select" name="cartaoCredito" required>
 
-                                    <option value="" selected>Banco | Corretora</option>
+                                    <option value="" selected>Cartão</option>
 
                                     <?php
 
@@ -139,7 +139,7 @@ if ($login -> VerificarLogin()) {
 
                                 <input type="text" class="container input-group-text" name="valor" placeholder="Valor" step="0.01" value="" required>
 
-                                <input type="submit" class="container btn btn-dark" value="Debitar">
+                                <input type="submit" class="container btn btn-dark" value="Creditar">
 
                             </form>
                         </div>

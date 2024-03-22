@@ -31,6 +31,18 @@ abstract class DadosEntradaFormulario extends VerificarCpf
 
     }
 
+    protected function cartaoCredito()
+    {
+
+        $this -> setDados(addslashes($_POST['cartaoCredito']));
+
+        if ($this -> dadosDefinidos())
+            return $this -> getDados();
+
+        return false;
+
+    }
+
     protected function classificacao()
     {
 

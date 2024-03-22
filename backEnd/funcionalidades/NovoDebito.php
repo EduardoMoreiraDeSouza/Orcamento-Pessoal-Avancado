@@ -31,13 +31,17 @@ class NovoDebito extends EditarBancoCorretora
             return false;
         }
 
-        if (!$this -> SaidaDadosBancosCorretoras($this -> getBancoCorretora(), $this -> getSessao())) {
+        $banco = $this -> SaidaDadosBancosCorretoras($this -> getBancoCorretora(), $this -> getSessao());
+
+        if (!$banco) {
             $this -> Comunicar('naoBancoCorretora');
             $this -> Redirecionar($this -> getPaginaPai());
             return false;
         }
 
-        $saldoBanco = $this->SaidaDadosBancosCorretoras($this->getBancoCorretora(), $this->getSessao())['saldo'];
+        date_default_timezone_set('America/Sao_Paulo');
+
+        $saldoBanco = $banco['saldo'];
         $valorFinal = $saldoBanco - $this->getValor();
         $dataAtual = date('Y-m-d');
 
@@ -47,24 +51,23 @@ class NovoDebito extends EditarBancoCorretora
             return false;
         }
 
-        if (!$this -> EntradaDadosGastos($this -> getBancoCorretora(), 'debito', $this -> getClassificacao(), $this -> getDataEfetivacao(), $this -> getValor())) {
+        if (!$this -> EntradaDadosGastos(
+            $this -> getBancoCorretora(),
+            'debito', $this -> getClassificacao(),
+            $this -> getDataEfetivacao(),
+            $this -> getValor())
+        ) {
             $this -> Redirecionar($this -> getPaginaPai());
             return false;
         }
 
-        else {
-
-            date_default_timezone_set('America/Sao_Paulo');
-
-            if ($this-> getDataEfetivacao() <= $dataAtual) {
-                $this->EditarDadosBancosCorretoras(
-                    $this->getBancoCorretora(),
-                    $this->getBancoCorretora(),
-                    $this->getSessao(),
-                    $valorFinal
-                );
-            }
-
+        elseif ($this-> getDataEfetivacao() <= $dataAtual) {
+            $this->EditarDadosBancosCorretoras(
+                $this->getBancoCorretora(),
+                $this->getBancoCorretora(),
+                $this->getSessao(),
+                $valorFinal
+            );
         }
 
         $this -> Redirecionar($this -> getPaginaPai());
