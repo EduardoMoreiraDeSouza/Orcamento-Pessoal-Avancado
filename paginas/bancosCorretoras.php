@@ -11,7 +11,8 @@ require_once __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
 $formatacao =  new FormatacaoDados();
 $execucao = new ExecucaoCodigoMySql();
 
-$codigoMySql = "SELECT * FROM orcamentoPessoal.bancosCorretoras WHERE cpf LIKE '". $login -> getSessao() ."';";
+$dbName = $execucao-> Servidor('DBname');
+$codigoMySql = "SELECT * FROM $dbName.bancosCorretoras WHERE cpf LIKE '". $login -> getSessao() ."';";
 $execucao -> setCodigoMySql($codigoMySql);
 $resultadoExecucao = $execucao-> ExecutarCodigoMySql();
 

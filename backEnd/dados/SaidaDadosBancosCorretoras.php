@@ -19,10 +19,8 @@ abstract class SaidaDadosBancosCorretoras extends EntradaDadosUsuarios
 
         $this -> setDados(mysqli_fetch_assoc($this -> getExecucaoMySql()));
 
-        if (!empty($this -> getDados()))
-            return $this -> getDados();
+        return !empty($this->getDados()) ? $this->getDados() : false;
 
-        return false;
     }
 
     private function gerarCodigoMySql($nome, $cpf)
