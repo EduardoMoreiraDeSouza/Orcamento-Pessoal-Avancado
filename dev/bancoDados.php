@@ -45,11 +45,12 @@ function criarBancoDados() {
     $codigoMySql = "CREATE TABLE gastos(
         cpf VARCHAR(11) NOT NULL,
         id INT AUTO_INCREMENT PRIMARY KEY,
-        tipo VARCHAR(7) NOT NULL,
-        fiador VARCHAR(60) NOT NULL,
-        classificacao VARCHAR(11) NOT NULL,
-        valor DECIMAL(12, 2) NULL,
-        dataEfetivacao DATE
+        tipo VARCHAR(7) NOT NULL, 2
+        fiador VARCHAR(60) NOT NULL, 1
+        classificacao VARCHAR(11) NOT NULL, 5
+        valor DECIMAL(12, 2) NULL, 3
+        parcelas INT(4), 4
+        dataEfetivacao DATE 6
     ) DEFAULT CHARSET = utf8;";
     mysqli_query($conexaoDB, $codigoMySql);
 

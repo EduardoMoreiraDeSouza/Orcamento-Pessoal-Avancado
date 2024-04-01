@@ -36,7 +36,9 @@ abstract class Mensagens extends ScriptJS
 
             'sucesso' => 'Comando executado com sucesso!',
 
-            'fechamentoVencimento' => 'O dia do fechamento não pode ser igual ao vencimento!'
+            'fechamentoVencimento' => 'O dia do fechamento não pode ser igual ao vencimento!',
+
+            'valorInvalido' => 'O valor inserido está inválido!'
 
         ]);
 

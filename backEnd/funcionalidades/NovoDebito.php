@@ -9,6 +9,7 @@ class NovoDebito extends EditarBancoCorretora
     private $classificacao;
     private $dataEfetivacao;
     private $valor;
+    private $parcelas;
 
     public function __construct()
     {
@@ -20,12 +21,14 @@ class NovoDebito extends EditarBancoCorretora
         $this -> setClassificacao($this -> classificacao());
         $this -> setDataEfetivacao($this -> dataEfetivacao());
         $this -> setValor($this -> valor());
+        $this-> setParcelas($this-> parcelas());
 
         if (
             !$this -> getBancoCorretora() or
             !$this -> getClassificacao() or
             !$this -> getDataEfetivacao() or
-            !$this -> getValor()
+            !$this -> getValor() or
+            !$this-> getParcelas()
         ) {
             $this -> Redirecionar($this -> getPaginaPai());
             return false;
@@ -53,10 +56,12 @@ class NovoDebito extends EditarBancoCorretora
 
         if (!$this -> EntradaDadosGastos(
             $this -> getBancoCorretora(),
-            'debito', $this -> getClassificacao(),
+            'Débito',
+            $this -> getClassificacao(),
             $this -> getDataEfetivacao(),
-            $this -> getValor())
-        ) {
+            $this -> getValor(),
+            $this-> getParcelas()
+        )) {
             $this -> Redirecionar($this -> getPaginaPai());
             return false;
         }
@@ -115,4 +120,15 @@ class NovoDebito extends EditarBancoCorretora
     {
         $this -> valor = $valor;
     }
+
+    protected function getParcelas()
+    {
+        return $this -> parcelas;
+    }
+
+    protected function setParcelas($parcelas)
+    {
+        $this -> parcelas = $parcelas;
+    }
+
 }

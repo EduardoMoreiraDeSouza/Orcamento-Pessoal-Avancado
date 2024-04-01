@@ -8,13 +8,13 @@ if ($login -> VerificarLogin()) {
     require_once __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
     require_once __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
 
-    $formatacao =  new FormatacaoDados();
+    $formatacao = new FormatacaoDados();
     $execucao = new ExecucaoCodigoMySql();
 
-    $dbName = $execucao-> Servidor('DBname');
-    $codigoMySql = "SELECT * FROM $dbName.cartoesCredito WHERE cpf LIKE '". $login -> getSessao() ."';";
+    $dbName = $execucao -> Servidor('DBname');
+    $codigoMySql = "SELECT * FROM $dbName.cartoesCredito WHERE cpf LIKE '" . $login -> getSessao() . "';";
     $execucao -> setCodigoMySql($codigoMySql);
-    $resultadoExecucao = $execucao-> ExecutarCodigoMySql();
+    $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
 
     if (
         isset($_GET['excluir']) and
@@ -37,13 +37,14 @@ if ($login -> VerificarLogin()) {
 
     <head>
 
-        <title>Bancos e Corretoras</title>
+        <title>Cartões de Crédito</title>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+              integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+              crossorigin="anonymous">
 
     </head>
 
@@ -58,29 +59,36 @@ if ($login -> VerificarLogin()) {
 
     <main class="container w-75 bg-light p-5 rounded border border-secondary shadow-lg">
 
-        <h1 class="text-center">Crédito</h1>
+        <h1 class="text-center">Cartões de Crédito</h1>
 
         <div class="container row mt-5">
             <div class="col-auto">
 
                 <p>
-                    <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#novoBancoCorretora" aria-expanded="false" aria-controls="collapseWidthExample">
-                        Novo cartão de crédito
+                    <button class="btn btn-dark" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#novoCartaoCredito" aria-expanded="false"
+                            aria-controls="collapseWidthExample">
+                        Novo Cartão de Crédito
                     </button>
                 </p>
 
                 <div style="min-height: auto;" class="mb-4">
 
-                    <div class="collapse collapse-horizontal" id="novoBancoCorretora">
+                    <div class="collapse collapse-horizontal" id="novoCartaoCredito">
 
                         <div class="card card-body border border-dark bg-secondary" style="width: 1000px;">
 
-                            <form action="../backEnd/interacaoComUsuario/novoCartaoCredito.php" method="POST" class="form hstack gap-3">
+                            <form action="../backEnd/interacaoComUsuario/novoCartaoCredito.php" method="POST"
+                                  class="form hstack gap-3">
 
-                                <input type="text" class="container input-group-text" name="nome" placeholder="Nome:" required>
-                                <input type="number" class="container input-group-text" name="valor" placeholder="Limite:" step="0.01" required>
-                                <input type="number" class="container input-group-text" name="fechamento" placeholder="fechamento" max="31" min="1" required>
-                                <input type="number" class="container input-group-text" name="vencimento" placeholder="vencimento" max="31" min="1" required>
+                                <input type="text" class="container input-group-text" name="nome" placeholder="Nome:"
+                                       required>
+                                <input type="number" class="container input-group-text" name="valor"
+                                       placeholder="Limite:" step="0.01" required>
+                                <input type="number" class="container input-group-text" name="fechamento"
+                                       placeholder="fechamento" max="31" min="1" required>
+                                <input type="number" class="container input-group-text" name="vencimento"
+                                       placeholder="vencimento" max="31" min="1" required>
 
                                 <input type="submit" class="container btn btn-dark" value="Criar">
 
@@ -93,21 +101,22 @@ if ($login -> VerificarLogin()) {
             <div class="col-auto">
 
                 <p>
-                    <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#novoDebito" aria-expanded="false" aria-controls="collapseWidthExample">
+                    <button class="btn btn-dark" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#novoGastoCredito" aria-expanded="false"
+                            aria-controls="collapseWidthExample">
                         Novo Gasto no Crédito
                     </button>
                 </p>
 
                 <div style="min-height: auto;" class="mb-3">
 
-                    <div class="collapse collapse-horizontal" id="novoDebito">
-
-                        <div class="card card-body border border-dark bg-secondary" style="width: 700px;">
-
-                            <form action="../backEnd/interacaoComUsuario/novoCredito.php" method="POST" class="form hstack gap-3">
-
+                    <div class="collapse collapse-horizontal" id="novoGastoCredito">
+                        <p>Não sabe o valor das parcelas? <br/>Coloque o valor total do gasto (Com juros, se tiver), e
+                            no final coloque um * (Asterisco) para calcularmos para você!</p>
+                        <div class="card card-body border border-dark bg-secondary" style="width: 900px;">
+                            <form action="../backEnd/interacaoComUsuario/novoCredito.php" method="POST"
+                                  class="form hstack gap-3">
                                 <select class="form-select" name="cartaoCredito" required>
-
                                     <option value="" selected>Cartão</option>
 
                                     <?php
@@ -116,28 +125,30 @@ if ($login -> VerificarLogin()) {
 
                                         $nome = $dadosCartoesCredito['nome'];
 
-                                    ?>
+                                        ?>
 
                                         <option value="<?= $nome ?>"><?= $nome ?></option>
 
 
                                     <?php } ?>
-
                                 </select>
 
                                 <select class="form-select" name="clasificacao" required>
                                     <option value="" selected>Classificação</option>
-                                    <option value="pessoal">Pessoal</option>
-                                    <option value="nescessario">Necessário</option>
-                                    <option value="reserva">Reserva</option>
-                                    <option value="dividas">Dívidas</option>
-                                    <option value="arca">A.R.C.A</option>
-                                    <option value="boasAcoes">Boas Ações</option>
+                                    <option value="Pessoal">Pessoal</option>
+                                    <option value="Necessário">Necessário</option>
+                                    <option value="Reserva">Reserva</option>
+                                    <option value="Dívidas">Dívidas</option>
+                                    <option value="Investimentos">Investimentos</option>
+                                    <option value="Boas Ações">Boas Ações</option>
                                 </select>
 
-                                <input type="date" class="container input-group-text" name="dataEfetivacao" value="<?=date('Y-m-d')?>" required>
-
-                                <input type="text" class="container input-group-text" name="valor" placeholder="Valor" step="0.01" value="" required>
+                                <input type="date" class="container input-group-text" name="dataEfetivacao"
+                                       value="<?= date('Y-m-d') ?>" required>
+                                <input type="text" class="container input-group-text" name="valor" placeholder="Valor"
+                                       step="0.01" value="" required>
+                                <input type="number" class="container input-group-text" name="parcelas"
+                                       title="Quantidade de Parcelas" step="1" min="1" value="1" required>
 
                                 <input type="submit" class="container btn btn-dark" value="Creditar">
 
@@ -146,6 +157,15 @@ if ($login -> VerificarLogin()) {
                     </div>
                 </div>
             </div>
+
+            <div class="col-auto">
+                <p>
+                    <button class="btn btn-dark" type="button">
+                        <a style="text-decoration: none" class="text-light" href="./gastos.php">Meus Gastos</a>
+                    </button>
+                </p>
+            </div>
+
         </div>
 
         <table class="table table-dark text-center">
@@ -157,7 +177,7 @@ if ($login -> VerificarLogin()) {
                 <th scope="col">Limite</th>
                 <th scope="col">Fechamento</th>
                 <th scope="col">vencimento</th>
-                <th scope="col">Ação</th>
+                <th scope="col">Ações</th>
             </tr>
             </thead>
             <tbody>
@@ -179,33 +199,41 @@ if ($login -> VerificarLogin()) {
                 $limiteTotal += $dadosCartoesCredito['limite'];
                 $limite = $dadosCartoesCredito['limite'];
 
-            ?>
+                ?>
 
                 <form action="../backEnd/interacaoComUsuario/editarCartaoCredito.php" method="POST">
                     <tr>
                         <th scope="row"><?= $quantidade ?>º</th>
                         <td>
-                            <input type="text" class="container input-group-text" name="nome" placeholder="Nome:" value="<?= $nome ?>" required>
+                            <input type="text" class="container input-group-text" name="nome" placeholder="Nome:"
+                                   value="<?= $nome ?>" required>
                         </td>
                         <td>
-                            <input type="number" class="container input-group-text" name="valor" placeholder="Limite:" step="0.01" value="<?= $limite ?>">
+                            <input type="number" class="container input-group-text" name="valor" placeholder="Limite:"
+                                   step="0.01" value="<?= $limite ?>">
                         </td>
                         <td>
-                            <input type="number" class="container input-group-text" name="fechamento" placeholder="Fechamento:" step="0.01" min="1" value="<?= $fechamento ?>">
+                            <input type="number" class="container input-group-text" name="fechamento"
+                                   placeholder="Fechamento:" step="0.01" min="1" value="<?= $fechamento ?>">
                         </td>
                         <td>
-                            <input type="number" class="container input-group-text" name="vencimento" placeholder="Vencimento:" step="0.01" min="1" value="<?= $vencimento ?>">
+                            <input type="number" class="container input-group-text" name="vencimento"
+                                   placeholder="Vencimento:" step="0.01" min="1" value="<?= $vencimento ?>">
                         </td>
                         <td>
-                            <button style="text-decoration: none;" class="text-primary bg-transparent" name="nameId" value="<?= $nome ?>">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                            <button style="text-decoration: none;" class="text-primary bg-transparent" name="nameId"
+                                    value="<?= $nome ?>">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-pen" viewBox="0 0 16 16">
                                     <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
                                 </svg>
                             </button>
 
                             <button type="button" style="text-decoration: none;" class="text-primary bg-transparent">
-                                <a href="?excluir=true&nome=<?= $nome ?>" style="text-decoration: none;" class="text-danger">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-backspace" viewBox="0 0 16 16">
+                                <a href="?excluir=true&nome=<?= $nome ?>" style="text-decoration: none;"
+                                   class="text-danger">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-backspace" viewBox="0 0 16 16">
                                         <path d="M5.83 5.146a.5.5 0 0 0 0 .708L7.975 8l-2.147 2.146a.5.5 0 0 0 .707.708l2.147-2.147 2.146 2.147a.5.5 0 0 0 .707-.708L9.39 8l2.146-2.146a.5.5 0 0 0-.707-.708L8.683 7.293 6.536 5.146a.5.5 0 0 0-.707 0z"/>
                                         <path d="M13.683 1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-7.08a2 2 0 0 1-1.519-.698L.241 8.65a1 1 0 0 1 0-1.302L5.084 1.7A2 2 0 0 1 6.603 1h7.08zm-7.08 1a1 1 0 0 0-.76.35L1 8l4.844 5.65a1 1 0 0 0 .759.35h7.08a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-7.08z"/>
                                     </svg>

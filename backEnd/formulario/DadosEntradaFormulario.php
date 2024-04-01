@@ -108,8 +108,29 @@ abstract class DadosEntradaFormulario extends VerificarCpf
 
         $this -> setDados(addslashes($_POST['valor']));
 
+        if ($this-> formatarValorDB($this-> getDados()) < 0) {
+            $this-> Comunicar('valorInvalido');
+            return false;
+        }
+
+        elseif ($this -> dadosDefinidos()) {
+            if (str_contains($this-> getDados(), '*'))
+                $this-> setDados($this-> formatarValorDB($this-> getDados()) / $this-> parcelas());
+
+            return $this->formatarValorDB($this->getDados());
+        }
+
+        return false;
+
+    }
+
+    protected function parcelas()
+    {
+
+        $this -> setDados(addslashes($_POST['parcelas']));
+
         if ($this -> dadosDefinidos())
-            return $this -> formatarValorDB($this -> getDados());
+            return $this -> getDados();
 
         return false;
 

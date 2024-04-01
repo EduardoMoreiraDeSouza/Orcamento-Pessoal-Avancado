@@ -18,7 +18,8 @@ class EditarBancoCorretora extends Entrar
         $this -> setSaldo($this -> formatarValorDB($this -> saldo()));
 
         if (
-            !$this-> getNome()
+            !$this-> getNome() or
+            !$this-> getNomeId()
         ) {
             $this -> Redirecionar($this -> getPaginaPai());
             return false;

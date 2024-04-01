@@ -37,7 +37,7 @@ class FormatacaoDados extends VerificarSenha
 
     public function formatarValorDB($valor): float
     {
-        $valor = str_replace(',', '.', str_replace('R$ ', '', $valor));
+        $valor = str_replace(',', '.', $this-> somenteNumerosPontos($valor));
         return number_format(floatval($valor), 2, ".", "");
     }
 

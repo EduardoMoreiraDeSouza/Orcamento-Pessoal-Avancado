@@ -17,12 +17,14 @@ class NovoCredito extends NovoDebito
         $this -> setClassificacao($this -> classificacao());
         $this -> setDataEfetivacao($this -> dataEfetivacao());
         $this -> setValor($this -> valor());
+        $this-> setParcelas($this-> parcelas());
 
         if (
             !$this -> getCartaoCredito() or
             !$this -> getClassificacao() or
             !$this -> getDataEfetivacao() or
-            !$this -> getValor()
+            !$this -> getValor() or
+            !$this-> getParcelas()
         ) {
             $this -> Redirecionar($this -> getPaginaPai());
             return false;
@@ -39,25 +41,27 @@ class NovoCredito extends NovoDebito
         date_default_timezone_set('America/Sao_Paulo');
 
         $limiteBanco = $cartao['limite'];
-        $limiteFinal = $limiteBanco - $this-> getValor();
-        $dataAtual = date('Y-m-d');
+        $limiteFinal = $limiteBanco - $this-> getValor() * $this-> getParcelas();
 
-        if ($limiteFinal < 0 and $this-> getDataEfetivacao() <= $dataAtual) {
+        if ($limiteFinal < 0) {
             $this -> Comunicar('limiteInsuficiente');
             $this -> Redirecionar($this -> getPaginaPai());
             return false;
         }
 
         if (!$this-> EntradaDadosGastos(
-            $this-> getCartaoCredito(), 'credito',
-            $this-> getClassificacao(), $this-> getDataEfetivacao(),
-            $this-> getValor())
-        ) {
+            $this-> getCartaoCredito(),
+            'Crédito',
+            $this-> getClassificacao(),
+            $this-> getDataEfetivacao(),
+            $this-> getValor(),
+            $this-> getParcelas()
+        )) {
             $this -> Redirecionar($this -> getPaginaPai());
             return false;
         }
 
-        elseif ($this-> getDataEfetivacao() <= $dataAtual) {
+        else
             $this-> EditarDadosCartoesCredito(
                 $this-> getCartaoCredito(),
                 $this-> getCartaoCredito(),
@@ -66,7 +70,6 @@ class NovoCredito extends NovoDebito
                 $cartao['fechamento'],
                 $cartao['vencimento'],
             );
-        }
 
         $this -> Redirecionar($this -> getPaginaPai());
         return true;
