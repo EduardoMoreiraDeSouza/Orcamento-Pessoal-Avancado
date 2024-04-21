@@ -16,8 +16,10 @@ function criarBancoDados() {
 
     $codigoMySql = "CREATE TABLE usuarios(
        
-        cpf VARCHAR(11) PRIMARY KEY,
-        senha VARCHAR(64) NOT NULL
+        cpf VARCHAR(11) NOT NULL,
+        senha VARCHAR(64) NOT NULL,
+        
+        CONSTRAINT PK_cpf PRIMARY KEY (cpf)
     
     ) DEFAULT CHARSET = utf8;";
     mysqli_query($conexaoDB, $codigoMySql);
