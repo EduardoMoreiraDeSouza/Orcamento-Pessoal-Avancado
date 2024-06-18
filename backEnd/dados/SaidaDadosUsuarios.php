@@ -10,9 +10,7 @@ abstract class SaidaDadosUsuarios extends ExecucaoCodigoMySql
 
     protected function SaidaDadosUsuarios($email)
     {
-
-        $dbName = $this-> Servidor('DBname');
-        $this -> setCodigoMySql("SELECT * FROM $dbName.usuarios WHERE email LIKE '$email';");
+        $this -> setCodigoMySql("SELECT * FROM dbName.usuarios WHERE email LIKE '$email';");
         $this -> setExecucaoMySqlUsuarios($this -> ExecutarCodigoMySql());
 
         if (!$this -> getExecucaoMySqlUsuarios())

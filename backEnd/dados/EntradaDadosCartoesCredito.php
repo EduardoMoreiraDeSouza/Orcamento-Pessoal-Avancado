@@ -6,9 +6,7 @@ abstract class EntradaDadosCartoesCredito extends SaidaDadosCartoesCredito
 {
     protected function EntradaDadosCartoesCredito($nome, $email, $limite, $fechamento, $vencimento)
     {
-
-        $dbName = $this-> Servidor('DBname');
-        $this -> setCodigoMySql("INSERT INTO $dbName.cartoesCredito VALUES ('$nome', '$email', '$limite', '$fechamento', '$vencimento');");
+        $this -> setCodigoMySql("INSERT INTO dbName.cartoesCredito VALUES ('$nome', '$email', '$limite', '$fechamento', '$vencimento');");
 
         if (!$this -> ExecutarCodigoMySql()) {
             $this -> Comunicar('erroSql');

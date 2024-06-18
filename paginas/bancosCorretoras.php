@@ -11,8 +11,7 @@ if ($login -> VerificarLogin()) {
     $formatacao = new FormatacaoDados();
 
     $execucao = new ExecucaoCodigoMySql();
-    $dbName = $execucao -> Servidor('DBname');
-    $codigoMySql = "SELECT * FROM $dbName.bancosCorretoras WHERE email LIKE '" . $login -> getSessao() . "';";
+    $codigoMySql = "SELECT * FROM dbName.bancosCorretoras WHERE email LIKE '" . $login -> getSessao() . "';";
     $execucao -> setCodigoMySql($codigoMySql);
     $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
 

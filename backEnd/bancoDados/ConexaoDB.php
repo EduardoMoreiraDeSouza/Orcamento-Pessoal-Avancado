@@ -9,7 +9,6 @@ abstract class ConexaoDB extends Servidor
 
     public function ConexaoDB()
     {
-
         $this -> setConexaoDB(
             mysqli_connect(
                 $this -> Servidor('servidor'),

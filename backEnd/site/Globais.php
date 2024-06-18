@@ -2,21 +2,9 @@
 
 class Globais{
 
-    private $codigoMySql;
     private $paginaPai;
 
     private $localServidor;
-
-    public function getCodigoMySql()
-    {
-        return $this -> codigoMySql;
-    }
-
-    public function setCodigoMySql($codigoMySql): void
-    {
-        $this -> codigoMySql = $codigoMySql;
-    }
-
 
     public function getSessao()
     {

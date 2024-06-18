@@ -25,10 +25,7 @@ abstract class SaidaDadosCartoesCredito extends EditarDadosBancosCorretoras
 
     private function gerarCodigoMySql($nome, $email)
     {
-
-        $dbName = $this-> Servidor('DBname');
-
-        $codigo = "SELECT * FROM $dbName.cartoesCredito WHERE ";
+        $codigo = "SELECT * FROM dbName.cartoesCredito WHERE ";
 
         if ($nome == null and $email == null)
             return false;

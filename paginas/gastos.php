@@ -11,15 +11,14 @@ if ($login -> VerificarLogin()) {
     $formatacao = new FormatacaoDados();
 
     $execucao = new ExecucaoCodigoMySql();
-    $dbName = $execucao -> Servidor('DBname');
-    $codigoMySql = "SELECT * FROM $dbName.gastos WHERE email LIKE '" . $login -> getSessao() . "';";
+    $codigoMySql = "SELECT * FROM dbName.gastos WHERE email LIKE '" . $login -> getSessao() . "';";
     $execucao -> setCodigoMySql($codigoMySql);
     $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
 
     if (isset($_GET['excluir']) and isset($_GET['id'])) {
 
         require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirBancoCorretora.php";
-        $exluir = new ExcluirBancoCorretora(); // ATENÇÃO
+        $exluir = new ExcluirBancoCorretora(); // ATENÇÃO MUDAR
         $exluir -> ExcluirBancoCorretora($_GET['nome'], $login -> getSessao());
         $exluir -> Redirecionar('bancosCorretoras', true);
 
@@ -112,16 +111,16 @@ if ($login -> VerificarLogin()) {
 
                 ?>
 
-                <form action="../backEnd/interacaoComUsuario/editarBancoCorretora.php" method="POST">
+                <form action="../backEnd/interacaoComUsuario/" method="POST"> <!-- Editar gastos -->
                     <tr>
                         <th scope="row"><?= $quantidade ?>º</th>
                         <td>
-                            <select class="form-select" name="fiado" required>
+                            <select class="form-select" name="fiador" required>
 
                                 <?php
 
                                 $execucao2 = new ExecucaoCodigoMySql();
-                                $codigoMySql2 = "SELECT * FROM $dbName.bancosCorretoras WHERE email LIKE '" . $login -> getSessao() . "';";
+                                $codigoMySql2 = "SELECT * FROM dbName.bancosCorretoras WHERE email LIKE '" . $login -> getSessao() . "';";
                                 $execucao2 -> setCodigoMySql($codigoMySql2);
                                 $resultadoExecucao2 = $execucao2 -> ExecutarCodigoMySql();
 

@@ -11,9 +11,6 @@ if ($login -> VerificarLogin()) {
     $formatacao = new FormatacaoDados();
     $execucao = new ExecucaoCodigoMySql();
 
-    $dbName = $execucao -> Servidor('DBname');
-
-
     if (
         isset($_GET['excluir']) and
         isset($_GET['nome'])
@@ -84,7 +81,7 @@ if ($login -> VerificarLogin()) {
 
                                     <?php
 
-                                    $codigoMySql = "SELECT * FROM $dbName.bancosCorretoras WHERE email LIKE '" . $login -> getSessao() . "';";
+                                    $codigoMySql = "SELECT * FROM dbName.bancosCorretoras WHERE email LIKE '" . $login -> getSessao() . "';";
                                     $execucao -> setCodigoMySql($codigoMySql);
                                     $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
                                     while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
@@ -139,7 +136,7 @@ if ($login -> VerificarLogin()) {
 
                                     <?php
 
-                                    $codigoMySql = "SELECT * FROM $dbName.cartoesCredito WHERE email LIKE '" . $login -> getSessao() . "';";
+                                    $codigoMySql = "SELECT * FROM dbName.cartoesCredito WHERE email LIKE '" . $login -> getSessao() . "';";
                                     $execucao -> setCodigoMySql($codigoMySql);
                                     $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
                                     while ($dadosCartoesCredito = mysqli_fetch_assoc($resultadoExecucao)) {
