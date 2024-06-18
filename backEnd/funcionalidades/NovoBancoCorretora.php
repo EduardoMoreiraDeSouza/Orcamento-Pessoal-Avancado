@@ -4,13 +4,11 @@ require_once __DIR__ . "/../formulario/DadosEntradaFormulario.php";
 
 class NovoBancoCorretora extends DadosEntradaFormulario
 {
-
     private $nome;
     private $saldo;
 
     public function __construct()
     {
-
         if (!$this-> VerificarLogin()) return false;
 
         $this -> setPaginaPai('bancosCorretoras');

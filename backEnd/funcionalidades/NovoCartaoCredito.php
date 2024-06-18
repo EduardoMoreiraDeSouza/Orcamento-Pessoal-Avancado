@@ -4,14 +4,12 @@ require_once __DIR__ . "/./NovoBancoCorretora.php";
 
 class NovoCartaoCredito extends NovoBancoCorretora
 {
-
     private $limite;
     private $fechamento;
     private $vencimento;
 
     public function __construct()
     {
-
         if (!$this-> VerificarLogin()) return false;
 
         $this -> setPaginaPai('credito');
@@ -55,7 +53,6 @@ class NovoCartaoCredito extends NovoBancoCorretora
 
         $this -> Redirecionar($this -> getPaginaPai());
         return true;
-
     }
 
     protected function setLimite($limite): void

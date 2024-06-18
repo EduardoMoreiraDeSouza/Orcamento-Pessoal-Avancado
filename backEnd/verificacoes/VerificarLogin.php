@@ -6,7 +6,6 @@ class VerificarLogin extends Redirecionar {
 
     public function VerificarLogin()
     {
-
         if (empty($this -> getSessao())) {
 
             $this -> Comunicar('entrar');
@@ -15,9 +14,6 @@ class VerificarLogin extends Redirecionar {
             return false;
 
         }
-
         return true;
-
     }
-
 }

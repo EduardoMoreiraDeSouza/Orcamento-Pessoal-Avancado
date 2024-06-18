@@ -3,12 +3,10 @@
 require_once __DIR__ . "/./ScriptJS.php";
 abstract class Mensagens extends ScriptJS
 {
-
     private $mensagens;
 
     protected function Mensagens($mensagem)
     {
-
         $this->setMensagens([
 
             'erroSql' => 'Erro ao tentar acessar o banco de dados',
@@ -43,9 +41,7 @@ abstract class Mensagens extends ScriptJS
         ]);
 
         return $this->getMensagens()[$mensagem];
-
     }
-
 
     private function getMensagens()
     {

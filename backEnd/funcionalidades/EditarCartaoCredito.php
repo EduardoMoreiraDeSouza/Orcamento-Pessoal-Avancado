@@ -4,10 +4,8 @@ require_once __DIR__ . "/./EditarBancoCorretora.php";
 
 class EditarCartaoCredito extends EditarBancoCorretora
 {
-
     public function __construct()
     {
-
         if (!$this-> VerificarLogin()) return false;
 
         $this-> setPaginaPai('credito');

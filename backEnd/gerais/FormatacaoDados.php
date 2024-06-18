@@ -4,7 +4,6 @@ require_once __DIR__ . "/../verificacoes/VerificarSenha.php";
 
 class FormatacaoDados extends VerificarSenha
 {
-
     public function somenteNumerosPontos($numeros)
     {
         return trim(preg_replace('/[^0-9.,]/', '', $numeros));

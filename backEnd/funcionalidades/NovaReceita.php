@@ -4,10 +4,8 @@ require_once __DIR__ . "/./NovoDebito.php";
 
 class NovaReceita extends NovoDebito
 {
-
     public function __construct()
     {
-
         if (!$this-> VerificarLogin()) return false;
 
         $this -> setPaginaPai('bancosCorretoras');
@@ -54,7 +52,5 @@ class NovaReceita extends NovoDebito
 
         $this -> Redirecionar($this -> getPaginaPai());
         return true;
-
     }
-
 }

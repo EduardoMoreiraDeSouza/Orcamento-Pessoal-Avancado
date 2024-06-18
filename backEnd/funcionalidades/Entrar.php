@@ -4,13 +4,11 @@ require_once __DIR__ . "/./NovoCartaoCredito.php";
 
 class Entrar extends NovoCartaoCredito
 {
-
     private $email;
     private $senha;
 
     public function __construct()
     {
-
         $this -> setPaginaPai('entrar');
         $this -> setEmail($this -> email());
         $this -> setSenha($this -> senha());
@@ -37,7 +35,6 @@ class Entrar extends NovoCartaoCredito
         $this -> Comunicar('entrarSucesso');
         $this -> Redirecionar('inicio');
         return true;
-
     }
 
     protected function getEmail()

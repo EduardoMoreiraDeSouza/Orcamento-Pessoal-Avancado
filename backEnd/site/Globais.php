@@ -8,22 +8,18 @@ class Globais{
 
     public function getSessao()
     {
-
         $this -> iniciarSessao();
 
         if (!isset($_SESSION['usuario']))
             return null;
 
         return $_SESSION['usuario'];
-
     }
 
     protected function setSessao($usuario): void
     {
-
         $this -> iniciarSessao();
         $_SESSION['usuario'] = $usuario;
-
     }
 
     protected function destruirSessao(): void

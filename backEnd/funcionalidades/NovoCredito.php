@@ -4,12 +4,10 @@ require_once __DIR__ . "/./NovoDebito.php";
 
 class NovoCredito extends NovoDebito
 {
-
     private $cartaoCredito;
 
     public function __construct()
     {
-
         if (!$this-> VerificarLogin()) return false;
 
         $this -> setPaginaPai('credito');
@@ -73,7 +71,6 @@ class NovoCredito extends NovoDebito
 
         $this -> Redirecionar($this -> getPaginaPai());
         return true;
-
     }
 
     public function getCartaoCredito()

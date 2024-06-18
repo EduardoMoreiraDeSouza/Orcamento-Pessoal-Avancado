@@ -4,10 +4,8 @@ require_once __DIR__ . "/./EditarCartaoCredito.php";
 
 class Cadastrar extends EditarCartaoCredito
 {
-
     public function __construct()
     {
-
         $this -> setPaginaPai('cadastrar');
         $this -> setSenha($this -> senha());
         $this -> setEmail($this -> email());
@@ -37,6 +35,5 @@ class Cadastrar extends EditarCartaoCredito
 
         $this -> Redirecionar('inicio');
         return true;
-
     }
 }

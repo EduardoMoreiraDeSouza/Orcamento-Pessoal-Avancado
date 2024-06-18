@@ -4,7 +4,6 @@ require_once __DIR__ . "/../funcionalidades/EditarBancoCorretora.php";
 
 class NovoDebito extends EditarBancoCorretora
 {
-
     private $bancoCorretora;
     private $classificacao;
     private $dataEfetivacao;
@@ -13,7 +12,6 @@ class NovoDebito extends EditarBancoCorretora
 
     public function __construct()
     {
-
         if (!$this-> VerificarLogin()) return false;
 
         $this -> setPaginaPai('bancosCorretoras');
@@ -77,7 +75,6 @@ class NovoDebito extends EditarBancoCorretora
 
         $this -> Redirecionar($this -> getPaginaPai());
         return true;
-
     }
 
 

@@ -6,7 +6,6 @@ final class ExcluirBancoCorretora extends ExecucaoCodigoMySql
 {
     public function ExcluirBancoCorretora($nome, $email)
     {
-
         if (!$this-> VerificarLogin()) return false;
 
         $this -> setPaginaPai('bancosCorretoras');

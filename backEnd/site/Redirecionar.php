@@ -4,10 +4,8 @@ require_once __DIR__ . "/./Comunicar.php";
 
 class Redirecionar extends Comunicar
 {
-
     public function Redirecionar($local, $subpasta = null)
     {
-
         if ($subpasta == true)
             $caminho = "..";
         else
@@ -21,7 +19,5 @@ class Redirecionar extends Comunicar
             $this -> ScriptJS("window.location.href = `$caminho/paginas/$local.php`");
 
         return true;
-
     }
-
 }

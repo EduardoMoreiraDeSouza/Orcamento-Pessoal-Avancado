@@ -4,7 +4,6 @@ require_once __DIR__ . "/../verificacoes/VerificarLogin.php";
 
 abstract class Servidor extends VerificarLogin
 {
-
     private $servidor;
     private $usuario;
     private $senhaServidor;
@@ -12,7 +11,6 @@ abstract class Servidor extends VerificarLogin
 
     public function Servidor($informacao)
     {
-
         if ($this -> getLocalServidor() == 'local') {
 
             $this -> setServidor('localhost');
@@ -47,9 +45,7 @@ abstract class Servidor extends VerificarLogin
             default:
                 break;
         }
-
     }
-
 
     protected function getServidor()
     {
