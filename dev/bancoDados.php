@@ -19,53 +19,80 @@ function criarBancoDados() {
         cpf VARCHAR(11) NOT NULL,
         senha VARCHAR(64) NOT NULL,
         
-        CONSTRAINT PK_cpf PRIMARY KEY (cpf)
+        CONSTRAINT PK_cpf_usuarios PRIMARY KEY (cpf)
     
     ) DEFAULT CHARSET = utf8;";
     mysqli_query($conexaoDB, $codigoMySql);
 
     $codigoMySql = "CREATE TABLE bancosCorretoras(
        
-        nome VARCHAR(60) PRIMARY KEY,
+        nome VARCHAR(60),
         cpf VARCHAR(11) NOT NULL,
-        saldo DECIMAL(12, 2) NULL
+        saldo DECIMAL(12, 2) NULL,
+        
+        CONSTRAINT PK_nome_bancoCorretoras PRIMARY KEY (nome),
+        
+        CONSTRAINT FK_nome_bancoCorretoras FOREIGN KEY (cpf)
+        REFERENCES usuarios(cpf) on DELETE CASCADE ON UPDATE CASCADE
     
     ) DEFAULT CHARSET = utf8;";
     mysqli_query($conexaoDB, $codigoMySql);
 
     $codigoMySql = "CREATE TABLE cartoesCredito(
        
-        nome VARCHAR(60) PRIMARY KEY,
+        nome VARCHAR(60),
         cpf VARCHAR(11) NOT NULL,
         limite DECIMAL(12, 2) NULL,
         fechamento INT(2),
-        vencimento INT(2)
+        vencimento INT(2),
+        
+        CONSTRAINT PK_nome_cartoesCredito PRIMARY KEY (nome),
+        
+        CONSTRAINT FK_cpf_cartoesCredito FOREIGN KEY (cpf)
+        REFERENCES usuarios(cpf) ON DELETE CASCADE ON UPDATE CASCADE,
+        
+        CONSTRAINT FK_nome_cartoesCredito FOREIGN KEY (nome)
+        REFERENCES bancosCorretoras(nome) ON DELETE CASCADE ON UPDATE CASCADE
     
     ) DEFAULT CHARSET = utf8;";
     mysqli_query($conexaoDB, $codigoMySql);
 
     $codigoMySql = "CREATE TABLE gastos(
+    
         cpf VARCHAR(11) NOT NULL,
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        tipo VARCHAR(7) NOT NULL, 2
-        fiador VARCHAR(60) NOT NULL, 1
-        classificacao VARCHAR(11) NOT NULL, 5
-        valor DECIMAL(12, 2) NULL, 3
-        parcelas INT(4), 4
-        dataEfetivacao DATE 6
+        id INT AUTO_INCREMENT,
+        tipo VARCHAR(7) NOT NULL,
+        fiador VARCHAR(60) NOT NULL,
+        classificacao VARCHAR(11) NOT NULL,
+        valor DECIMAL(12, 2) NULL,
+        parcelas INT(4),
+        dataEfetivacao DATE,
+    
+        CONSTRAINT PK_id_gastos PRIMARY KEY (id),
+        CONSTRAINT FK_cpf_gastos FOREIGN KEY (cpf)
+        REFERENCES usuarios(cpf) ON DELETE CASCADE ON UPDATE CASCADE,
+        
+        CONSTRAINT FK_fiador_gastos FOREIGN KEY (fiador)
+        REFERENCES bancosCorretoras(nome) ON DELETE CASCADE ON UPDATE CASCADE 
+    
     ) DEFAULT CHARSET = utf8;";
     mysqli_query($conexaoDB, $codigoMySql);
 
     $codigoMySql = "CREATE TABLE receitas(
+    
         cpf VARCHAR(11) NOT NULL,
-        id INT AUTO_INCREMENT PRIMARY KEY,
+        id INT AUTO_INCREMENT,
         bancoCorretora VARCHAR(60) NOT NULL,
         classificacao VARCHAR(11) NOT NULL,
         valor DECIMAL(12, 2) NULL,
-        dataEfetivacao DATE
+        dataEfetivacao DATE,
+        
+        CONSTRAINT PK_id_receitas PRIMARY KEY (id),
+        CONSTRAINT FK_cpf_receitas FOREIGN KEY (cpf)
+        REFERENCES usuarios(cpf) ON DELETE CASCADE ON UPDATE CASCADE
+                     
     ) DEFAULT CHARSET = utf8;";
     mysqli_query($conexaoDB, $codigoMySql);
-
 
 }
 

@@ -12,9 +12,7 @@ if ($login -> VerificarLogin()) {
     $execucao = new ExecucaoCodigoMySql();
 
     $dbName = $execucao -> Servidor('DBname');
-    $codigoMySql = "SELECT * FROM $dbName.cartoesCredito WHERE cpf LIKE '" . $login -> getSessao() . "';";
-    $execucao -> setCodigoMySql($codigoMySql);
-    $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
+
 
     if (
         isset($_GET['excluir']) and
@@ -81,8 +79,28 @@ if ($login -> VerificarLogin()) {
                             <form action="../backEnd/interacaoComUsuario/novoCartaoCredito.php" method="POST"
                                   class="form hstack gap-3">
 
-                                <input type="text" class="container input-group-text" name="nome" placeholder="Nome:"
-                                       required>
+                                <select class="form-select" name="nome" required>
+                                    <option value="" selected> Banco | Corretora </option>
+
+                                    <?php
+
+                                    $codigoMySql = "SELECT * FROM $dbName.bancosCorretoras WHERE cpf LIKE '" . $login -> getSessao() . "';";
+                                    $execucao -> setCodigoMySql($codigoMySql);
+                                    $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
+                                    while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
+
+                                        $nome = $dadosBancosCorretoras['nome'];
+
+                                        ?>
+
+                                        <option value="<?= $nome ?>"><?= $nome ?></option>
+
+
+                                    <?php
+                                    } ?>
+
+                                </select>
+
                                 <input type="number" class="container input-group-text" name="valor"
                                        placeholder="Limite:" step="0.01" required>
                                 <input type="number" class="container input-group-text" name="fechamento"
@@ -121,6 +139,9 @@ if ($login -> VerificarLogin()) {
 
                                     <?php
 
+                                    $codigoMySql = "SELECT * FROM $dbName.cartoesCredito WHERE cpf LIKE '" . $login -> getSessao() . "';";
+                                    $execucao -> setCodigoMySql($codigoMySql);
+                                    $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
                                     while ($dadosCartoesCredito = mysqli_fetch_assoc($resultadoExecucao)) {
 
                                         $nome = $dadosCartoesCredito['nome'];
@@ -130,7 +151,8 @@ if ($login -> VerificarLogin()) {
                                         <option value="<?= $nome ?>"><?= $nome ?></option>
 
 
-                                    <?php } ?>
+                                    <?php
+                                    } ?>
                                 </select>
 
                                 <select class="form-select" name="clasificacao" required>
@@ -244,7 +266,8 @@ if ($login -> VerificarLogin()) {
                     </tr>
                 </form>
 
-            <?php } ?>
+            <?php
+            } ?>
 
             <th scope="row">#</th>
             <td>Total</td>
@@ -273,4 +296,5 @@ if ($login -> VerificarLogin()) {
     </body>
     </html>
 
-<?php } ?>
+<?php
+} ?>

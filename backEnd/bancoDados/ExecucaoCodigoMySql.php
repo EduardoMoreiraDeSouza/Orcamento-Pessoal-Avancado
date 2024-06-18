@@ -8,7 +8,6 @@ class ExecucaoCodigoMySql extends ConexaoDB
 
     public function ExecutarCodigoMySql()
     {
-
         $this -> setExecucaoCodigoMySql(mysqli_query($this -> ConexaoDB(), $this -> getCodigoMySql()));
 
         if (!$this -> getExecucaoCodigoMySql()) {
@@ -19,12 +18,8 @@ class ExecucaoCodigoMySql extends ConexaoDB
 
         }
 
-        else {
-
-            $this -> setCodigoMySql(null);
-            return $this -> getExecucaoCodigoMySql();
-
-        }
+        $this -> setCodigoMySql(null);
+        return $this -> getExecucaoCodigoMySql();
     }
 
 
