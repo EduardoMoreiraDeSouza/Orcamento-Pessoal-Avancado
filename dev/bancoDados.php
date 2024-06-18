@@ -2,7 +2,6 @@
 
 function criarBancoDados()
 {
-
     $servidor = "localhost";
     $usuario = "root";
     $senhaServidor = "";
@@ -94,12 +93,10 @@ function criarBancoDados()
                      
     ) DEFAULT CHARSET = utf8;";
     mysqli_query($conexaoDB, $codigoMySql);
-
 }
 
 function excluirBancoDados()
 {
-
     $servidor = "localhost";
     $usuario = "root";
     $senhaServidor = "";
@@ -108,11 +105,9 @@ function excluirBancoDados()
 
     $codigoMySql = "DROP DATABASE orcamentoPessoal;";
     mysqli_query($conexaoDB, $codigoMySql);
-
 }
 
 if (isset($_POST['criarBancoDados'])) {
-
     criarBancoDados();
 
     echo "<script>

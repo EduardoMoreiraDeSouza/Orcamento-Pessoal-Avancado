@@ -117,7 +117,8 @@ if ($login -> VerificarLogin()) {
                                         <option value="<?= $nome ?>"><?= $nome ?></option>
 
 
-                                    <?php } ?>
+                                    <?php
+                                    } ?>
 
                                 </select>
 
@@ -180,7 +181,8 @@ if ($login -> VerificarLogin()) {
                                         <option value="<?= $nome ?>"><?= $nome ?></option>
 
 
-                                    <?php } ?>
+                                    <?php
+                                    } ?>
 
                                 </select>
 
@@ -280,7 +282,8 @@ if ($login -> VerificarLogin()) {
                     </tr>
                 </form>
 
-            <?php } ?>
+            <?php
+            } ?>
 
             <th scope="row">#</th>
             <td>Total</td>
@@ -307,4 +310,5 @@ if ($login -> VerificarLogin()) {
     </body>
     </html>
 
-<?php } ?>
+<?php
+} ?>

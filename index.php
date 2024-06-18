@@ -39,7 +39,8 @@ $globais = new Globais;
 
                 <ul class="navbar-nav">
 
-                    <?php if (empty($globais -> getSessao())) { ?>
+                    <?php
+                    if (empty($globais -> getSessao())) { ?>
 
                         <li class="nav-item h6">
                             <a class="nav-link active text-light" aria-current="page"
@@ -50,7 +51,8 @@ $globais = new Globais;
                             <a class="nav-link active text-light" aria-current="page" href="paginas/cadastrar.php">Cadastrar</a>
                         </li>
 
-                    <?php } else { ?>
+                    <?php
+                    } else { ?>
 
 
                         <li class="nav-item h6">
@@ -76,7 +78,8 @@ $globais = new Globais;
                             <a class="nav-link text-light" href="#">Investimentos</a>
                         </li>
 
-                    <?php } ?>
+                    <?php
+                    } ?>
 
                     <li class="nav-item h6">
                         <a class="nav-link text-light" href="./dev/index.html">Desenvolvedor</a>

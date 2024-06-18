@@ -77,7 +77,7 @@ if ($login -> VerificarLogin()) {
                                   class="form hstack gap-3">
 
                                 <select class="form-select" name="nome" required>
-                                    <option value="" selected> Banco | Corretora </option>
+                                    <option value="" selected> Banco | Corretora</option>
 
                                     <?php
 
@@ -93,7 +93,7 @@ if ($login -> VerificarLogin()) {
                                         <option value="<?= $nome ?>"><?= $nome ?></option>
 
 
-                                    <?php
+                                        <?php
                                     } ?>
 
                                 </select>
@@ -148,7 +148,7 @@ if ($login -> VerificarLogin()) {
                                         <option value="<?= $nome ?>"><?= $nome ?></option>
 
 
-                                    <?php
+                                        <?php
                                     } ?>
                                 </select>
 
@@ -263,7 +263,7 @@ if ($login -> VerificarLogin()) {
                     </tr>
                 </form>
 
-            <?php
+                <?php
             } ?>
 
             <th scope="row">#</th>
@@ -293,5 +293,5 @@ if ($login -> VerificarLogin()) {
     </body>
     </html>
 
-<?php
+    <?php
 } ?>

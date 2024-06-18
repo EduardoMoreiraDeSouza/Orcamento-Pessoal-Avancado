@@ -58,7 +58,8 @@ if ($login -> VerificarLogin()) {
             <div class="col-auto">
                 <p>
                     <button class="btn btn-dark" type="button">
-                        <a style="text-decoration: none" class="text-light" href="./bancosCorretoras.php">Novo Débito</a>
+                        <a style="text-decoration: none" class="text-light" href="./bancosCorretoras.php">Novo
+                            Débito</a>
                     </button>
                 </p>
             </div>
@@ -66,7 +67,8 @@ if ($login -> VerificarLogin()) {
             <div class="col-auto">
                 <p>
                     <button class="btn btn-dark" type="button">
-                        <a style="text-decoration: none" class="text-light" href="./credito.php">Novo Gasto no Crédito</a>
+                        <a style="text-decoration: none" class="text-light" href="./credito.php">Novo Gasto no
+                            Crédito</a>
                     </button>
                 </p>
             </div>
@@ -133,7 +135,8 @@ if ($login -> VerificarLogin()) {
                                     <option value="<?= $nome ?>" <?= $nome == $fiador ? 'selected' : '' ?>><?= $nome ?></option>
 
 
-                                <?php } ?>
+                                <?php
+                                } ?>
 
                             </select>
                         </td>
@@ -153,16 +156,26 @@ if ($login -> VerificarLogin()) {
                         </td>
                         <td>
                             <select class="form-select" name="clasificacao" required>
-                                <option value="Pessoal" <?= $classificacao == 'Pessoal' ? 'selected' : '' ?>>Pessoal</option>
-                                <option value="Necessário" <?= $classificacao == 'Necessário' ? 'selected' : '' ?>>Necessário</option>
-                                <option value="Reserva" <?= $classificacao == 'Reserva' ? 'selected' : '' ?>>Reserva</option>
-                                <option value="Dívidas" <?= $classificacao == 'Dívidas' ? 'selected' : '' ?>>Dívidas</option>
-                                <option value="Investimentos" <?= $classificacao == 'Investimentos' ? 'selected' : '' ?>>Investimentos</option>
-                                <option value="Boas Ações" <?= $classificacao == 'Boas Ações' ? 'selected' : '' ?>>Boas Ações</option>
+                                <option value="Pessoal" <?= $classificacao == 'Pessoal' ? 'selected' : '' ?>>Pessoal
+                                </option>
+                                <option value="Necessário" <?= $classificacao == 'Necessário' ? 'selected' : '' ?>>
+                                    Necessário
+                                </option>
+                                <option value="Reserva" <?= $classificacao == 'Reserva' ? 'selected' : '' ?>>Reserva
+                                </option>
+                                <option value="Dívidas" <?= $classificacao == 'Dívidas' ? 'selected' : '' ?>>Dívidas
+                                </option>
+                                <option value="Investimentos" <?= $classificacao == 'Investimentos' ? 'selected' : '' ?>>
+                                    Investimentos
+                                </option>
+                                <option value="Boas Ações" <?= $classificacao == 'Boas Ações' ? 'selected' : '' ?>>Boas
+                                    Ações
+                                </option>
                             </select>
                         </td>
                         <td>
-                            <input type="date" class="container input-group-text" name="dataEfetivacao" value="<?= $dataEfetivacao ?>">
+                            <input type="date" class="container input-group-text" name="dataEfetivacao"
+                                   value="<?= $dataEfetivacao ?>">
                         </td>
                         <td>
                             <button style="text-decoration: none;" class="text-primary bg-transparent" name="nameId"
@@ -188,7 +201,8 @@ if ($login -> VerificarLogin()) {
                     </tr>
                 </form>
 
-            <?php } ?>
+            <?php
+            } ?>
 
             <th scope="row">#</th>
             <td>Total</td>
@@ -215,4 +229,5 @@ if ($login -> VerificarLogin()) {
     </body>
     </html>
 
-<?php } ?>
+<?php
+} ?>
