@@ -38,7 +38,6 @@ abstract class SaidaDadosCartoesCredito extends EditarDadosBancosCorretoras
 
         $this-> setCodigoMySql($codigo . $codigoVariante);
         return true;
-
     }
 
     private function getDados()

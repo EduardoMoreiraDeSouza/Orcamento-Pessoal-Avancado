@@ -4,7 +4,6 @@ require_once __DIR__ . "/../bancoDados/ExecucaoCodigoMySql.php";
 
 abstract class SaidaDadosUsuarios extends ExecucaoCodigoMySql
 {
-
     private $execucaoMySqlUsuarios;
     private $dadosUsuarios;
 

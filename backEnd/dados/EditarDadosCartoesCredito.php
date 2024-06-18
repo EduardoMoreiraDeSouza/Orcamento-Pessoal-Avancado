@@ -15,6 +15,11 @@ abstract class EditarDadosCartoesCredito extends EntradaDadosCartoesCredito
             WHERE nome LIKE '$nomeAtual' AND email LIKE '$email';"
         );
 
-        return !$this -> ExecutarCodigoMySql() ? false : true;
+        if (!$this -> ExecutarCodigoMySql()) {
+            $this -> Comunicar('erroSql');
+            return false;
+        }
+
+        return true;
     }
 }

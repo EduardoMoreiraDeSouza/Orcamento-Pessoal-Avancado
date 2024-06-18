@@ -14,6 +14,5 @@ abstract class EntradaDadosCartoesCredito extends SaidaDadosCartoesCredito
         }
 
         return true;
-
     }
 }

@@ -10,7 +10,6 @@ abstract class SaidaDadosBancosCorretoras extends EntradaDadosUsuarios
 
     public function SaidaDadosBancosCorretoras($nome, $email)
     {
-
         $this-> gerarCodigoMySql($nome, $email);
         $this -> setExecucaoMySql($this -> ExecutarCodigoMySql());
 
@@ -20,12 +19,10 @@ abstract class SaidaDadosBancosCorretoras extends EntradaDadosUsuarios
         $this -> setDados(mysqli_fetch_assoc($this -> getExecucaoMySql()));
 
         return !empty($this->getDados()) ? $this->getDados() : false;
-
     }
 
     private function gerarCodigoMySql($nome, $email)
     {
-
         $codigo = "SELECT * FROM dbName.bancosCorretoras WHERE ";
 
         if ($nome == null and $email == null)
@@ -39,7 +36,6 @@ abstract class SaidaDadosBancosCorretoras extends EntradaDadosUsuarios
 
         $this-> setCodigoMySql($codigo . $codigoVariante);
         return true;
-
     }
 
     private function getDados()
