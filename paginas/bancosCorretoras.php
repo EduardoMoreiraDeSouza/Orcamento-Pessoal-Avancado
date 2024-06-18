@@ -12,7 +12,7 @@ if ($login -> VerificarLogin()) {
 
     $execucao = new ExecucaoCodigoMySql();
     $dbName = $execucao -> Servidor('DBname');
-    $codigoMySql = "SELECT * FROM $dbName.bancosCorretoras WHERE cpf LIKE '" . $login -> getSessao() . "';";
+    $codigoMySql = "SELECT * FROM $dbName.bancosCorretoras WHERE email LIKE '" . $login -> getSessao() . "';";
     $execucao -> setCodigoMySql($codigoMySql);
     $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
 

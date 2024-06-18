@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ .  "/../verificacoes/VerificarCpf.php";
+require_once __DIR__ .  "/../gerais/FormatacaoDados.php";
 
-abstract class DadosEntradaFormulario extends VerificarCpf
+abstract class DadosEntradaFormulario extends FormatacaoDados
 {
 
     private $dados;
@@ -145,13 +145,13 @@ abstract class DadosEntradaFormulario extends VerificarCpf
 
     }
 
-    protected function cpf()
+    protected function email()
     {
 
-        $this -> setDados($this -> somenteNumeros(addslashes($_POST['cpf'])));
+        $this -> setDados(addslashes($_POST['email']));
 
-        if ($this -> dadosDefinidos() and $this -> VerificarCPF($this -> getDados()))
-            return $this -> somenteNumeros($this -> getDados());
+        if ($this -> dadosDefinidos())
+            return $this -> getDados();
 
         return false;
 

@@ -12,7 +12,7 @@ if ($login -> VerificarLogin()) {
 
     $execucao = new ExecucaoCodigoMySql();
     $dbName = $execucao -> Servidor('DBname');
-    $codigoMySql = "SELECT * FROM $dbName.gastos WHERE cpf LIKE '" . $login -> getSessao() . "';";
+    $codigoMySql = "SELECT * FROM $dbName.gastos WHERE email LIKE '" . $login -> getSessao() . "';";
     $execucao -> setCodigoMySql($codigoMySql);
     $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
 
@@ -121,7 +121,7 @@ if ($login -> VerificarLogin()) {
                                 <?php
 
                                 $execucao2 = new ExecucaoCodigoMySql();
-                                $codigoMySql2 = "SELECT * FROM $dbName.bancosCorretoras WHERE cpf LIKE '" . $login -> getSessao() . "';";
+                                $codigoMySql2 = "SELECT * FROM $dbName.bancosCorretoras WHERE email LIKE '" . $login -> getSessao() . "';";
                                 $execucao2 -> setCodigoMySql($codigoMySql2);
                                 $resultadoExecucao2 = $execucao2 -> ExecutarCodigoMySql();
 

@@ -5,7 +5,7 @@ require_once __DIR__ . "/./EntradaDadosCartoesCredito.php";
 abstract class EditarDadosCartoesCredito extends EntradaDadosCartoesCredito
 {
 
-    public function EditarDadosCartoesCredito($nome, $nomeAtual, $cpf, $limite, $fechamento, $vencimento)
+    public function EditarDadosCartoesCredito($nome, $nomeAtual, $email, $limite, $fechamento, $vencimento)
     {
 
         $dbName = $this->Servidor('DBname');
@@ -15,7 +15,7 @@ abstract class EditarDadosCartoesCredito extends EntradaDadosCartoesCredito
                 limite = '$limite',
                 fechamento = '$fechamento',
                 vencimento = '$vencimento'                
-            WHERE nome LIKE '$nomeAtual' AND cpf LIKE '$cpf';"
+            WHERE nome LIKE '$nomeAtual' AND email LIKE '$email';"
         );
 
         if (!$this->ExecutarCodigoMySql())

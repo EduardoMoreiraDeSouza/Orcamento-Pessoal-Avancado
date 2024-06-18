@@ -5,17 +5,17 @@ require_once __DIR__ . "/./NovoCartaoCredito.php";
 class Entrar extends NovoCartaoCredito
 {
 
-    private $cpf;
+    private $email;
     private $senha;
 
     public function __construct()
     {
 
         $this -> setPaginaPai('entrar');
-        $this -> setCpf($this -> cpf());
+        $this -> setEmail($this -> email());
         $this -> setSenha($this -> senha());
 
-        if (!$this -> SaidaDadosUsuarios($this -> getCpf())) {
+        if (!$this -> SaidaDadosUsuarios($this -> getEmail())) {
 
             $this-> Comunicar('cadastrar');
             $this -> Redirecionar($this -> getPaginaPai());
@@ -25,14 +25,14 @@ class Entrar extends NovoCartaoCredito
 
         if (
             !$this -> getSenha() or
-            !$this -> getCpf() or
-            !$this -> VerificarSenha($this -> getCpf(), $this -> getSenha())
+            !$this -> getEmail() or
+            !$this -> VerificarSenha($this -> getEmail(), $this -> getSenha())
         ) {
             $this -> Redirecionar($this -> getPaginaPai());
             return false;
         }
 
-        $this -> setSessao($this -> getCpf());
+        $this -> setSessao($this -> getEmail());
 
         $this -> Comunicar('entrarSucesso');
         $this -> Redirecionar('inicio');
@@ -40,14 +40,14 @@ class Entrar extends NovoCartaoCredito
 
     }
 
-    protected function getCpf()
+    protected function getEmail()
     {
-        return $this -> cpf;
+        return $this -> email;
     }
 
-    protected function setCpf($cpf): void
+    protected function setEmail($email): void
     {
-        $this -> cpf = $cpf;
+        $this -> email = $email;
     }
 
     protected function getSenha()

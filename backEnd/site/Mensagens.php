@@ -18,17 +18,17 @@ abstract class Mensagens extends ScriptJS
             'senhaPequena' => 'A senha deve conter no mínimo 8 caracteres!',
             'senha' => 'A senha está incorreta!',
 
-            'cpfFalso' => 'CPF inválido!',
+            'emailFalso' => 'Email inválido!',
 
-            'entrarSucesso' => 'Você entrou com seu CPF!',
-            'entrar' => 'Para continuar é nescessário entrar com seu CPF!',
+            'entrarSucesso' => 'Você entrou com seu Email!',
+            'entrar' => 'Para continuar é nescessário entrar com seu Email!',
 
             'cadastrar' => 'Você não está cadastrado em nosso sistema!',
             'cadastro' => 'Agora você está cadastrado em nosso sitema!',
 
             'x2bancosCorretoras' => 'Este Banco/Corretora já está cadastrado!',
             'x2cartoesCredito' => 'Já existe um cartão de crédito com esse nome!',
-            'x2cpf' => 'Este CPF já está cadastrado!',
+            'x2email' => 'Este Email já está cadastrado!',
 
             'naoBancoCorretora' => 'O banco/corretora selecionado não existe!',
             'saldoInsuficiente' => 'O saldo disponível não é suficiente para debitar o valor!',

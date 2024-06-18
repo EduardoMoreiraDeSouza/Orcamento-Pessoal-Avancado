@@ -4,7 +4,6 @@ require_once __DIR__ . "/./Cadastrar.php";
 
 class Sair extends Cadastrar
 {
-
     public function __construct()
     {
         $this -> sair();
@@ -12,7 +11,6 @@ class Sair extends Cadastrar
 
     protected function sair()
     {
-
         if (!empty($this -> getSessao())) {
             $this -> setSessao(null);
             $this -> destruirSessao();
@@ -20,6 +18,5 @@ class Sair extends Cadastrar
 
         $this -> Redirecionar('inicio');
         return true;
-
     }
 }

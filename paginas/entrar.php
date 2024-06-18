@@ -29,8 +29,8 @@
     <form class="mt-5" action="../backEnd/interacaoComUsuario/entrar.php" method="POST">
 
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Seu CPF:</label>
-            <input type="text" name="cpf" class="form-control">
+            <label for="exampleInputEmail1" class="form-label">Seu Email:</label>
+            <input type="text" name="email" class="form-control">
         </div>
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Sua Senha:</label>

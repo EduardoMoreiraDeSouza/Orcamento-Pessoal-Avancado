@@ -84,7 +84,7 @@ if ($login -> VerificarLogin()) {
 
                                     <?php
 
-                                    $codigoMySql = "SELECT * FROM $dbName.bancosCorretoras WHERE cpf LIKE '" . $login -> getSessao() . "';";
+                                    $codigoMySql = "SELECT * FROM $dbName.bancosCorretoras WHERE email LIKE '" . $login -> getSessao() . "';";
                                     $execucao -> setCodigoMySql($codigoMySql);
                                     $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
                                     while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
@@ -139,7 +139,7 @@ if ($login -> VerificarLogin()) {
 
                                     <?php
 
-                                    $codigoMySql = "SELECT * FROM $dbName.cartoesCredito WHERE cpf LIKE '" . $login -> getSessao() . "';";
+                                    $codigoMySql = "SELECT * FROM $dbName.cartoesCredito WHERE email LIKE '" . $login -> getSessao() . "';";
                                     $execucao -> setCodigoMySql($codigoMySql);
                                     $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
                                     while ($dadosCartoesCredito = mysqli_fetch_assoc($resultadoExecucao)) {

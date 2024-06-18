@@ -10,23 +10,23 @@ class Cadastrar extends EditarCartaoCredito
 
         $this -> setPaginaPai('cadastrar');
         $this -> setSenha($this -> senha());
-        $this -> setCpf($this -> cpf());
+        $this -> setEmail($this -> email());
 
         if (
             !$this -> getSenha() or
-            !$this -> getCpf()
+            !$this -> getEmail()
         ) {
             $this -> Redirecionar($this -> getPaginaPai());
             return false;
         }
 
-        if ($this -> SaidaDadosUsuarios($this -> getCpf())) {
-            $this-> Comunicar('x2cpf');
+        if ($this -> SaidaDadosUsuarios($this -> getEmail())) {
+            $this-> Comunicar('x2email');
             $this -> Redirecionar($this -> getPaginaPai());
             return false;
         }
 
-        if (!$this -> EntradaDadosUsuario($this -> getCpf(), $this -> getSenha())) {
+        if (!$this -> EntradaDadosUsuario($this -> getEmail(), $this -> getSenha())) {
             $this -> Redirecionar($this -> getPaginaPai());
             return false;
         }

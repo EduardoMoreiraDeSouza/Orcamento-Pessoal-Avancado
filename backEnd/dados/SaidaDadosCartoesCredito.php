@@ -8,10 +8,10 @@ abstract class SaidaDadosCartoesCredito extends EditarDadosBancosCorretoras
     private $execucaoMySql;
     private $dados;
 
-    public function SaidaDadosCartoesCredito($nome, $cpf)
+    public function SaidaDadosCartoesCredito($nome, $email)
     {
 
-        $this-> gerarCodigoMySql($nome, $cpf);
+        $this-> gerarCodigoMySql($nome, $email);
         $this -> setExecucaoMySql($this -> ExecutarCodigoMySql());
 
         if (!$this -> getExecucaoMySql())
@@ -23,21 +23,21 @@ abstract class SaidaDadosCartoesCredito extends EditarDadosBancosCorretoras
 
     }
 
-    private function gerarCodigoMySql($nome, $cpf)
+    private function gerarCodigoMySql($nome, $email)
     {
 
         $dbName = $this-> Servidor('DBname');
 
         $codigo = "SELECT * FROM $dbName.cartoesCredito WHERE ";
 
-        if ($nome == null and $cpf == null)
+        if ($nome == null and $email == null)
             return false;
-        elseif ($nome != null and $cpf != null)
-            $codigoVariante = "nome LIKE '$nome' AND cpf LIKE '$cpf';";
-        elseif ($nome != null and $cpf == null)
+        elseif ($nome != null and $email != null)
+            $codigoVariante = "nome LIKE '$nome' AND email LIKE '$email';";
+        elseif ($nome != null and $email == null)
             $codigoVariante = "nome LIKE '$nome';";
-        elseif ($nome == null and $cpf != null)
-            $codigoVariante = "cpf LIKE '$cpf';";
+        elseif ($nome == null and $email != null)
+            $codigoVariante = "email LIKE '$email';";
 
         $this-> setCodigoMySql($codigo . $codigoVariante);
         return true;
