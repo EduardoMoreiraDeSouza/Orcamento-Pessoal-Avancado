@@ -42,11 +42,7 @@ class NovoDebito extends EditarBancoCorretora
 
         date_default_timezone_set('America/Sao_Paulo');
 
-        $saldoBanco = $banco['saldo'];
-        $valorFinal = $saldoBanco - $this->getValor();
-        $dataAtual = date('Y-m-d');
-
-        if ($valorFinal < 0 and $this-> getDataEfetivacao() <= $dataAtual) {
+        if ($banco['saldo'] - $this->getValor() < 0 and $this-> getDataEfetivacao() <= date('Y-m-d')) {
             $this -> Comunicar('saldoInsuficiente');
             $this -> Redirecionar($this -> getPaginaPai());
             return false;
@@ -64,12 +60,12 @@ class NovoDebito extends EditarBancoCorretora
             return false;
         }
 
-        elseif ($this-> getDataEfetivacao() <= $dataAtual) {
+        elseif ($this-> getDataEfetivacao() <= date('Y-m-d')) {
             $this->EditarDadosBancosCorretoras(
                 $this->getBancoCorretora(),
                 $this->getBancoCorretora(),
                 $this->getSessao(),
-                $valorFinal
+                $banco['saldo'] - $this->getValor()
             );
         }
 
