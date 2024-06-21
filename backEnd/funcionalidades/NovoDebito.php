@@ -12,21 +12,21 @@ class NovoDebito extends EditarBancoCorretora
 
     public function __construct()
     {
-        if (!$this-> VerificarLogin()) return false;
+        if (!$this -> VerificarLogin()) return false;
 
         $this -> setPaginaPai('bancosCorretoras');
         $this -> setBancoCorretora($this -> bancoCorretora());
         $this -> setClassificacao($this -> classificacao());
         $this -> setDataEfetivacao($this -> dataEfetivacao());
         $this -> setValor($this -> valor());
-        $this-> setParcelas($this-> parcelas());
+        $this -> setParcelas($this -> parcelas());
 
         if (
             !$this -> getBancoCorretora() or
             !$this -> getClassificacao() or
             !$this -> getDataEfetivacao() or
             !$this -> getValor() or
-            !$this-> getParcelas()
+            !$this -> getParcelas()
         ) {
             $this -> Redirecionar($this -> getPaginaPai());
             return false;
@@ -42,7 +42,7 @@ class NovoDebito extends EditarBancoCorretora
 
         date_default_timezone_set('America/Sao_Paulo');
 
-        if ($banco['saldo'] - $this->getValor() < 0 and $this-> getDataEfetivacao() <= date('Y-m-d')) {
+        if ($banco['saldo'] - $this -> getValor() < 0 and $this -> getDataEfetivacao() <= date('Y-m-d')) {
             $this -> Comunicar('saldoInsuficiente');
             $this -> Redirecionar($this -> getPaginaPai());
             return false;
@@ -54,19 +54,11 @@ class NovoDebito extends EditarBancoCorretora
             $this -> getClassificacao(),
             $this -> getDataEfetivacao(),
             $this -> getValor(),
-            $this-> getParcelas()
-        )) {
+            $this -> getParcelas()
+        )
+        ) {
             $this -> Redirecionar($this -> getPaginaPai());
             return false;
-        }
-
-        elseif ($this-> getDataEfetivacao() <= date('Y-m-d')) {
-            $this->EditarDadosBancosCorretoras(
-                $this->getBancoCorretora(),
-                $this->getBancoCorretora(),
-                $this->getSessao(),
-                $banco['saldo'] - $this->getValor()
-            );
         }
 
         $this -> Redirecionar($this -> getPaginaPai());

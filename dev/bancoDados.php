@@ -61,7 +61,7 @@ function criarBancoDados()
     
         email VARCHAR(60) NOT NULL,
         id INT AUTO_INCREMENT,
-        tipo VARCHAR(7) NOT NULL,
+        formaPagamento VARCHAR(7) NOT NULL,
         fiador VARCHAR(60) NOT NULL,
         classificacao VARCHAR(11) NOT NULL,
         valor DECIMAL(12, 2) NULL,

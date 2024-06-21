@@ -1,5 +1,5 @@
 Investimentos
-    Quatros tipos de Investimentos
+    Quatros formaPagamentos de Investimentos
 
 Receita
     Extrato

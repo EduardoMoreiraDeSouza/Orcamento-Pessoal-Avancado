@@ -4,21 +4,26 @@ require_once __DIR__ . "/./ConexaoDB.php";
 
 class ExecucaoCodigoMySql extends ConexaoDB
 {
-    private $execucaoCodigoMySql;
+    private $executar;
     private $codigoMySql;
 
     public function ExecutarCodigoMySql()
     {
-        $this -> setExecucaoCodigoMySql(mysqli_query($this -> ConexaoDB(), $this -> getCodigoMySql()));
-
-        if (!$this -> getExecucaoCodigoMySql()) {
-            $this -> setCodigoMySql(null);
-            $this -> Comunicar('erroSql');
-            return false;
-        }
-
+        $this -> setExecutar($this-> executar());
         $this -> setCodigoMySql(null);
-        return $this -> getExecucaoCodigoMySql();
+
+        if (!$this -> getExecutar())
+            return (bool)$this-> RetornarErro('inicio', 'erroSql');
+
+        return $this -> getExecutar();
+    }
+
+    private function executar()
+    {
+        if (!empty($this-> getCodigoMySql()))
+            return mysqli_query($this -> ConexaoDB(), $this -> getCodigoMySql());
+
+        return false;
     }
 
     public function getCodigoMySql()
@@ -31,14 +36,14 @@ class ExecucaoCodigoMySql extends ConexaoDB
         $this -> codigoMySql = str_replace('dbName', $this -> Servidor('dbName'), $codigoMySql);
     }
 
-    private function getExecucaoCodigoMySql()
+    private function getExecutar()
     {
-        return $this -> execucaoCodigoMySql;
+        return $this -> executar;
     }
 
-    private function setExecucaoCodigoMySql($execucaoCodigoMySql): void
+    private function setExecutar($executar): void
     {
-        $this -> execucaoCodigoMySql = $execucaoCodigoMySql;
+        $this -> executar = $executar;
     }
 
 }

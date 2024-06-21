@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . "/../gerais/FormatacaoDados.php";
+require_once __DIR__ . "/../gerais/ValorFinal.php";
 
-abstract class DadosEntradaFormulario extends FormatacaoDados
+abstract class DadosEntradaFormulario extends ValorFinal
 {
     private $dados;
 
@@ -108,6 +108,16 @@ abstract class DadosEntradaFormulario extends FormatacaoDados
     protected function parcelas()
     {
         $this -> setDados(addslashes($_POST['parcelas']));
+
+        if ($this -> dadosDefinidos())
+            return $this -> getDados();
+
+        return false;
+    }
+
+    protected function formaPagamento()
+    {
+        $this -> setDados(addslashes($_POST['formaPagamento']));
 
         if ($this -> dadosDefinidos())
             return $this -> getDados();

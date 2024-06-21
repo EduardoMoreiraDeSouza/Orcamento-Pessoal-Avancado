@@ -81,7 +81,7 @@ if ($login -> VerificarLogin()) {
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Fiador</th>
-                <th scope="col">Tipo</th>
+                <th scope="col">FormaPagamento</th>
                 <th scope="col">Valor</th>
                 <th scope="col">Parcelas</th>
                 <th scope="col">Classificacao</th>
@@ -105,7 +105,7 @@ if ($login -> VerificarLogin()) {
 
                 $id = $dadosGastos['id'];
                 $fiador = $dadosGastos['fiador'];
-                $tipo = $dadosGastos['tipo'];
+                $formaPagamento = $dadosGastos['formaPagamento'];
                 $valor = $dadosGastos['valor'];
                 $parcelas = $dadosGastos['parcelas'];
                 $classificacao = $dadosGastos['classificacao'];
@@ -141,9 +141,9 @@ if ($login -> VerificarLogin()) {
                             </select>
                         </td>
                         <td>
-                            <select class="form-select" name="tipo" required>
-                                <option value="Débito" <?= $tipo == 'Débito' ? 'selected' : '' ?>>Débito</option>
-                                <option value="Crédito" <?= $tipo == 'Crédito' ? 'selected' : '' ?>>Crédito</option>
+                            <select class="form-select" name="formaPagamento" required>
+                                <option value="Débito" <?= $formaPagamento == 'Débito' ? 'selected' : '' ?>>Débito</option>
+                                <option value="Crédito" <?= $formaPagamento == 'Crédito' ? 'selected' : '' ?>>Crédito</option>
                             </select>
                         </td>
                         <td>

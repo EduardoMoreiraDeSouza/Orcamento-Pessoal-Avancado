@@ -9,19 +9,26 @@ abstract class ConexaoDB extends Servidor
 
     public function ConexaoDB()
     {
-        $this -> setConexaoDB(
-            mysqli_connect(
-                $this -> Servidor('servidor'),
-                $this -> Servidor('usuario'),
-                $this -> Servidor('senhaServidor'),
-                $this -> Servidor('DBname')
-            ));
+        $this -> setConexaoDB($this -> conectarDB());
 
         if ($this -> getConexaoDB())
             return $this -> getConexaoDB();
 
-        $this -> Comunicar('erroSql');
-        return false;
+        return (bool)$this -> RetornarErro('inicio', 'erroSql');
+    }
+
+    private function conectarDB()
+    {
+        try {
+            return mysqli_connect(
+                $this -> Servidor('servidor'),
+                $this -> Servidor('usuario'),
+                $this -> Servidor('senhaServidor'),
+                $this -> Servidor('DBname')
+            );
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
     private function getConexaoDB()
