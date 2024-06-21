@@ -10,10 +10,10 @@ class ValorFinal extends FormatacaoDados
 
         if ($tipo == 'cartaoCredito') {
 
-            $limiteTotal = $this-> SaidaDadosCartoesCredito($entidade, $email)['limite'];
+            $limiteTotal = $this-> ObterDadosCartoesCredito($entidade, $email)['limite'];
             $gastosCreditoTotal = 0;
 
-            foreach ($this-> SaidaDadosGastos($email) as $gasto) {
+            foreach ($this-> ObterDadosGastos($email) as $gasto) {
                 if ($gasto['formaPagamento'] == 'Crédito')
                     $gastosCreditoTotal += $gasto['valor'] * $gasto['parcelas'];
             }
@@ -24,10 +24,10 @@ class ValorFinal extends FormatacaoDados
 
         elseif ($tipo == 'bancoCorretora') {
 
-            $saldo = $this-> SaidaDadosBancosCorretoras($entidade, $email)['saldo'];
+            $saldo = $this-> ObterDadosBancosCorretoras($entidade, $email)['saldo'];
             $gastosDebitoTotal = 0;
 
-            foreach ($this-> SaidaDadosGastos($email) as $gasto) {
+            foreach ($this-> ObterDadosGastos($email) as $gasto) {
                 if ($gasto['formaPagamento'] == 'Débito')
                     $gastosDebitoTotal += $gasto['valor'];
             }

@@ -32,7 +32,7 @@ class NovoDebito extends EditarBancoCorretora
             return false;
         }
 
-        $banco = $this -> SaidaDadosBancosCorretoras($this -> getBancoCorretora(), $this -> getSessao());
+        $banco = $this -> ObterDadosBancosCorretoras($this -> getBancoCorretora(), $this -> getSessao());
 
         if (!$banco) {
             $this -> Comunicar('naoBancoCorretora');

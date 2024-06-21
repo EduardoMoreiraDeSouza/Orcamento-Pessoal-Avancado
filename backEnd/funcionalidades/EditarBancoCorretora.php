@@ -24,7 +24,7 @@ class EditarBancoCorretora extends Entrar
         }
 
         if (
-            !$this -> EditarDadosBancosCorretoras(
+            !$this -> AlterarDadosBancosCorretoras(
                 $this -> getNome(),
                 $this -> getNomeId(),
                 $this -> getSessao(),

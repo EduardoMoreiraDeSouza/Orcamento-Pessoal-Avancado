@@ -32,7 +32,7 @@ class EditarCartaoCredito extends EditarBancoCorretora
         }
 
         elseif (
-            !$this-> EditarDadosCartoesCredito(
+            !$this-> AlterarDadosCartoesCredito(
                 $this-> getNome(),
                 $this-> getNomeId(),
                 $this-> getSessao(),

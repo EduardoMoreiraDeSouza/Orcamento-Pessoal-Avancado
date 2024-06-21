@@ -13,7 +13,7 @@ class Entrar extends NovoCartaoCredito
         $this -> setEmail($this -> email());
         $this -> setSenha($this -> senha());
 
-        if (!$this -> SaidaDadosUsuarios($this -> getEmail())) {
+        if (!$this -> ObterDadosUsuarios($this -> getEmail())) {
 
             $this-> Comunicar('cadastrar');
             $this -> Redirecionar($this -> getPaginaPai());

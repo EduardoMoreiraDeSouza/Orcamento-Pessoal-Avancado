@@ -18,7 +18,7 @@ class Cadastrar extends EditarCartaoCredito
             return false;
         }
 
-        if ($this -> SaidaDadosUsuarios($this -> getEmail())) {
+        if ($this -> ObterDadosUsuarios($this -> getEmail())) {
             $this-> Comunicar('x2email');
             $this -> Redirecionar($this -> getPaginaPai());
             return false;

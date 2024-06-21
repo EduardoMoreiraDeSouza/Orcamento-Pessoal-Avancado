@@ -1,18 +1,13 @@
 <?php
 
-require_once __DIR__ . "/./SaidaDadosUsuarios.php";
+require_once __DIR__ . "/./ObterDadosUsuarios.php";
 
-abstract class EntradaDadosUsuarios extends SaidaDadosUsuarios
+abstract class EntradaDadosUsuarios extends ObterDadosUsuarios
 {
     protected function EntradaDadosUsuario($email, $senha)
     {
         $this -> setCodigoMySql("INSERT INTO dbName.usuarios VALUES ('$email', '$senha');");
 
-        if (!$this -> ExecutarCodigoMySql()) {
-            $this -> Comunicar('erroSql');
-            return false;
-        }
-
-        return true;
+        return (bool)$this-> ExecutarCodigoMySql();
     }
 }

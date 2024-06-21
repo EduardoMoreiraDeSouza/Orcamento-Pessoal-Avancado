@@ -22,7 +22,7 @@ class NovoBancoCorretora extends DadosEntradaFormulario
             return false;
         }
 
-        if ($this -> SaidaDadosBancosCorretoras($this -> getNome(), $this -> getSessao())) {
+        if ($this -> ObterDadosBancosCorretoras($this -> getNome(), $this -> getSessao())) {
             $this -> Comunicar('x2bancosCorretoras');
             $this -> Redirecionar($this -> getPaginaPai());
             return false;

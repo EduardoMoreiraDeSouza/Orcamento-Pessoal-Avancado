@@ -2,9 +2,9 @@
 
 require_once __DIR__ . "/./EntradaDadosCartoesCredito.php";
 
-abstract class EditarDadosCartoesCredito extends EntradaDadosCartoesCredito
+abstract class AlterarDadosCartoesCredito extends EntradaDadosCartoesCredito
 {
-    public function EditarDadosCartoesCredito($nome, $nomeAtual, $email, $limite, $fechamento, $vencimento)
+    public function AlterarDadosCartoesCredito($nome, $nomeAtual, $email, $limite, $fechamento, $vencimento)
     {
         $this->setCodigoMySql(
             "UPDATE dbName.cartoesCredito SET
@@ -15,11 +15,6 @@ abstract class EditarDadosCartoesCredito extends EntradaDadosCartoesCredito
             WHERE nome LIKE '$nomeAtual' AND email LIKE '$email';"
         );
 
-        if (!$this -> ExecutarCodigoMySql()) {
-            $this -> Comunicar('erroSql');
-            return false;
-        }
-
-        return true;
+        return (bool)$this-> ExecutarCodigoMySql();
     }
 }

@@ -35,7 +35,7 @@ class NovoCartaoCredito extends NovoBancoCorretora
             return false;
         }
 
-        elseif ($this-> SaidaDadosCartoesCredito($this-> getNome(), $this-> getSessao())) {
+        elseif ($this-> ObterDadosCartoesCredito($this-> getNome(), $this-> getSessao())) {
             $this -> Comunicar('x2cartoesCredito');
             $this -> Redirecionar($this -> getPaginaPai());
             return false;

@@ -28,7 +28,7 @@ class NovoCredito extends NovoDebito
             return false;
         }
 
-        $cartao = $this -> SaidaDadosCartoesCredito($this -> getCartaoCredito(), $this -> getSessao());
+        $cartao = $this -> ObterDadosCartoesCredito($this -> getCartaoCredito(), $this -> getSessao());
 
         if (!$cartao) {
             $this -> Comunicar('naoBancoCorretora');

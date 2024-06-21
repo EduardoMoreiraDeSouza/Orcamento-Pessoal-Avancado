@@ -24,7 +24,7 @@ class NovaReceita extends NovoDebito
             return false;
         }
 
-        if (!$this -> SaidaDadosBancosCorretoras($this -> getBancoCorretora(), $this -> getSessao())) {
+        if (!$this -> ObterDadosBancosCorretoras($this -> getBancoCorretora(), $this -> getSessao())) {
             $this -> Comunicar('naoBancoCorretora');
             $this -> Redirecionar($this -> getPaginaPai());
             return false;

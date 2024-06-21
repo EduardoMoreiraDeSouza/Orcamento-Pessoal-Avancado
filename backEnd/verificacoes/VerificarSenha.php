@@ -7,8 +7,8 @@ class VerificarSenha extends EntradaDadosReceita
     public function VerificarSenha($email, $senha): bool
     {
         if (
-            $this -> SaidaDadosUsuarios($email) and
-            $this -> SaidaDadosUsuarios($email)['senha'] == $senha
+            $this -> ObterDadosUsuarios($email) and
+            $this -> ObterDadosUsuarios($email)['senha'] == $senha
         ) return true;
 
         $this -> Comunicar('senha');
