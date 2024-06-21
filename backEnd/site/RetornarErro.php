@@ -8,6 +8,7 @@ abstract class RetornarErro extends Redirecionar
     {
         if ($mensagem != null and !empty($mensagem)) $this -> Comunicar($mensagem);
 
+        if ($redirecionar == 'pai') $this -> Redirecionar($this-> getPaginaPai()); 
         if ($redirecionar != null) $this -> Redirecionar($redirecionar);
 
         return false;

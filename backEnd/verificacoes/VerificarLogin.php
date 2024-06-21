@@ -12,8 +12,8 @@ class VerificarLogin extends RetornarErro {
             $this -> Redirecionar('entrar', true);
 
             return false;
-
         }
+
         return true;
     }
 }

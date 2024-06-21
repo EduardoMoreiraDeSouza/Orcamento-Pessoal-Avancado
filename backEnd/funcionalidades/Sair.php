@@ -9,7 +9,7 @@ class Sair extends Cadastrar
         $this -> sair();
     }
 
-    protected function sair()
+    protected function sair(): true
     {
         if (!empty($this -> getSessao())) {
             $this -> setSessao(null);

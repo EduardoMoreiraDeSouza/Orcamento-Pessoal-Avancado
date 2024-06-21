@@ -19,23 +19,15 @@ class NovaReceita extends NovoDebito
             !$this -> getClassificacao() or
             !$this -> getDataEfetivacao() or
             !$this -> getValor()
-        ) {
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        )
+            return (bool)$this-> RetornarErro('pai', null);
 
-        if (!$this -> ObterDadosBancosCorretoras($this -> getBancoCorretora(), $this -> getSessao())) {
-            $this -> Comunicar('naoBancoCorretora');
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        if (!$this -> ObterDadosBancosCorretoras($this -> getBancoCorretora(), $this -> getSessao()))
+            return (bool)$this-> RetornarErro('pai', 'naoBancoCorretora');
 
-        if (!$this -> EntradaDadosReceita($this -> getBancoCorretora(), $this -> getClassificacao(), $this -> getDataEfetivacao(), $this -> getValor())) {
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        if (!$this -> EntradaDadosReceita($this -> getBancoCorretora(), $this -> getClassificacao(), $this -> getDataEfetivacao(), $this -> getValor()))
+            return (bool)$this-> RetornarErro('pai', null);
 
-        $this -> Redirecionar($this -> getPaginaPai());
-        return true;
+        return !$this-> RetornarErro('pai', null);
     }
 }

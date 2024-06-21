@@ -24,35 +24,24 @@ class NovoCartaoCredito extends NovoBancoCorretora
             !$this-> getLimite() or
             !$this-> getFechamento() or
             !$this-> getVencimento()
-        ) {
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        )
+            return (bool)$this-> RetornarErro('pai', null);
 
-        elseif ($this-> getFechamento() == $this-> getVencimento()) {
-            $this -> Comunicar('fechamentoVencimento');
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        elseif ($this-> getFechamento() == $this-> getVencimento())
+            return (bool)$this-> RetornarErro('pai', 'fechamentoVencimento');
 
-        elseif ($this-> ObterDadosCartoesCredito($this-> getNome(), $this-> getSessao())) {
-            $this -> Comunicar('x2cartoesCredito');
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        elseif ($this-> ObterDadosCartoesCredito($this-> getNome(), $this-> getSessao()))
+            return (bool)$this-> RetornarErro('pai', 'x2cartoesCredito');
 
         elseif (!$this-> EntradaDadosCartoesCredito($this-> getNome(),
             $this-> getSessao(),
             $this-> getLimite(),
             $this-> getFechamento(),
             $this-> getVencimento())
-        )  {
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        )
+            return (bool)$this-> RetornarErro('pai', null);
 
-        $this -> Redirecionar($this -> getPaginaPai());
-        return true;
+        return !$this-> RetornarErro('pai', null);
     }
 
     protected function setLimite($limite): void

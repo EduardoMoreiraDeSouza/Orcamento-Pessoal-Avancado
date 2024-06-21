@@ -18,10 +18,8 @@ class EditarBancoCorretora extends Entrar
         if (
             !$this -> getNome() or
             !$this -> getNomeId()
-        ) {
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        )
+            return (bool)$this-> RetornarErro('pai', null);
 
         if (
             !$this -> AlterarDadosBancosCorretoras(
@@ -30,13 +28,10 @@ class EditarBancoCorretora extends Entrar
                 $this -> getSessao(),
                 $this -> getSaldo()
             )
-        ) {
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        )   
+            return (bool)$this-> RetornarErro('pai', null);
 
-        $this -> Redirecionar($this -> getPaginaPai());
-        return true;
+        return !$this-> RetornarErro('pai', null);
     }
 
     protected function getNomeId()

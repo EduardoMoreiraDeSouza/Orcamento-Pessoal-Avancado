@@ -13,27 +13,19 @@ class Cadastrar extends EditarCartaoCredito
         if (
             !$this -> getSenha() or
             !$this -> getEmail()
-        ) {
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        )
+            return (bool)$this-> RetornarErro('pai', null);
 
-        if ($this -> ObterDadosUsuarios($this -> getEmail())) {
-            $this-> Comunicar('x2email');
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        if ($this -> ObterDadosUsuarios($this -> getEmail()))
+            return (bool)$this-> RetornarErro('pai', 'x2email');
 
-        if (!$this -> EntradaDadosUsuario($this -> getEmail(), $this -> getSenha())) {
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        if (!$this -> EntradaDadosUsuario($this -> getEmail(), $this -> getSenha()))
+            return (bool)$this-> RetornarErro('pai', null);
 
         $this -> Comunicar('cadastro');
 
         new Entrar();
 
-        $this -> Redirecionar('inicio');
-        return true;
+        return !$this-> RetornarErro('inicio', null);
     }
 }

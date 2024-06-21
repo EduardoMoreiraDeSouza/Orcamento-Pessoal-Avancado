@@ -20,16 +20,11 @@ class EditarCartaoCredito extends EditarBancoCorretora
             !$this-> getLimite() or
             !$this-> getFechamento() or
             !$this-> getVencimento()
-        ) {
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        )   
+            return (bool)$this-> RetornarErro('pai', null);
 
-        elseif ($this-> getFechamento() == $this-> getVencimento()) {
-            $this -> Comunicar('fechamentoVencimento');
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        elseif ($this-> getFechamento() == $this-> getVencimento())
+            return (bool)$this-> RetornarErro('pai', 'fechamentoVencimento');
 
         elseif (
             !$this-> AlterarDadosCartoesCredito(
@@ -40,13 +35,10 @@ class EditarCartaoCredito extends EditarBancoCorretora
                 $this-> getFechamento(),
                 $this-> getVencimento()
             )
-        ) {
-            $this->Redirecionar($this-> getPaginaPai());
-            return false;
-        }
+        )
+            return (bool)$this-> RetornarErro('pai', null);
 
-        $this->Redirecionar($this-> getPaginaPai());
-        return true;
+        return !$this-> RetornarErro('pai', null);
     }
 
 }

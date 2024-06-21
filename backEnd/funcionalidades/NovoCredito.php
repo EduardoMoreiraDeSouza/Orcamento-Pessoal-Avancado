@@ -23,24 +23,19 @@ class NovoCredito extends NovoDebito
             !$this -> getDataEfetivacao() or
             !$this -> getValor() or
             !$this -> getParcelas()
-        ) {
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        )
+            return (bool)$this-> RetornarErro('pai', null);
 
         $cartao = $this -> ObterDadosCartoesCredito($this -> getCartaoCredito(), $this -> getSessao());
 
-        if (!$cartao) {
-            $this -> Comunicar('naoBancoCorretora');
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        if (!$cartao)
+            return (bool)$this-> RetornarErro('pai', 'naoBancoCorretora');
 
         date_default_timezone_set('America/Sao_Paulo');
 
         /* if ($cartao['saldo'] - $this -> getValor() < 0 and $this -> getDataEfetivacao() <= date('Y-m-d')) {
             $this -> Comunicar('saldoInsuficiente');
-            $this -> Redirecionar($this -> getPaginaPai());
+            $this -> Redirecionar('pai');
             return false;
         } */
 
@@ -51,14 +46,10 @@ class NovoCredito extends NovoDebito
             $this -> getDataEfetivacao(),
             $this -> getValor(),
             $this -> getParcelas()
-        )
-        ) {
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        ))
+            return (bool)$this-> RetornarErro('pai', null);
 
-        $this -> Redirecionar($this -> getPaginaPai());
-        return true;
+        return !$this-> RetornarErro('pai', null);
     }
 
     public function getCartaoCredito()

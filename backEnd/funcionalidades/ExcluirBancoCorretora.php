@@ -11,10 +11,7 @@ final class ExcluirBancoCorretora extends ExecucaoCodigoMySql
         $this -> setPaginaPai('bancosCorretoras');
         $this -> setCodigoMySql("DELETE FROM dbName.bancosCorretoras WHERE nome LIKE '$nome' AND email LIKE '$email';");
 
-        if (!$this -> ExecutarCodigoMySql())
-            return false;
-
-        return true;
+        return (bool)$this-> ExecutarCodigoMySql();
     }
 
 }

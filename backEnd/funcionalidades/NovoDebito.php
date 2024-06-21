@@ -27,26 +27,18 @@ class NovoDebito extends EditarBancoCorretora
             !$this -> getDataEfetivacao() or
             !$this -> getValor() or
             !$this -> getParcelas()
-        ) {
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        )
+            return (bool)$this-> RetornarErro('pai', null);
 
         $banco = $this -> ObterDadosBancosCorretoras($this -> getBancoCorretora(), $this -> getSessao());
 
-        if (!$banco) {
-            $this -> Comunicar('naoBancoCorretora');
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        if (!$banco)
+            return (bool)$this-> RetornarErro('pai', 'naoBancoCorretora');
 
         date_default_timezone_set('America/Sao_Paulo');
 
-        if ($banco['saldo'] - $this -> getValor() < 0 and $this -> getDataEfetivacao() <= date('Y-m-d')) {
-            $this -> Comunicar('saldoInsuficiente');
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        if ($banco['saldo'] - $this -> getValor() < 0 and $this -> getDataEfetivacao() <= date('Y-m-d'))
+            return (bool)$this-> RetornarErro('pai', 'saldoInsuficiente');
 
         if (!$this -> EntradaDadosGastos(
             $this -> getBancoCorretora(),
@@ -55,14 +47,10 @@ class NovoDebito extends EditarBancoCorretora
             $this -> getDataEfetivacao(),
             $this -> getValor(),
             $this -> getParcelas()
-        )
-        ) {
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        ))
+            return (bool)$this-> RetornarErro('pai', null);
 
-        $this -> Redirecionar($this -> getPaginaPai());
-        return true;
+        return !$this-> RetornarErro('pai', null);
     }
 
 

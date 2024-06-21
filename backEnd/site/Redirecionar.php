@@ -11,10 +11,11 @@ class Redirecionar extends Comunicar
         else
             $caminho = "../..";
 
+        if ($local == 'pai')
+            $local = $this-> getPaginaPai();
 
         if ($local == 'inicio')
             $this -> ScriptJS("window.location.href = `$caminho/`");
-
         else
             $this -> ScriptJS("window.location.href = `$caminho/paginas/$local.php`");
 

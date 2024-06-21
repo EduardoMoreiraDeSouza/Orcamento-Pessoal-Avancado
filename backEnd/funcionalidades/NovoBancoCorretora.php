@@ -17,28 +17,20 @@ class NovoBancoCorretora extends DadosEntradaFormulario
 
         if (
             !$this-> getNome()
-        ) {
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        )
+            return (bool)$this-> RetornarErro('pai', null);
 
-        if ($this -> ObterDadosBancosCorretoras($this -> getNome(), $this -> getSessao())) {
-            $this -> Comunicar('x2bancosCorretoras');
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        if ($this -> ObterDadosBancosCorretoras($this -> getNome(), $this -> getSessao()))
+            return (bool)$this-> RetornarErro('pai', 'x2bancosCorretoras');
 
         if (!$this -> EntradaDadosBancosCorretoras(
             $this -> getNome(),
             $this -> getSessao(),
             $this -> getSaldo())
-        ) {
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        )
+            return (bool)$this-> RetornarErro('pai', null);
 
-        $this -> Redirecionar($this -> getPaginaPai());
-        return true;
+        return !$this-> RetornarErro('pai', null);
     }
 
 

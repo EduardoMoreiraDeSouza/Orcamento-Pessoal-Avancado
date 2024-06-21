@@ -26,19 +26,13 @@ class EditarGastos extends NovoCredito
             !$this -> getDataEfetivacao() or
             !$this -> getValor() or
             !$this -> getParcelas()
-        ) {
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
+        )
+            return (bool)$this-> RetornarErro('pai', null);
 
         $banco = $this -> ObterDadosBancosCorretoras($this -> getBancoCorretora(), $this -> getSessao());
 
-        if (!$banco) {
-            $this -> Comunicar('naoBancoCorretora');
-            $this -> Redirecionar($this -> getPaginaPai());
-            return false;
-        }
-
+        if (!$banco)
+            return (bool)$this-> RetornarErro('pai', 'naoBancoCorretora');
 
 
     }
