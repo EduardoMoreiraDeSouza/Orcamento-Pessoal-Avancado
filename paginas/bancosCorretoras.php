@@ -14,6 +14,7 @@ if ($login -> VerificarLogin()) {
     $codigoMySql = "SELECT * FROM dbName.bancosCorretoras WHERE email LIKE '" . $login -> getSessao() . "';";
     $execucao -> setCodigoMySql($codigoMySql);
     $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
+    $execucao-> timezone();
 
     if (isset($_GET['excluir']) and isset($_GET['nome'])) {
 
@@ -23,8 +24,6 @@ if ($login -> VerificarLogin()) {
         $exluir -> Redirecionar('bancosCorretoras', true);
 
     }
-
-    date_default_timezone_set('America/Sao_Paulo');
 
     ?>
 
@@ -242,8 +241,6 @@ if ($login -> VerificarLogin()) {
 
                 $quantidade++;
                 $nome = $dadosBancosCorretoras['nome'];
-                $saldoTotal += $dadosBancosCorretoras['saldo'];
-                $saldo = $formatacao -> formatarValor($dadosBancosCorretoras['saldo']);
 
                 ?>
 
@@ -256,7 +253,7 @@ if ($login -> VerificarLogin()) {
                         </td>
                         <td>
                             <input type="text" class="container input-group-text" name="saldo" placeholder="Saldo:"
-                                   step="0.01" value="R$ <?= $saldo ?>">
+                                   step="0.01" value="R$ <?= ""; ?>">
                         </td>
                         <td>
                             <button style="text-decoration: none;" class="text-primary bg-transparent" name="nameId"

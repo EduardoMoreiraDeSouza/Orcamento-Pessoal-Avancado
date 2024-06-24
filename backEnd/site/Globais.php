@@ -5,6 +5,11 @@ class Globais{
     private $paginaPai;
 
     private $localServidor;
+    
+    public function timezone(): bool
+    {
+        return date_default_timezone_set('America/Sao_Paulo');
+    }
 
     public function getSessao()
     {

@@ -14,6 +14,7 @@ if ($login -> VerificarLogin()) {
     $codigoMySql = "SELECT * FROM dbName.gastos WHERE email LIKE '" . $login -> getSessao() . "';";
     $execucao -> setCodigoMySql($codigoMySql);
     $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
+    $execucao -> timezone();
 
     if (isset($_GET['excluir']) and isset($_GET['id'])) {
 
@@ -23,8 +24,6 @@ if ($login -> VerificarLogin()) {
         $exluir -> Redirecionar('bancosCorretoras', true);
 
     }
-
-    date_default_timezone_set('America/Sao_Paulo');
 
     ?>
 

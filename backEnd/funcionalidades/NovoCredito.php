@@ -31,7 +31,7 @@ class NovoCredito extends NovoDebito
         if (!$cartao)
             return (bool)$this-> RetornarErro('pai', 'naoBancoCorretora');
 
-        date_default_timezone_set('America/Sao_Paulo');
+        $this-> timezone();
 
         /* if ($cartao['saldo'] - $this -> getValor() < 0 and $this -> getDataEfetivacao() <= date('Y-m-d')) {
             $this -> Comunicar('saldoInsuficiente');

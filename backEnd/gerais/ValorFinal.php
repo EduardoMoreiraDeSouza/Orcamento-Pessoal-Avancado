@@ -6,7 +6,7 @@ class ValorFinal extends FormatacaoDados
 {
     public function ValorFinal($tipo, $entidade, $email) {
 
-        date_default_timezone_set('America/Sao_Paulo');
+        $this-> timezone();
 
         if ($tipo == 'cartaoCredito') {
 

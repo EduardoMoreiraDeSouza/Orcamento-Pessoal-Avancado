@@ -28,7 +28,6 @@ function criarBancoDados()
        
         nome VARCHAR(60),
         email VARCHAR(60) NOT NULL,
-        saldo DECIMAL(12, 2) NULL,
         
         CONSTRAINT PK_nome_bancoCorretoras PRIMARY KEY (nome),
         

@@ -11,6 +11,8 @@ if ($login -> VerificarLogin()) {
     $formatacao = new FormatacaoDados();
     $execucao = new ExecucaoCodigoMySql();
 
+    $execucao -> timezone();
+
     if (
         isset($_GET['excluir']) and
         isset($_GET['nome'])
@@ -22,8 +24,6 @@ if ($login -> VerificarLogin()) {
         $exluir -> Redirecionar('credito', true);
 
     }
-
-    date_default_timezone_set('America/Sao_Paulo');
 
     ?>
 

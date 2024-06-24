@@ -35,7 +35,7 @@ class NovoDebito extends EditarBancoCorretora
         if (!$banco)
             return (bool)$this-> RetornarErro('pai', 'naoBancoCorretora');
 
-        date_default_timezone_set('America/Sao_Paulo');
+        $this-> timezone();
 
         if ($banco['saldo'] - $this -> getValor() < 0 and $this -> getDataEfetivacao() <= date('Y-m-d'))
             return (bool)$this-> RetornarErro('pai', 'saldoInsuficiente');

@@ -25,10 +25,33 @@ class NovoBancoCorretora extends DadosEntradaFormulario
 
         if (!$this -> EntradaDadosBancosCorretoras(
             $this -> getNome(),
-            $this -> getSessao(),
-            $this -> getSaldo())
-        )
+            $this -> getSessao()
+        ))
             return (bool)$this-> RetornarErro('pai', null);
+
+        $this-> timezone();
+
+        if ($this-> getSaldo() > 0) {
+            if (!$this -> EntradaDadosReceita(
+                $this -> getNome(),
+                'novoBancoCorretora',
+                date('Y-m-d'),
+                $this -> getSaldo())
+            )
+                return (bool)$this -> RetornarErro('pai', null);
+        }
+
+        elseif ($this-> getSaldo() < 0) {
+            if (!$this -> EntradaDadosGastos(
+                $this -> getNome(),
+                'Débito',
+                'novoBancoCorretora',
+                date('Y-m-d'),
+                $this -> getSaldo(),
+                1
+            ))
+                return (bool)$this-> RetornarErro('pai', null);
+        }
 
         return !$this-> RetornarErro('pai', null);
     }
