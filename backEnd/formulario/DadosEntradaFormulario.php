@@ -46,9 +46,9 @@ abstract class DadosEntradaFormulario extends ValorFinal
         return false;
     }
 
-    protected function dataEfetivacao()
+    protected function dataCompraPagamento()
     {
-        $this -> setDados(addslashes($_POST['dataEfetivacao']));
+        $this -> setDados(addslashes($_POST['dataCompraPagamento']));
 
         if ($this -> dadosDefinidos())
             return $this -> getDados();

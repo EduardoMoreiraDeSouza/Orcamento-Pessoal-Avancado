@@ -131,7 +131,7 @@ if ($login -> VerificarLogin()) {
                                     <option value="Boas Ações">Boas Ações</option>
                                 </select>
 
-                                <input type="date" class="container input-group-text" name="dataEfetivacao"
+                                <input type="date" class="container input-group-text" name="dataCompraPagamento"
                                        value="<?= date('Y-m-d') ?>" required>
                                 <input type="text" class="container input-group-text" name="valor"
                                        placeholder="Valor das Parcelas" required>
@@ -195,7 +195,7 @@ if ($login -> VerificarLogin()) {
                                     <option value="Outros">Outros</option>
                                 </select>
 
-                                <input type="date" class="container input-group-text" name="dataEfetivacao"
+                                <input type="date" class="container input-group-text" name="dataCompraPagamento"
                                        value="<?= date('Y-m-d') ?>" required>
                                 <input type="number" class="container input-group-text" name="valor" placeholder="Valor"
                                        step="0.01" min="0.01" required>

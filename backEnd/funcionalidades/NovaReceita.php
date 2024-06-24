@@ -11,13 +11,13 @@ class NovaReceita extends NovoDebito
         $this -> setPaginaPai('bancosCorretoras');
         $this -> setBancoCorretora($this -> bancoCorretora());
         $this -> setClassificacao($this -> classificacao());
-        $this -> setDataEfetivacao($this -> dataEfetivacao());
+        $this -> setDataCompraPagamento($this -> dataCompraPagamento());
         $this -> setValor($this -> valor());
 
         if (
             !$this -> getBancoCorretora() or
             !$this -> getClassificacao() or
-            !$this -> getDataEfetivacao() or
+            !$this -> getDataCompraPagamento() or
             !$this -> getValor()
         )
             return (bool)$this-> RetornarErro('pai', null);
@@ -25,7 +25,7 @@ class NovaReceita extends NovoDebito
         if (!$this -> ObterDadosBancosCorretoras($this -> getBancoCorretora(), $this -> getSessao()))
             return (bool)$this-> RetornarErro('pai', 'naoBancoCorretora');
 
-        if (!$this -> EntradaDadosReceita($this -> getBancoCorretora(), $this -> getClassificacao(), $this -> getDataEfetivacao(), $this -> getValor()))
+        if (!$this -> EntradaDadosReceita($this -> getBancoCorretora(), $this -> getClassificacao(), $this -> getDataCompraPagamento(), $this -> getValor()))
             return (bool)$this-> RetornarErro('pai', null);
 
         return !$this-> RetornarErro('pai', null);

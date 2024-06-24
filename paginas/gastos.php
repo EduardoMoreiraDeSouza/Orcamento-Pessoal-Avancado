@@ -84,7 +84,7 @@ if ($login -> VerificarLogin()) {
                 <th scope="col">Valor</th>
                 <th scope="col">Parcelas</th>
                 <th scope="col">Classificacao</th>
-                <th scope="col">Data da Efetivação</th>
+                <th scope="col">Data da Compra/Pagamento</th>
                 <th scope="col">Ações</th>
             </tr>
             </thead>
@@ -108,7 +108,7 @@ if ($login -> VerificarLogin()) {
                 $valor = $dadosGastos['valor'];
                 $parcelas = $dadosGastos['parcelas'];
                 $classificacao = $dadosGastos['classificacao'];
-                $dataEfetivacao = $dadosGastos['dataEfetivacao'];
+                $dataCompraPagamento = $dadosGastos['dataCompraPagamento'];
 
                 ?>
 
@@ -173,8 +173,8 @@ if ($login -> VerificarLogin()) {
                             </select>
                         </td>
                         <td>
-                            <input type="date" class="container input-group-text" name="dataEfetivacao"
-                                   value="<?= $dataEfetivacao ?>">
+                            <input type="date" class="container input-group-text" name="dataCompraPagamento"
+                                   value="<?= $dataCompraPagamento ?>">
                         </td>
                         <td>
                             <button style="text-decoration: none;" class="text-primary bg-transparent" name="nameId"

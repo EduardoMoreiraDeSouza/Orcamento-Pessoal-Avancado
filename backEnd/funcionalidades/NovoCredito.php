@@ -13,14 +13,14 @@ class NovoCredito extends NovoDebito
         $this -> setPaginaPai('credito');
         $this -> setCartaoCredito($this -> cartaoCredito());
         $this -> setClassificacao($this -> classificacao());
-        $this -> setDataEfetivacao($this -> dataEfetivacao());
+        $this -> setDataCompraPagamento($this -> dataCompraPagamento());
         $this -> setValor($this -> valor());
         $this -> setParcelas($this -> parcelas());
 
         if (
             !$this -> getCartaoCredito() or
             !$this -> getClassificacao() or
-            !$this -> getDataEfetivacao() or
+            !$this -> getDataCompraPagamento() or
             !$this -> getValor() or
             !$this -> getParcelas()
         )
@@ -33,7 +33,7 @@ class NovoCredito extends NovoDebito
 
         $this-> timezone();
 
-        /* if ($cartao['saldo'] - $this -> getValor() < 0 and $this -> getDataEfetivacao() <= date('Y-m-d')) {
+        /* if ($cartao['saldo'] - $this -> getValor() < 0 and $this -> getDataCompraPagamento() <= date('Y-m-d')) {
             $this -> Comunicar('saldoInsuficiente');
             $this -> Redirecionar('pai');
             return false;
@@ -43,7 +43,7 @@ class NovoCredito extends NovoDebito
             $this -> getCartaoCredito(),
             'Crédito',
             $this -> getClassificacao(),
-            $this -> getDataEfetivacao(),
+            $this -> getDataCompraPagamento(),
             $this -> getValor(),
             $this -> getParcelas()
         ))

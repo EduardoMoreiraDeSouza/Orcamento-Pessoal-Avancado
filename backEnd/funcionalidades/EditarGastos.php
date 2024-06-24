@@ -15,7 +15,7 @@ class EditarGastos extends NovoCredito
         $this -> setBancoCorretora($this -> bancoCorretora());
         $this-> setFormaPagamento($this-> formaPagamento());
         $this -> setClassificacao($this -> classificacao());
-        $this -> setDataEfetivacao($this -> dataEfetivacao());
+        $this -> setDataCompraPagamento($this -> dataCompraPagamento());
         $this -> setValor($this -> valor());
         $this -> setParcelas($this -> parcelas());
 
@@ -23,7 +23,7 @@ class EditarGastos extends NovoCredito
             !$this -> getBancoCorretora() or
             !$this -> getFormaPagamento() or
             !$this -> getClassificacao() or
-            !$this -> getDataEfetivacao() or
+            !$this -> getDataCompraPagamento() or
             !$this -> getValor() or
             !$this -> getParcelas()
         )

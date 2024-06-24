@@ -6,7 +6,7 @@ class NovoDebito extends EditarBancoCorretora
 {
     private $bancoCorretora;
     private $classificacao;
-    private $dataEfetivacao;
+    private $dataCompraPagamento;
     private $valor;
     private $parcelas;
 
@@ -17,14 +17,14 @@ class NovoDebito extends EditarBancoCorretora
         $this -> setPaginaPai('bancosCorretoras');
         $this -> setBancoCorretora($this -> bancoCorretora());
         $this -> setClassificacao($this -> classificacao());
-        $this -> setDataEfetivacao($this -> dataEfetivacao());
+        $this -> setDataCompraPagamento($this -> dataCompraPagamento());
         $this -> setValor($this -> valor());
         $this -> setParcelas($this -> parcelas());
 
         if (
             !$this -> getBancoCorretora() or
             !$this -> getClassificacao() or
-            !$this -> getDataEfetivacao() or
+            !$this -> getDataCompraPagamento() or
             !$this -> getValor() or
             !$this -> getParcelas()
         )
@@ -37,14 +37,14 @@ class NovoDebito extends EditarBancoCorretora
 
         $this-> timezone();
 
-        if ($banco['saldo'] - $this -> getValor() < 0 and $this -> getDataEfetivacao() <= date('Y-m-d'))
+        if ($banco['saldo'] - $this -> getValor() < 0 and $this -> getDataCompraPagamento() <= date('Y-m-d'))
             return (bool)$this-> RetornarErro('pai', 'saldoInsuficiente');
 
         if (!$this -> EntradaDadosGastos(
             $this -> getBancoCorretora(),
             'Débito',
             $this -> getClassificacao(),
-            $this -> getDataEfetivacao(),
+            $this -> getDataCompraPagamento(),
             $this -> getValor(),
             $this -> getParcelas()
         ))
@@ -74,14 +74,14 @@ class NovoDebito extends EditarBancoCorretora
         $this -> classificacao = $classificacao;
     }
 
-    protected function getDataEfetivacao()
+    protected function getDataCompraPagamento()
     {
-        return $this -> dataEfetivacao;
+        return $this -> dataCompraPagamento;
     }
 
-    protected function setDataEfetivacao($dataEfetivacao)
+    protected function setDataCompraPagamento($dataCompraPagamento)
     {
-        $this -> dataEfetivacao = $dataEfetivacao;
+        $this -> dataCompraPagamento = $dataCompraPagamento;
     }
 
     protected function getValor()

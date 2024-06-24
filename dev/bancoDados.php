@@ -65,7 +65,7 @@ function criarBancoDados()
         classificacao VARCHAR(11) NOT NULL,
         valor DECIMAL(12, 2) NULL,
         parcelas INT(4),
-        dataEfetivacao DATE,
+        dataCompraPagamento DATE,
     
         CONSTRAINT PK_id_gastos PRIMARY KEY (id),
         CONSTRAINT FK_email_gastos FOREIGN KEY (email)
@@ -84,7 +84,7 @@ function criarBancoDados()
         bancoCorretora VARCHAR(60) NOT NULL,
         classificacao VARCHAR(11) NOT NULL,
         valor DECIMAL(12, 2) NULL,
-        dataEfetivacao DATE,
+        dataCompraPagamento DATE,
         
         CONSTRAINT PK_id_receitas PRIMARY KEY (id),
         CONSTRAINT FK_email_receitas FOREIGN KEY (email)
