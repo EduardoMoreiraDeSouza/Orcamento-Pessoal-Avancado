@@ -84,7 +84,7 @@ if ($login -> VerificarLogin()) {
                 <th scope="col">Valor</th>
                 <th scope="col">Parcelas</th>
                 <th scope="col">Classificacao</th>
-                <th scope="col">Data da Compra/Pagamento</th>
+                <th scope="col">Compra/Pagamento</th>
                 <th scope="col">Ações</th>
             </tr>
             </thead>

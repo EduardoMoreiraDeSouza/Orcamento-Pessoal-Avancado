@@ -1,17 +1,17 @@
 <?php
 
-require_once __DIR__ . "/./AlterarDadosCartoesCredito.php";
+require_once __DIR__ . "/./EntradaDadosGastos.php";
 
-class ObterDadosGastos extends AlterarDadosCartoesCredito
+class ObterDadosReceita extends EntradaDadosGastos
 {
     private $dados;
 
-    public function ObterDadosGastos($email)
+    public function ObterDadosReceita($email)
     {
         if ($email == null)
             return false;
 
-        $this -> setCodigoMySql("SELECT * FROM dbName.gastos WHERE email LIKE '$email';");
+        $this -> setCodigoMySql("SELECT * FROM dbName.receitas WHERE email LIKE '$email';");
         $this -> setDados($this -> CarregarResultadosMySql(true));
 
         return !empty($this -> getDados()) ? $this -> getDados() : false;

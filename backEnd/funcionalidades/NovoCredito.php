@@ -24,20 +24,17 @@ class NovoCredito extends NovoDebito
             !$this -> getValor() or
             !$this -> getParcelas()
         )
-            return (bool)$this-> RetornarErro('pai', null);
+            return (bool)$this -> RetornarErro('pai', null);
 
         $cartao = $this -> ObterDadosCartoesCredito($this -> getCartaoCredito(), $this -> getSessao());
 
         if (!$cartao)
-            return (bool)$this-> RetornarErro('pai', 'naoBancoCorretora');
+            return (bool)$this -> RetornarErro('pai', 'naoBancoCorretora');
 
-        $this-> timezone();
+        $this -> timezone();
 
-        /* if ($cartao['saldo'] - $this -> getValor() < 0 and $this -> getDataCompraPagamento() <= date('Y-m-d')) {
-            $this -> Comunicar('saldoInsuficiente');
-            $this -> Redirecionar('pai');
-            return false;
-        } */
+        if ($this -> ValorFinal('cartaoCredito', $this -> getCartaoCredito()) < $this-> getValor())
+            return (bool)$this -> RetornarErro('pai', 'limiteInsuficiente');
 
         if (!$this -> EntradaDadosGastos(
             $this -> getCartaoCredito(),
@@ -46,10 +43,11 @@ class NovoCredito extends NovoDebito
             $this -> getDataCompraPagamento(),
             $this -> getValor(),
             $this -> getParcelas()
-        ))
-            return (bool)$this-> RetornarErro('pai', null);
+        )
+        )
+            return (bool)$this -> RetornarErro('pai', null);
 
-        return !$this-> RetornarErro('pai', null);
+        return !$this -> RetornarErro('pai', null);
     }
 
     public function getCartaoCredito()

@@ -7,6 +7,7 @@ if ($login -> VerificarLogin()) {
 
     require_once __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
     require_once __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
+    require_once __DIR__ . "/../backEnd/gerais/ValorFinal.php";
 
     $formatacao = new FormatacaoDados();
 
@@ -242,6 +243,10 @@ if ($login -> VerificarLogin()) {
                 $quantidade++;
                 $nome = $dadosBancosCorretoras['nome'];
 
+                $valorFinal = new ValorFinal('bancoCorretora', $dadosBancosCorretoras['nome']);
+                $saldo = $valorFinal -> ValorFinal('bancoCorretora', $dadosBancosCorretoras['nome']);
+                $saldoTotal += floatval($saldo);
+
                 ?>
 
                 <form action="../backEnd/interacaoComUsuario/editarBancoCorretora.php" method="POST">
@@ -253,7 +258,7 @@ if ($login -> VerificarLogin()) {
                         </td>
                         <td>
                             <input type="text" class="container input-group-text" name="saldo" placeholder="Saldo:"
-                                   step="0.01" value="R$ <?= ""; ?>">
+                                   value="R$ <?= $formatacao -> formatarValor($saldo) ?>">
                         </td>
                         <td>
                             <button style="text-decoration: none;" class="text-primary bg-transparent" name="nameId"

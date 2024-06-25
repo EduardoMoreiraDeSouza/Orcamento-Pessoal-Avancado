@@ -34,10 +34,10 @@ class NovoBancoCorretora extends DadosEntradaFormulario
         if ($this-> getSaldo() > 0) {
             if (!$this -> EntradaDadosReceita(
                 $this -> getNome(),
-                'novoBancoCorretora',
+                'correcaoSaldo',
                 date('Y-m-d'),
-                $this -> getSaldo())
-            )
+                $this -> getSaldo()
+            ))
                 return (bool)$this -> RetornarErro('pai', null);
         }
 
@@ -45,7 +45,7 @@ class NovoBancoCorretora extends DadosEntradaFormulario
             if (!$this -> EntradaDadosGastos(
                 $this -> getNome(),
                 'Débito',
-                'novoBancoCorretora',
+                'correcaoSaldo',
                 date('Y-m-d'),
                 $this -> getSaldo(),
                 1

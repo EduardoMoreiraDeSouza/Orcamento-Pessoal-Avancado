@@ -37,9 +37,6 @@ class NovoDebito extends EditarBancoCorretora
 
         $this-> timezone();
 
-        if ($banco['saldo'] - $this -> getValor() < 0 and $this -> getDataCompraPagamento() <= date('Y-m-d'))
-            return (bool)$this-> RetornarErro('pai', 'saldoInsuficiente');
-
         if (!$this -> EntradaDadosGastos(
             $this -> getBancoCorretora(),
             'Débito',

@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . "/../site/RetornarErro.php";
+require_once __DIR__ . "/../gerais/InformacoesData.php";
 
-class VerificarLogin extends RetornarErro {
+class VerificarLogin extends InformacoesData {
 
     public function VerificarLogin()
     {

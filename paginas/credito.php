@@ -7,6 +7,7 @@ if ($login -> VerificarLogin()) {
 
     require_once __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
     require_once __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
+    require_once __DIR__ . "/../backEnd/gerais/ValorFinal.php";
 
     $formatacao = new FormatacaoDados();
     $execucao = new ExecucaoCodigoMySql();
@@ -194,6 +195,7 @@ if ($login -> VerificarLogin()) {
                 <th scope="col">#</th>
                 <th scope="col">Cartão</th>
                 <th scope="col">Limite</th>
+                <th scope="col">Limite Restante</th>
                 <th scope="col">Fechamento</th>
                 <th scope="col">vencimento</th>
                 <th scope="col">Ações</th>
@@ -211,12 +213,15 @@ if ($login -> VerificarLogin()) {
 
             while ($dadosCartoesCredito = mysqli_fetch_assoc($resultadoExecucao)) {
 
+                $valorFinal = new ValorFinal('cartaoCredito', $dadosCartoesCredito['nome']);
+
                 $quantidade++;
                 $nome = $dadosCartoesCredito['nome'];
                 $fechamento = $dadosCartoesCredito['fechamento'];
                 $vencimento = $dadosCartoesCredito['vencimento'];
-                $limiteTotal += $dadosCartoesCredito['limite'];
-                $limite = $dadosCartoesCredito['limite'];
+                $limite = floatval($valorFinal -> ValorFinal('cartaoCredito', $dadosCartoesCredito['nome']));
+                $limiteTotal += $limite;
+
 
                 ?>
 
@@ -228,8 +233,12 @@ if ($login -> VerificarLogin()) {
                                    value="<?= $nome ?>" required>
                         </td>
                         <td>
-                            <input type="number" class="container input-group-text" name="valor" placeholder="Limite:"
-                                   step="0.01" value="<?= $limite ?>">
+                            <input type="text" class="container input-group-text" name="valor" placeholder="Limite:"
+                                   value="R$ <?= $dadosCartoesCredito['limite'] ?>">
+                        </td>
+                        <td>
+                            <input type="text" class="container input-group-text" name="" placeholder="Limite:"
+                                   value="R$ <?= $formatacao -> formatarValor($limite) ?>" disabled>
                         </td>
                         <td>
                             <input type="number" class="container input-group-text" name="fechamento"
@@ -268,6 +277,7 @@ if ($login -> VerificarLogin()) {
 
             <th scope="row">#</th>
             <td>Total</td>
+            <td></td>
             <td>R$ <?= $formatacao -> formatarValor($limiteTotal) ?></td>
             <td></td>
             <td></td>

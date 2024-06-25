@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . "/./EntradaDadosGastos.php";
+require_once __DIR__ . "/./ObterDadosReceita.php";
 
-abstract class EntradaDadosReceita extends EntradaDadosGastos
+abstract class EntradaDadosReceita extends ObterDadosReceita
 {
     public function EntradaDadosReceita($bancoCorretora, $classificacao, $dataCompraPagamento, $valor)
     {
