@@ -10,7 +10,7 @@ class NovoCredito extends NovoDebito
     {
         if (!$this -> VerificarLogin()) return false;
 
-        $this -> setPaginaPai('credito');
+        $this -> setPaginaPai('gastos');
         $this -> setCartaoCredito($this -> cartaoCredito());
         $this -> setClassificacao($this -> classificacao());
         $this -> setDataCompraPagamento($this -> dataCompraPagamento());
@@ -26,10 +26,11 @@ class NovoCredito extends NovoDebito
         )
             return (bool)$this -> RetornarErro('pai', null);
 
-        $cartao = $this -> ObterDadosCartoesCredito($this -> getCartaoCredito(), $this -> getSessao());
-
-        if (!$cartao)
+        if (!$this -> ObterDadosCartoesCredito($this -> getCartaoCredito(), $this -> getSessao()))
             return (bool)$this -> RetornarErro('pai', 'naoBancoCorretora');
+
+        if ($this-> getValor() < 0)
+            $this-> setValor($this-> getValor() * -1);
 
         $this -> timezone();
 

@@ -86,6 +86,16 @@ abstract class DadosEntradaFormulario extends ValorFinal
         return false;
     }
 
+    protected function id()
+    {
+        $this -> setDados($this-> somenteNumeros(addslashes($_POST['id'])));
+
+        if ($this -> dadosDefinidos())
+            return $this -> getDados();
+
+        return false;
+    }
+
     protected function valor()
     {
         $this -> setDados(addslashes($_POST['valor']));

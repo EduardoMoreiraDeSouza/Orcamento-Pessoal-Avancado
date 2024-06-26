@@ -41,10 +41,10 @@ class FormatacaoDados extends VerificarSenha
         if ($valor < 0)
             $negativo = true;
 
-        $valor = str_replace(',', '.', str_replace('.', '', $this-> somenteNumerosPontos($valor)));
+        $valor = str_replace(',', '.', $this-> somenteNumerosPontos($valor));
 
         if ($negativo == true)
-            $valor *= -1;
+            $valor = (floatval($valor)) * -1;
 
         return number_format($valor, 2, '.', '');
     }

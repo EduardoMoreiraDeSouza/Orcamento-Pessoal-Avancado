@@ -82,13 +82,18 @@ function criarBancoDados()
         email VARCHAR(60) NOT NULL,
         id INT AUTO_INCREMENT,
         bancoCorretora VARCHAR(60) NOT NULL,
-        classificacao VARCHAR(11) NOT NULL,
+        classificacao VARCHAR(13) NOT NULL,
         valor DECIMAL(12, 2) NULL,
+        parcelas INT(4),
         dataPagamento DATE,
         
         CONSTRAINT PK_id_receitas PRIMARY KEY (id),
+        
         CONSTRAINT FK_email_receitas FOREIGN KEY (email)
-        REFERENCES usuarios(email) ON DELETE CASCADE ON UPDATE CASCADE
+        REFERENCES usuarios(email) ON DELETE CASCADE ON UPDATE CASCADE,
+        
+        CONSTRAINT FK_bancoCorretora_receitas FOREIGN KEY (bancoCorretora)
+        REFERENCES bancosCorretoras(nome) ON DELETE CASCADE ON UPDATE CASCADE 
                      
     ) DEFAULT CHARSET = utf8;";
     mysqli_query($conexaoDB, $codigoMySql);

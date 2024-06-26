@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . "/./EntradaDadosGastos.php";
+require_once __DIR__ . "/./AlterarDadosGastos.php";
 
-class ObterDadosReceita extends EntradaDadosGastos
+class ObterDadosReceita extends AlterarDadosGastos
 {
     private $dados;
 

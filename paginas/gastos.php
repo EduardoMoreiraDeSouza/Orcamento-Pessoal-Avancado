@@ -11,17 +11,15 @@ if ($login -> VerificarLogin()) {
     $formatacao = new FormatacaoDados();
 
     $execucao = new ExecucaoCodigoMySql();
-    $codigoMySql = "SELECT * FROM dbName.gastos WHERE email LIKE '" . $login -> getSessao() . "';";
-    $execucao -> setCodigoMySql($codigoMySql);
-    $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
+
     $execucao -> timezone();
 
     if (isset($_GET['excluir']) and isset($_GET['id'])) {
 
-        require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirBancoCorretora.php";
-        $exluir = new ExcluirBancoCorretora(); // ATENÇÃO MUDAR
-        $exluir -> ExcluirBancoCorretora($_GET['nome'], $login -> getSessao());
-        $exluir -> Redirecionar('bancosCorretoras', true);
+        require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirGasto.php";
+        $exluir = new ExcluirGasto(); // ATENÇÃO MUDAR
+        $exluir -> ExcluirGasto($_GET['id'], $login -> getSessao());
+        $exluir -> Redirecionar('gastos', true);
 
     }
 
@@ -55,21 +53,134 @@ if ($login -> VerificarLogin()) {
         <div class="container row mt-5">
 
             <div class="col-auto">
+
                 <p>
-                    <button class="btn btn-dark" type="button">
-                        <a style="text-decoration: none" class="text-light" href="./bancosCorretoras.php">Novo
-                            Débito</a>
+                    <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#novoDebito"
+                            aria-expanded="false" aria-controls="collapseWidthExample">
+                        Novo Débito
                     </button>
                 </p>
+
+                <div style="min-height: auto;" class="mb-3">
+                    <div class="collapse collapse-horizontal" id="novoDebito">
+
+                        <p>Não sabe o valor das parcelas? <br/>Coloque o valor total do gasto (Com juros, se tiver), e
+                            no final coloque um * (Asterisco) para calcularmos para você!</p>
+
+                        <div class="card card-body border border-dark bg-secondary" style="width: 900px;">
+                            <form action="../backEnd/interacaoComUsuario/novoDebito.php" method="POST"
+                                  class="form hstack gap-3">
+
+                                <select class="form-select" name="bancoCorretora" required>
+                                    <option value="" selected>Banco | Corretora</option>
+
+                                    <?php
+
+                                    $codigoMySql = "SELECT * FROM dbName.bancosCorretoras WHERE email LIKE '" . $login -> getSessao() . "';";
+                                    $execucao -> setCodigoMySql($codigoMySql);
+                                    $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
+
+                                    while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
+
+                                        $nome = $dadosBancosCorretoras['nome'];
+
+                                        ?>
+
+                                        <option value="<?= $nome ?>"><?= $nome ?></option>
+
+
+                                        <?php
+                                    } ?>
+
+                                </select>
+
+                                <select class="form-select" name="clasificacao" required>
+                                    <option value="" selected>Classificação</option>
+                                    <option value="Pessoal">Pessoal</option>
+                                    <option value="Necessário">Necessário</option>
+                                    <option value="Reserva">Reserva</option>
+                                    <option value="Dívidas">Dívidas</option>
+                                    <option value="Investimentos">Investimentos</option>
+                                    <option value="Boas Ações">Boas Ações</option>
+                                </select>
+
+                                <input type="date" class="container input-group-text" name="dataCompraPagamento"
+                                       value="<?= date('Y-m-d') ?>" required>
+                                <input type="text" class="container input-group-text" name="valor"
+                                       placeholder="Valor das Parcelas" required>
+                                <input type="number" class="container input-group-text" name="parcelas"
+                                       title="Quantidade de Parcelas" step="1" min="1" value="1" required>
+
+                                <input type="submit" class="container btn btn-dark" value="Debitar">
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="col-auto">
+
                 <p>
-                    <button class="btn btn-dark" type="button">
-                        <a style="text-decoration: none" class="text-light" href="./credito.php">Novo Gasto no
-                            Crédito</a>
+                    <button class="btn btn-dark" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#novoGastoCredito" aria-expanded="false"
+                            aria-controls="collapseWidthExample">
+                        Novo Gasto no Crédito
                     </button>
                 </p>
+
+                <div style="min-height: auto;" class="mb-3">
+
+                    <div class="collapse collapse-horizontal" id="novoGastoCredito">
+                        <p>Não sabe o valor das parcelas? <br/>Coloque o valor total do gasto (Com juros, se tiver), e
+                            no final coloque um * (Asterisco) para calcularmos para você!</p>
+                        <div class="card card-body border border-dark bg-secondary" style="width: 900px;">
+                            <form action="../backEnd/interacaoComUsuario/novoCredito.php" method="POST"
+                                  class="form hstack gap-3">
+                                <select class="form-select" name="cartaoCredito" required>
+                                    <option value="" selected>Cartão</option>
+
+                                    <?php
+
+                                    $codigoMySql = "SELECT * FROM dbName.cartoesCredito WHERE email LIKE '" . $login -> getSessao() . "';";
+                                    $execucao -> setCodigoMySql($codigoMySql);
+                                    $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
+                                    while ($dadosCartoesCredito = mysqli_fetch_assoc($resultadoExecucao)) {
+
+                                        $nome = $dadosCartoesCredito['nome'];
+
+                                        ?>
+
+                                        <option value="<?= $nome ?>"><?= $nome ?></option>
+
+
+                                        <?php
+                                    } ?>
+                                </select>
+
+                                <select class="form-select" name="clasificacao" required>
+                                    <option value="" selected>Classificação</option>
+                                    <option value="Pessoal">Pessoal</option>
+                                    <option value="Necessário">Necessário</option>
+                                    <option value="Reserva">Reserva</option>
+                                    <option value="Dívidas">Dívidas</option>
+                                    <option value="Investimentos">Investimentos</option>
+                                    <option value="Boas Ações">Boas Ações</option>
+                                </select>
+
+                                <input type="date" class="container input-group-text" name="dataCompraPagamento"
+                                       value="<?= date('Y-m-d') ?>" required>
+                                <input type="text" class="container input-group-text" name="valor" placeholder="Valor"
+                                       step="0.01" value="" required>
+                                <input type="number" class="container input-group-text" name="parcelas"
+                                       title="Quantidade de Parcelas" step="1" min="1" value="1" required>
+
+                                <input type="submit" class="container btn btn-dark" value="Creditar">
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -92,6 +203,7 @@ if ($login -> VerificarLogin()) {
 
             <?php
 
+            $codigoMySql = "SELECT * FROM dbName.gastos WHERE email LIKE '" . $login -> getSessao() . "';";
             $execucao -> setCodigoMySql($codigoMySql);
             $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
 
@@ -112,11 +224,11 @@ if ($login -> VerificarLogin()) {
 
                 ?>
 
-                <form action="../backEnd/interacaoComUsuario/" method="POST"> <!-- Editar gastos -->
+                <form action="../backEnd/interacaoComUsuario/editarGastos.php" method="POST"> <!-- Editar gastos -->
                     <tr>
                         <th scope="row"><?= $quantidade ?>º</th>
                         <td>
-                            <select class="form-select" name="fiador" required>
+                            <select class="form-select" name="bancoCorretora" required>
 
                                 <?php
 
@@ -147,10 +259,10 @@ if ($login -> VerificarLogin()) {
                         </td>
                         <td>
                             <input type="text" class="container input-group-text" name="valor" placeholder="Saldo:"
-                                   step="0.01" value="R$ <?= $valor ?>">
+                                   step="0.01" value="R$ <?= $formatacao -> formatarValor($valor) ?>">
                         </td>
                         <td>
-                            <input type="text" class="container input-group-text" name="parcelas" placeholder="Saldo:"
+                            <input type="text" class="container input-group-text" name="parcelas" placeholder="Parcelas:"
                                    step="0.01" value="<?= $parcelas ?>">
                         </td>
                         <td>
@@ -177,7 +289,7 @@ if ($login -> VerificarLogin()) {
                                    value="<?= $dataCompraPagamento ?>">
                         </td>
                         <td>
-                            <button style="text-decoration: none;" class="text-primary bg-transparent" name="nameId"
+                            <button style="text-decoration: none;" class="text-primary bg-transparent" name="id"
                                     value="<?= $id ?>">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-pen" viewBox="0 0 16 16">
@@ -206,6 +318,10 @@ if ($login -> VerificarLogin()) {
             <th scope="row">#</th>
             <td>Total</td>
             <td>R$ <?= $formatacao -> formatarValor($saldoTotal) ?></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
             <td></td>
 
             </tbody>

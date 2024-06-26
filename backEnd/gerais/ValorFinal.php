@@ -18,8 +18,9 @@ class ValorFinal extends FormatacaoDados
 
             if ($gastos)
                 foreach ($gastos as $ignored) {
-                    if ($gastos[$gastoAtual]['formaPagamento'] == 'Crédito')
-                        $gastosCreditoTotal += $gastos[$gastoAtual]['valor'] * $this -> parcelasRestantesCredito($gastos[$gastoAtual]);
+                    if ($gastos[$gastoAtual]['fiador'] == $entidade)
+                        if ($gastos[$gastoAtual]['formaPagamento'] == 'Crédito')
+                            $gastosCreditoTotal += $gastos[$gastoAtual]['valor'] * $this -> parcelasRestantesCredito($gastos[$gastoAtual]);
                     $gastoAtual++;
                 }
 
@@ -34,8 +35,9 @@ class ValorFinal extends FormatacaoDados
 
             if ($gastos)
                 foreach ($gastos as $ignored) {
-                    if ($gastos[$gastoAtual]['formaPagamento'] == 'Débito')
-                        $gastosDebitoTotal += $gastos[$gastoAtual]['valor'] * $this -> parcelasDebitadas($gastos[$gastoAtual]);
+                    if ($gastos[$gastoAtual]['fiador'] == $entidade)
+                        if ($gastos[$gastoAtual]['formaPagamento'] == 'Débito')
+                            $gastosDebitoTotal += $gastos[$gastoAtual]['valor'] * $this -> parcelasDebitadas($gastos[$gastoAtual]);
                     $gastoAtual++;
                 }
 
@@ -45,8 +47,8 @@ class ValorFinal extends FormatacaoDados
 
             if ($receita)
                 foreach ($receita as $ignored) {
-                    if ($receita[$receitaAtual]['dataPagamento'] <= date("Y-m-d"))
-                        $receitaTotal += $receita[$receitaAtual]['valor'];
+                    if ($receita[$receitaAtual]['bancoCorretora'] == $entidade)
+                        $receitaTotal += $receita[$receitaAtual]['valor'] * $this-> parcelasRecebidas($receita[$receitaAtual]);
 
                     $receitaAtual++;
                 }
@@ -133,4 +135,33 @@ class ValorFinal extends FormatacaoDados
         return $diferencaMeses;
     }
 
+    protected function parcelasRecebidas($receita)
+    {
+        $primeiroMesPagamento = intval($this -> InformacoesData('m', $receita['dataPagamento']));
+        $primeiroAnoPagamento = intval($this -> InformacoesData('y', $receita['dataPagamento']));
+
+        if (date('d') >= $this -> InformacoesData('d', $receita['dataPagamento'])) {
+            $primeiroMesPagamento -= 1;
+
+            if ($primeiroMesPagamento <= 0) {
+                $primeiroMesPagamento = 12;
+                $primeiroAnoPagamento--;
+            }
+        }
+
+        if ($primeiroMesPagamento < 10)
+            $primeiroMesPagamento = "0" . $primeiroMesPagamento;
+
+        $primeiraDataPagamento = $primeiroAnoPagamento . '-' . $primeiroMesPagamento . '-' . $this -> InformacoesData('d', $receita['dataPagamento']);
+        $diferencaMeses = $this -> diferencaMesesData($primeiraDataPagamento, date('Y-m-d'));
+
+        if ($diferencaMeses) {
+            if ($diferencaMeses > 0)
+                return $diferencaMeses;
+            else
+                return 0;
+        }
+
+        return $diferencaMeses;
+    }
 }

@@ -195,11 +195,12 @@ if ($login -> VerificarLogin()) {
                                     <option value="Reserva">Reserva</option>
                                     <option value="Outros">Outros</option>
                                 </select>
-
                                 <input type="date" class="container input-group-text" name="dataCompraPagamento"
                                        value="<?= date('Y-m-d') ?>" required>
                                 <input type="number" class="container input-group-text" name="valor" placeholder="Valor"
                                        step="0.01" min="0.01" required>
+                                <input type="number" class="container input-group-text" name="parcelas"
+                                       title="Quantidade de Parcelas" step="1" min="0" value="1">
                                 <input type="submit" class="container btn btn-dark" value="Depositar">
 
                             </form>

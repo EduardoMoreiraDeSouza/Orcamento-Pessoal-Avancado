@@ -33,41 +33,38 @@ class InformacoesData extends RetornarErro
         $mesIni = intval(substr($dataInicial, 5, 2));
         $anoIni = intval(substr($dataInicial, 0, 4));
 
+
         $diaFin = intval(substr($dataFinal, 8, 5));
         $mesFin = intval(substr($dataFinal, 5, 2));
         $anoFin = intval(substr($dataFinal, 0, 4));
+
 
         $diasAnos = 0;
         $diasMeses = 0;
         $dias = $diaFin - $diaIni;
 
-        while ($anoIni != $anoFin) {
+        if (gettype($anoIni / 4) == "integer")
+            $diasFevereiro = 29;
+        else
+            $diasFevereiro = 28;
 
-            if (gettype($anoIni / 4) == "integer")
-                $diasAnos += 366;
-            else
-                $diasAnos += 365;
-
-            $anoIni++;
-
-        }
-
-        while ($mesIni != $mesFin) {
+        while ($mesIni != $mesFin or $anoIni != $anoFin) {
 
             if ($mesIni == 1 or $mesIni == 3 or $mesIni == 5 or $mesIni == 7 or $mesIni == 8 or $mesIni == 10 or $mesIni == 12)
                 $diasMeses += 31;
 
             if ($mesIni == 2)
-                $diasMeses += 28;
+                $diasMeses += $diasFevereiro;
 
             if ($mesIni == 4 or $mesIni == 6 or $mesIni == 9 or $mesIni == 11)
                 $diasMeses += 30;
 
-            if ($mesIni == 12)
+            if ($mesIni == 12) {
                 $mesIni = 1;
+                $anoIni++;
+            }
             else
                 $mesIni++;
-
         }
 
         return intval(($diasAnos + $diasMeses + $dias)/30);

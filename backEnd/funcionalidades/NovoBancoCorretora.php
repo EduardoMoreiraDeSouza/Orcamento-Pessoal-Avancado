@@ -36,7 +36,8 @@ class NovoBancoCorretora extends DadosEntradaFormulario
                 $this -> getNome(),
                 'correcaoSaldo',
                 date('Y-m-d'),
-                $this -> getSaldo()
+                $this -> getSaldo(),
+                1
             ))
                 return (bool)$this -> RetornarErro('pai', null);
         }
@@ -47,7 +48,7 @@ class NovoBancoCorretora extends DadosEntradaFormulario
                 'Débito',
                 'correcaoSaldo',
                 date('Y-m-d'),
-                $this -> getSaldo(),
+                $this -> getSaldo() * -1,
                 1
             ))
                 return (bool)$this-> RetornarErro('pai', null);

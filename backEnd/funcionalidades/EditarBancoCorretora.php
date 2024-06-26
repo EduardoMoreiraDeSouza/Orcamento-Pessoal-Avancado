@@ -36,7 +36,8 @@ class EditarBancoCorretora extends Entrar
                 $this -> getNome(),
                 'correcaoSaldo',
                 date('Y-m-d'),
-                $this -> getSaldo() - floatval($this-> ValorFinal('bancoCorretora', $this-> getNome()))
+                $this -> getSaldo() - floatval($this-> ValorFinal('bancoCorretora', $this-> getNome())),
+                1
             ))
                 return (bool)$this -> RetornarErro('pai', null);
         }
