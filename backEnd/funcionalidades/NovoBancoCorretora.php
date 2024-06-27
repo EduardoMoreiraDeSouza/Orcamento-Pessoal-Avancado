@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . "/../formulario/DadosEntradaFormulario.php";
+require_once __DIR__ . "/../formulario/Formulario.php";
 
-class NovoBancoCorretora extends DadosEntradaFormulario
+class NovoBancoCorretora extends Formulario
 {
     private $nome;
     private $saldo;

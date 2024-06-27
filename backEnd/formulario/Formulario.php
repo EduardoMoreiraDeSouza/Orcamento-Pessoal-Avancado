@@ -2,7 +2,7 @@
 
 require_once __DIR__ . "/../gerais/ValorFinal.php";
 
-abstract class DadosEntradaFormulario extends ValorFinal
+abstract class Formulario extends ValorFinal
 {
     private $dados;
 

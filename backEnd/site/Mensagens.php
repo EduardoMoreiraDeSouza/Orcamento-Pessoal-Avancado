@@ -36,7 +36,8 @@ abstract class Mensagens extends ScriptJS
 
             'fechamentoVencimento' => 'O dia do fechamento não pode ser igual ao vencimento!',
 
-            'valorInvalido' => 'O valor inserido está inválido!'
+            'valorInvalido' => 'O valor inserido está inválido!',
+            'valorAbaixoZero' => 'O valor não pode ser negativo, ou zero!'
 
         ]);
 

@@ -22,6 +22,7 @@ class EditarGastos extends NovoCredito
         $this -> setParcelas($this -> parcelas());
 
         if (
+            !$this-> getId() or
             !$this -> getBancoCorretora() or
             !$this -> getFormaPagamento() or
             !$this -> getClassificacao() or
@@ -31,13 +32,11 @@ class EditarGastos extends NovoCredito
         )
             return (bool)$this -> RetornarErro('pai', null);
 
-        if ($this-> getValor() < 0)
+        if ($this-> getValor() <= 0)
             $this-> setValor($this-> getValor() * -1);
 
         if (!$this -> ObterDadosBancosCorretoras($this -> getBancoCorretora(), $this -> getSessao()))
             return (bool)$this-> RetornarErro('pai', 'naoBancoCorretora');
-
-        $this-> timezone();
 
         if (!$this -> AlterarDadosGastos(
             $this-> getId(),
@@ -51,7 +50,6 @@ class EditarGastos extends NovoCredito
             return (bool)$this-> RetornarErro('pai', null);
 
         return !$this-> RetornarErro('pai', null);
-
     }
 
     protected function getFormaPagamento()

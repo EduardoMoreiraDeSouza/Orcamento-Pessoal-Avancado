@@ -19,10 +19,10 @@ if ($login -> VerificarLogin()) {
 
     if (isset($_GET['excluir']) and isset($_GET['id'])) {
 
-        require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirGasto.php";
-        $exluir = new ExcluirGasto(); // ATENÇÃO MUDAR
-        $exluir -> ExcluirGasto($_GET['id'], $login -> getSessao());
-        $exluir -> Redirecionar('gastos', true);
+        require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirReceita.php";
+        $exluir = new ExcluirReceita(); // ATENÇÃO MUDAR
+        $exluir -> ExcluirReceita($_GET['id'], $login -> getSessao());
+        $exluir -> Redirecionar('receitas', true);
 
     }
 
@@ -186,7 +186,7 @@ if ($login -> VerificarLogin()) {
 
                 ?>
 
-                <form action="../backEnd/interacaoComUsuario/editarGastos.php" method="POST"> <!-- Editar gastos -->
+                <form action="../backEnd/interacaoComUsuario/editarReceita.php" method="POST">
                     <tr>
                         <th scope="row"><?= $quantidade ?>º</th>
                         <td>
@@ -214,8 +214,8 @@ if ($login -> VerificarLogin()) {
                             </select>
                         </td>
                         <td>
-                            <input type="text" class="container input-group-text" name="valor" placeholder="Saldo:"
-                                   step="0.01" value="R$ <?= $formatacao -> formatarValor($valor) ?>">
+                            <input type="text" class="container input-group-text" name="valor" placeholder="Valor:"
+                                   value="R$ <?= $formatacao -> formatarValor($valor) ?>">
                         </td>
 
                         <td>

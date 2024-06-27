@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . "/../dados/EntradaDadosReceita.php";
+require_once __DIR__ . "/../dados/AlterarDadosReceita.php";
 
-class VerificarSenha extends EntradaDadosReceita
+class VerificarSenha extends AlterarDadosReceita
 {
     public function VerificarSenha($email, $senha): bool
     {

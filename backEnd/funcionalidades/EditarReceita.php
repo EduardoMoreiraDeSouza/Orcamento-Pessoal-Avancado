@@ -1,14 +1,15 @@
 <?php
 
-require_once __DIR__ . "/./NovoDebito.php";
+require_once __DIR__ . "/./EditarGastos.php";
 
-class NovaReceita extends NovoDebito
+class EditarReceita extends EditarGastos
 {
     public function __construct()
     {
         if (!$this-> VerificarLogin()) return false;
 
         $this -> setPaginaPai('receitas');
+        $this -> setId($this-> id());
         $this -> setBancoCorretora($this -> bancoCorretora());
         $this -> setClassificacao($this -> classificacao());
         $this -> setDataCompraPagamento($this -> dataCompraPagamento());
@@ -16,26 +17,28 @@ class NovaReceita extends NovoDebito
         $this -> setParcelas($this -> parcelas());
 
         if (
+            !$this -> getId() or
             !$this -> getBancoCorretora() or
             !$this -> getClassificacao() or
             !$this -> getDataCompraPagamento() or
             !$this -> getValor() or
-            !$this -> getParcelas()
+            !$this-> getParcelas()
         )
-            return (bool)$this-> RetornarErro('pai', null);
+            return (bool)$this -> RetornarErro('pai', null);
 
-        if ($this-> getValor() < 0)
+        if ($this-> getValor() <= 0)
             return (bool)$this-> RetornarErro('pai', 'valorAbaixoZero');
 
         if (!$this -> ObterDadosBancosCorretoras($this -> getBancoCorretora(), $this -> getSessao()))
             return (bool)$this-> RetornarErro('pai', 'naoBancoCorretora');
 
-        if (!$this -> EntradaDadosReceita(
-            $this -> getBancoCorretora(),
-            $this -> getClassificacao(),
-            $this -> getDataCompraPagamento(),
-            $this -> getValor(),
-            $this-> getParcelas()
+        if (!$this -> AlterarDadosReceita(
+           $this -> getId(),
+           $this -> getBancoCorretora(),
+           $this -> getClassificacao(),
+           $this -> getValor(),
+           $this-> getParcelas(),
+           $this -> getDataCompraPagamento()
         ))
             return (bool)$this-> RetornarErro('pai', null);
 
