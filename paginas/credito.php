@@ -14,16 +14,12 @@ if ($login -> VerificarLogin()) {
 
     $execucao -> timezone();
 
-    if (
-        isset($_GET['excluir']) and
-        isset($_GET['nome'])
-    ) {
-
+    if (isset($_GET['excluir']) and isset($_GET['nome'])) {
         require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirCartaoCredito.php";
+
         $exluir = new ExcluirCartaoCredito();
         $exluir -> ExcluirCartaoCredito($_GET['nome'], $login -> getSessao());
         $exluir -> Redirecionar('credito', true);
-
     }
 
     ?>
@@ -74,7 +70,7 @@ if ($login -> VerificarLogin()) {
 
                         <div class="card card-body border border-dark bg-secondary" style="width: 1000px;">
 
-                            <form action="../backEnd/interacaoComUsuario/novoCartaoCredito.php" method="POST"
+                            <form action="../backEnd/InteracaoFront/novoCartaoCredito.php" method="POST"
                                   class="form hstack gap-3">
 
                                 <select class="form-select" name="nome" required>
@@ -82,17 +78,15 @@ if ($login -> VerificarLogin()) {
 
                                     <?php
 
-                                    $codigoMySql = "SELECT * FROM dbName.bancosCorretoras WHERE email LIKE '" . $login -> getSessao() . "';";
-                                    $execucao -> setCodigoMySql($codigoMySql);
+                                    $execucao -> setCodigoMySql("SELECT * FROM dbName.bancosCorretoras WHERE email LIKE '" . $login -> getSessao() . "';");
                                     $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
-                                    while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
 
+                                    while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
                                         $nome = $dadosBancosCorretoras['nome'];
 
                                         ?>
 
                                         <option value="<?= $nome ?>"><?= $nome ?></option>
-
 
                                         <?php
                                     } ?>
@@ -130,15 +124,14 @@ if ($login -> VerificarLogin()) {
                         <p>Não sabe o valor das parcelas? <br/>Coloque o valor total do gasto (Com juros, se tiver), e
                             no final coloque um * (Asterisco) para calcularmos para você!</p>
                         <div class="card card-body border border-dark bg-secondary" style="width: 900px;">
-                            <form action="../backEnd/interacaoComUsuario/novoCredito.php" method="POST"
+                            <form action="../backEnd/InteracaoFront/novoCredito.php" method="POST"
                                   class="form hstack gap-3">
                                 <select class="form-select" name="cartaoCredito" required>
                                     <option value="" selected>Cartão</option>
 
                                     <?php
 
-                                    $codigoMySql = "SELECT * FROM dbName.cartoesCredito WHERE email LIKE '" . $login -> getSessao() . "';";
-                                    $execucao -> setCodigoMySql($codigoMySql);
+                                    $execucao -> setCodigoMySql("SELECT * FROM dbName.cartoesCredito WHERE email LIKE '" . $login -> getSessao() . "';");
                                     $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
                                     while ($dadosCartoesCredito = mysqli_fetch_assoc($resultadoExecucao)) {
 
@@ -205,7 +198,7 @@ if ($login -> VerificarLogin()) {
 
             <?php
 
-            $execucao -> setCodigoMySql($codigoMySql);
+            $execucao -> setCodigoMySql("SELECT * FROM dbName.cartoesCredito WHERE email LIKE '" . $login -> getSessao() . "';");
             $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
 
             $quantidade = 0;
@@ -225,7 +218,7 @@ if ($login -> VerificarLogin()) {
 
                 ?>
 
-                <form action="../backEnd/interacaoComUsuario/editarCartaoCredito.php" method="POST">
+                <form action="../backEnd/InteracaoFront/editarCartaoCredito.php" method="POST">
                     <tr>
                         <th scope="row"><?= $quantidade ?>º</th>
                         <td>

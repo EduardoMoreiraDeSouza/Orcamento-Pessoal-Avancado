@@ -26,7 +26,7 @@
 
     <h1 class="text-center">Entrar</h1>
 
-    <form class="mt-5" action="../backEnd/interacaoComUsuario/entrar.php" method="POST">
+    <form class="mt-5" action="../backEnd/InteracaoFront/entrar.php" method="POST">
 
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Seu Email:</label>

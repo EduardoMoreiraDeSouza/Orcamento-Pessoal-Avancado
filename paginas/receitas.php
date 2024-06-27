@@ -11,19 +11,15 @@ if ($login -> VerificarLogin()) {
     $formatacao = new FormatacaoDados();
 
     $execucao = new ExecucaoCodigoMySql();
-    $codigoMySql = "SELECT * FROM dbName.receitas WHERE email LIKE '" . $login -> getSessao() . "';";
-
-    $execucao -> setCodigoMySql($codigoMySql);
-    $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
     $execucao -> timezone();
 
     if (isset($_GET['excluir']) and isset($_GET['id'])) {
-
         require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirReceita.php";
+
         $exluir = new ExcluirReceita(); // ATENÇÃO MUDAR
         $exluir -> ExcluirReceita($_GET['id'], $login -> getSessao());
-        $exluir -> Redirecionar('receitas', true);
 
+        $exluir -> Redirecionar('receitas', true);
     }
 
     ?>
@@ -67,7 +63,7 @@ if ($login -> VerificarLogin()) {
                 <div style="min-height: auto;" class="mb-4">
                     <div class="collapse collapse-horizontal" id="novoBancoCorretora">
                         <div class="card card-body border border-dark bg-secondary" style="width: 500px;">
-                            <form action="../backEnd/interacaoComUsuario/novoBancoCorretora.php" method="POST"
+                            <form action="../backEnd/InteracaoFront/novoBancoCorretora.php" method="POST"
                                   class="form hstack gap-3">
 
                                 <input type="text" class="container input-group-text" name="nome" placeholder="Nome:"
@@ -100,7 +96,7 @@ if ($login -> VerificarLogin()) {
                             no final coloque um * (Asterisco) para calcularmos para você!</p>
 
                         <div class="card card-body border border-dark bg-secondary" style="width: 700px;">
-                            <form action="../backEnd/interacaoComUsuario/novaReceita.php" method="POST"
+                            <form action="../backEnd/InteracaoFront/novaReceita.php" method="POST"
                                   class="form hstack gap-3">
 
                                 <select class="form-select" name="bancoCorretora" required>
@@ -167,7 +163,7 @@ if ($login -> VerificarLogin()) {
 
             <?php
 
-            $execucao -> setCodigoMySql($codigoMySql);
+            $execucao -> setCodigoMySql("SELECT * FROM dbName.receitas WHERE email LIKE '" . $login -> getSessao() . "';");
             $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
 
             $quantidade = 0;
@@ -186,7 +182,7 @@ if ($login -> VerificarLogin()) {
 
                 ?>
 
-                <form action="../backEnd/interacaoComUsuario/editarReceita.php" method="POST">
+                <form action="../backEnd/InteracaoFront/editarReceita.php" method="POST">
                     <tr>
                         <th scope="row"><?= $quantidade ?>º</th>
                         <td>

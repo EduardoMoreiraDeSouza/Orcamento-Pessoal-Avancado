@@ -43,39 +43,37 @@ $globais = new Globais;
                     if (empty($globais -> getSessao())) { ?>
 
                         <li class="nav-item h6">
+                            <a class="nav-link active text-light" aria-current="page" href="paginas/cadastrar.php">Cadastrar</a>
+                        </li>
+                        <li class="nav-item h6">
                             <a class="nav-link active text-light" aria-current="page"
                                href="./paginas/entrar.php">Entrar</a>
-                        </li>
-
-                        <li class="nav-item h6">
-                            <a class="nav-link active text-light" aria-current="page" href="paginas/cadastrar.php">Cadastrar</a>
                         </li>
 
                     <?php
                     } else { ?>
 
-
-                        <li class="nav-item h6">
-                            <a class="nav-link active text-light" aria-current="page"
-                               href="backEnd/interacaoComUsuario/sair.php">Sair</a>
-                        </li>
-                        <li class="nav-item h6">
-                            <a class="nav-link text-light" href="./paginas/gastos.php">Gastos</a>
-                        </li>
                         <li class="nav-item h6">
                             <a class="nav-link text-light" href="./paginas/bancosCorretoras.php">Bancos e Corretoras</a>
-                        </li>
-                        <li class="nav-item h6">
-                            <a class="nav-link text-light" href="./paginas/credito.php">Cartões de Crédito</a>
-                        </li>
-                        <li class="nav-item h6">
-                            <a class="nav-link text-light" href="#">Rendimentos</a>
                         </li>
                         <li class="nav-item h6">
                             <a class="nav-link text-light" href="paginas/receitas.php">Receitas</a>
                         </li>
                         <li class="nav-item h6">
+                            <a class="nav-link text-light" href="./paginas/gastos.php">Gastos</a>
+                        </li>
+                        <li class="nav-item h6">
+                            <a class="nav-link text-light" href="./paginas/credito.php">Cartões de Crédito</a>
+                        </li>
+                        <li class="nav-item h6">
                             <a class="nav-link text-light" href="#">Investimentos</a>
+                        </li>
+                        <li class="nav-item h6">
+                            <a class="nav-link text-light" href="#">Rendimentos</a>
+                        </li>
+                        <li class="nav-item h6">
+                            <a class="nav-link active text-light" aria-current="page"
+                               href="backEnd/InteracaoFront/sair.php">Sair</a>
                         </li>
 
                     <?php

@@ -10,22 +10,17 @@ if ($login -> VerificarLogin()) {
     require_once __DIR__ . "/../backEnd/gerais/ValorFinal.php";
 
     $formatacao = new FormatacaoDados();
-
     $execucao = new ExecucaoCodigoMySql();
-    $codigoMySql = "SELECT * FROM dbName.bancosCorretoras WHERE email LIKE '" . $login -> getSessao() . "';";
-    $execucao -> setCodigoMySql($codigoMySql);
-    $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
+
     $execucao-> timezone();
 
     if (isset($_GET['excluir']) and isset($_GET['nome'])) {
-
         require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirBancoCorretora.php";
+
         $exluir = new ExcluirBancoCorretora();
         $exluir -> ExcluirBancoCorretora($_GET['nome'], $login -> getSessao());
         $exluir -> Redirecionar('bancosCorretoras', true);
-
     }
-
     ?>
 
     <!doctype html>
@@ -67,7 +62,7 @@ if ($login -> VerificarLogin()) {
                 <div style="min-height: auto;" class="mb-4">
                     <div class="collapse collapse-horizontal" id="novoBancoCorretora">
                         <div class="card card-body border border-dark bg-secondary" style="width: 500px;">
-                            <form action="../backEnd/interacaoComUsuario/novoBancoCorretora.php" method="POST"
+                            <form action="../backEnd/InteracaoFront/novoBancoCorretora.php" method="POST"
                                   class="form hstack gap-3">
 
                                 <input type="text" class="container input-group-text" name="nome" placeholder="Nome:"
@@ -100,13 +95,17 @@ if ($login -> VerificarLogin()) {
                             no final coloque um * (Asterisco) para calcularmos para você!</p>
 
                         <div class="card card-body border border-dark bg-secondary" style="width: 900px;">
-                            <form action="../backEnd/interacaoComUsuario/novoDebito.php" method="POST"
+                            <form action="../backEnd/InteracaoFront/novoDebito.php" method="POST"
                                   class="form hstack gap-3">
 
                                 <select class="form-select" name="bancoCorretora" required>
                                     <option value="" selected>Banco | Corretora</option>
 
                                     <?php
+
+                                    $codigoMySql = "SELECT * FROM dbName.bancosCorretoras WHERE email LIKE '" . $login -> getSessao() . "';";
+                                    $execucao -> setCodigoMySql($codigoMySql);
+                                    $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
 
                                     while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
 
@@ -160,7 +159,7 @@ if ($login -> VerificarLogin()) {
                     <div class="collapse collapse-horizontal" id="novaReceita">
                         <div class="card card-body border border-dark bg-secondary" style="width: 700px;">
 
-                            <form action="../backEnd/interacaoComUsuario/novaReceita.php" method="POST"
+                            <form action="../backEnd/InteracaoFront/novaReceita.php" method="POST"
                                   class="form hstack gap-3">
 
                                 <select class="form-select" name="bancoCorretora" required>
@@ -249,7 +248,7 @@ if ($login -> VerificarLogin()) {
 
                 ?>
 
-                <form action="../backEnd/interacaoComUsuario/editarBancoCorretora.php" method="POST">
+                <form action="../backEnd/InteracaoFront/editarBancoCorretora.php" method="POST">
                     <tr>
                         <th scope="row"><?= $quantidade ?>º</th>
                         <td>

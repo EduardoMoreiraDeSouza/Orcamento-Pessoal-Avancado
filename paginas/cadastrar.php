@@ -26,7 +26,7 @@
 
     <h1 class="text-center">Cadastrar</h1>
 
-    <form class="mt-5" action="../backEnd/interacaoComUsuario/cadastrar.php" method="POST">
+    <form class="mt-5" action="../backEnd/InteracaoFront/cadastrar.php" method="POST">
 
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Seu Email:</label>

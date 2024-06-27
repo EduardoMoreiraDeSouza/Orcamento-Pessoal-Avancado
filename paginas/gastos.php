@@ -9,18 +9,16 @@ if ($login -> VerificarLogin()) {
     require_once __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
 
     $formatacao = new FormatacaoDados();
-
     $execucao = new ExecucaoCodigoMySql();
 
     $execucao -> timezone();
 
     if (isset($_GET['excluir']) and isset($_GET['id'])) {
-
         require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirGasto.php";
+
         $exluir = new ExcluirGasto(); // ATENÇÃO MUDAR
         $exluir -> ExcluirGasto($_GET['id'], $login -> getSessao());
         $exluir -> Redirecionar('gastos', true);
-
     }
 
     ?>
@@ -68,7 +66,7 @@ if ($login -> VerificarLogin()) {
                             no final coloque um * (Asterisco) para calcularmos para você!</p>
 
                         <div class="card card-body border border-dark bg-secondary" style="width: 900px;">
-                            <form action="../backEnd/interacaoComUsuario/novoDebito.php" method="POST"
+                            <form action="../backEnd/InteracaoFront/novoDebito.php" method="POST"
                                   class="form hstack gap-3">
 
                                 <select class="form-select" name="bancoCorretora" required>
@@ -135,16 +133,16 @@ if ($login -> VerificarLogin()) {
                         <p>Não sabe o valor das parcelas? <br/>Coloque o valor total do gasto (Com juros, se tiver), e
                             no final coloque um * (Asterisco) para calcularmos para você!</p>
                         <div class="card card-body border border-dark bg-secondary" style="width: 900px;">
-                            <form action="../backEnd/interacaoComUsuario/novoCredito.php" method="POST"
+                            <form action="../backEnd/InteracaoFront/novoCredito.php" method="POST"
                                   class="form hstack gap-3">
                                 <select class="form-select" name="cartaoCredito" required>
                                     <option value="" selected>Cartão</option>
 
                                     <?php
 
-                                    $codigoMySql = "SELECT * FROM dbName.cartoesCredito WHERE email LIKE '" . $login -> getSessao() . "';";
-                                    $execucao -> setCodigoMySql($codigoMySql);
+                                    $execucao -> setCodigoMySql("SELECT * FROM dbName.cartoesCredito WHERE email LIKE '" . $login -> getSessao() . "';");
                                     $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
+
                                     while ($dadosCartoesCredito = mysqli_fetch_assoc($resultadoExecucao)) {
 
                                         $nome = $dadosCartoesCredito['nome'];
@@ -203,8 +201,7 @@ if ($login -> VerificarLogin()) {
 
             <?php
 
-            $codigoMySql = "SELECT * FROM dbName.gastos WHERE email LIKE '" . $login -> getSessao() . "';";
-            $execucao -> setCodigoMySql($codigoMySql);
+            $execucao -> setCodigoMySql("SELECT * FROM dbName.gastos WHERE email LIKE '" . $login -> getSessao() . "';");
             $resultadoExecucao = $execucao -> ExecutarCodigoMySql();
 
             $quantidade = 0;
@@ -224,7 +221,7 @@ if ($login -> VerificarLogin()) {
 
                 ?>
 
-                <form action="../backEnd/interacaoComUsuario/editarGastos.php" method="POST"> <!-- Editar gastos -->
+                <form action="../backEnd/InteracaoFront/editarGastos.php" method="POST"> <!-- Editar gastos -->
                     <tr>
                         <th scope="row"><?= $quantidade ?>º</th>
                         <td>
@@ -233,8 +230,7 @@ if ($login -> VerificarLogin()) {
                                 <?php
 
                                 $execucao2 = new ExecucaoCodigoMySql();
-                                $codigoMySql2 = "SELECT * FROM dbName.bancosCorretoras WHERE email LIKE '" . $login -> getSessao() . "';";
-                                $execucao2 -> setCodigoMySql($codigoMySql2);
+                                $execucao2 -> setCodigoMySql("SELECT * FROM dbName.bancosCorretoras WHERE email LIKE '" . $login -> getSessao() . "';");
                                 $resultadoExecucao2 = $execucao2 -> ExecutarCodigoMySql();
 
                                 while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao2)) {
