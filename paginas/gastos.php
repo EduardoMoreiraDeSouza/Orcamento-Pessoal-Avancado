@@ -120,7 +120,7 @@ if ($login->VerificarLogin()) {
 												no final coloque um * (Asterisco) para calcularmos para você!</p>
 
 											<div class="card card-body border border-dark bg-secondary"
-											     style="width: 900px;">
+											     style="width: 90%;">
 												<form action="../backEnd/InteracaoFront/novoDebito.php" method="POST"
 												      class="form hstack gap-3">
 
@@ -193,7 +193,7 @@ if ($login->VerificarLogin()) {
 												juros, se tiver), e
 												no final coloque um * (Asterisco) para calcularmos para você!</p>
 											<div class="card card-body border border-dark bg-secondary"
-											     style="width: 900px;">
+											     style="width: 100%;">
 												<form action="../backEnd/InteracaoFront/novoCredito.php" method="POST"
 												      class="form hstack gap-3">
 													<select class="form-select" name="cartaoCredito" required>
@@ -249,7 +249,7 @@ if ($login->VerificarLogin()) {
 
 							</div>
 
-							<table class="table table-dark text-center">
+							<table class="table table-dark text-center" style="width: 100%">
 
 								<thead>
 								<tr>

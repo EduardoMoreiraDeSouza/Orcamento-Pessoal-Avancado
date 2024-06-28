@@ -116,7 +116,7 @@ if ($login->VerificarLogin()) {
 									<div style="min-height: auto;" class="mb-4">
 										<div class="collapse collapse-horizontal" id="novoBancoCorretora">
 											<div class="card card-body border border-dark bg-secondary"
-											     style="width: 500px;">
+											     style="width: 80%;">
 												<form action="../backEnd/InteracaoFront/novoBancoCorretora.php"
 												      method="POST"
 												      class="form hstack gap-3">
@@ -154,7 +154,7 @@ if ($login->VerificarLogin()) {
 												no final coloque um * (Asterisco) para calcularmos para você!</p>
 
 											<div class="card card-body border border-dark bg-secondary"
-											     style="width: 700px;">
+											     style="width: 100%;">
 												<form action="../backEnd/InteracaoFront/novaReceita.php" method="POST"
 												      class="form hstack gap-3">
 
