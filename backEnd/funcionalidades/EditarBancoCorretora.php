@@ -17,7 +17,8 @@ class EditarBancoCorretora extends Entrar
 
         if (
             !$this -> getNome() or
-            !$this -> getNomeId()
+            !$this -> getNomeId() or
+            !$this -> getSaldo()
         )
             return (bool)$this-> RetornarErro('pai', null);
 

@@ -36,11 +36,16 @@ class FormatacaoDados extends VerificarSenha
 
     public function formatarValorDB($valor)
     {
+        if (substr_count($valor, ',') > 1 or str_contains(substr($valor, -3, 3), '.')) {
+            return (bool)$this-> RetornarErro('pai', 'valorInvalido');
+        }
+
         $negativo = false;
 
         if ($valor < 0)
             $negativo = true;
 
+        $valor = str_replace('.', '', $valor);
         $valor = str_replace(',', '.', $this-> somenteNumerosPontos($valor));
 
         if ($negativo == true)
@@ -51,6 +56,10 @@ class FormatacaoDados extends VerificarSenha
 
     public function formatarValor($valor): string
     {
+        if (substr_count($valor, ',') > 1) {
+            return (bool)$this-> RetornarErro('pai', 'valorInvalido');
+        }
+
         return number_format($valor,2,",",".");
     }
 }

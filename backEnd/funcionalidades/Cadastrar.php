@@ -4,15 +4,18 @@ require_once __DIR__ . "/./EditarCartaoCredito.php";
 
 class Cadastrar extends EditarCartaoCredito
 {
+    private $confirmarSenha;
     public function __construct()
     {
         $this -> setPaginaPai('cadastrar');
         $this -> setSenha($this -> senha());
         $this -> setEmail($this -> email());
+        $this -> setConfirmarSenha($this -> confirmarSenha());
 
         if (
             !$this -> getSenha() or
-            !$this -> getEmail()
+            !$this -> getEmail() or
+            !$this -> getConfirmarSenha()
         )
             return (bool)$this-> RetornarErro('pai', null);
 
@@ -27,5 +30,15 @@ class Cadastrar extends EditarCartaoCredito
         new Entrar();
 
         return !$this-> RetornarErro('inicio', null);
+    }
+
+    private function getConfirmarSenha()
+    {
+        return $this->confirmarSenha;
+    }
+
+    private function setConfirmarSenha($confirmarSenha): void
+    {
+        $this->confirmarSenha = $confirmarSenha;
     }
 }

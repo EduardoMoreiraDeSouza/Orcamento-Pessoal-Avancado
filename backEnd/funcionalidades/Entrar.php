@@ -13,15 +13,15 @@ class Entrar extends NovoCartaoCredito
         $this -> setEmail($this -> email());
         $this -> setSenha($this -> senha());
 
-        if (!$this -> ObterDadosUsuarios($this -> getEmail()))
-            return (bool)$this-> RetornarErro('pai', 'cadastrar');
-
         if (
             !$this -> getSenha() or
             !$this -> getEmail() or
             !$this -> VerificarSenha($this -> getEmail(), $this -> getSenha())
         )
             return (bool)$this-> RetornarErro('pai', null);
+
+        if (!$this -> ObterDadosUsuarios($this -> getEmail()))
+            return (bool)$this-> RetornarErro('pai', 'cadastrar');
 
         $this -> setSessao($this -> getEmail());
 
