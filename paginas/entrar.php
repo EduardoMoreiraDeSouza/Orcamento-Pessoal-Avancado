@@ -52,8 +52,7 @@ $globais = new Globais;
                     <?php if (!empty($globais->getSessao())) { ?>
 
 					<li class="nav-item h6">
-						<a class="nav-link text-light" href="../paginas/bancosCorretoras.php">Bancos e
-							Corretoras</a>
+						<a class="nav-link text-light" href="../paginas/bancosCorretoras.php">Bancos/Corretoras</a>
 					</li>
 					<li class="nav-item h6">
 						<a class="nav-link text-light" href="../paginas/receitas.php">Receitas</a>

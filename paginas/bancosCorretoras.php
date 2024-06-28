@@ -12,6 +12,7 @@ if ($login->VerificarLogin()) {
     $formatacao = new FormatacaoDados();
     $execucao = new ExecucaoCodigoMySql();
 
+
     $execucao->timezone();
 
     if (isset($_GET['excluir']) and isset($_GET['nome'])) {
@@ -21,13 +22,6 @@ if ($login->VerificarLogin()) {
         $exluir->ExcluirBancoCorretora($_GET['nome'], $login->getSessao());
         $exluir->Redirecionar('bancosCorretoras', true);
     }
-    ?>
-
-    <?php
-
-    require_once __DIR__ . "/../backEnd/site/Globais.php";
-    $globais = new Globais;
-
     ?>
 
 	<!DOCTYPE html>
@@ -43,7 +37,7 @@ if ($login->VerificarLogin()) {
 
 		<link href="../css/style.css" rel="stylesheet">
 
-		<title>Orçamento Pessoal</title>
+		<title>Orçamento Pessoal - Banco/Corretoras</title>
 
 	</head>
 
@@ -52,21 +46,17 @@ if ($login->VerificarLogin()) {
 		<div class="container-fluid">
 			<a class="navbar-brand" href="../index.php">< Orçamento Pessoal ></a>
 
-            <?php if (!empty($globais->getSessao())) { ?>
-
 				<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
 				        data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
 				        aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 
-            <?php } ?>
-
 			<div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
 			     aria-labelledby="offcanvasDarkNavbarLabel">
 
 				<div class="offcanvas-header">
-					<h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">< Orçamento Pessoal ></h5>
+					<h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">< Bancos/Corretoras ></h5>
 					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
 					        aria-label="Close"></button>
 				</div>
@@ -74,12 +64,6 @@ if ($login->VerificarLogin()) {
 				<div class="offcanvas-body">
 					<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 
-                        <?php if (!empty($globais->getSessao())) { ?>
-
-						<li class="nav-item h6">
-							<a class="nav-link text-light" href="../paginas/bancosCorretoras.php">Bancos e
-								Corretoras</a>
-						</li>
 						<li class="nav-item h6">
 							<a class="nav-link text-light" href="../paginas/receitas.php">Receitas</a>
 						</li>
@@ -102,8 +86,6 @@ if ($login->VerificarLogin()) {
 
 					</ul>
 
-                    <?php } ?>
-
 				</div>
 			</div>
 		</div>
@@ -117,13 +99,12 @@ if ($login->VerificarLogin()) {
 					<div class="row-md-12 text-center ">
 
 						<h2 class="pt-4">
-							Bancos / Corretoras
+							Bancos/Corretoras
 						</h2>
 
 						<main class="container mb-5">
-							<div class="container row ">
+							<div class="container row text-start">
 								<div class="col-auto">
-
 									<p>
 										<button class="btn btn-dark" type="button" data-bs-toggle="collapse"
 										        data-bs-target="#novoBancoCorretora" aria-expanded="false"
@@ -168,7 +149,7 @@ if ($login->VerificarLogin()) {
 									<div style="min-height: auto;" class="mb-3">
 										<div class="collapse collapse-horizontal" id="novoDebito">
 
-											<p>Não sabe o valor das parcelas? <br/>Coloque o valor total do gasto (Com
+											<p style="font-size: medium; margin: 0;">Não sabe o valor das parcelas? <br/>Coloque o valor total do gasto (Com
 												juros, se tiver), e
 												no final coloque um * (Asterisco) para calcularmos para você!</p>
 
@@ -343,7 +324,8 @@ if ($login->VerificarLogin()) {
 											</td>
 											<td>
 												<button style="text-decoration: none; width: 4vh; height: 4vh;"
-												        class="text-primary bg-transparent rounded-circle border" name="nameId"
+												        class="text-primary bg-transparent rounded-circle border border-primary"
+												        name="nameId"
 												        value="<?= $nome ?>">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 													     fill="currentColor"
@@ -352,7 +334,9 @@ if ($login->VerificarLogin()) {
 													</svg>
 												</button>
 
-												<a href="?excluir=true&nome=<?= $nome ?>" style="text-decoration: none; margin-left: 0.8vh; width: 4vh; height: 4vh;" class="text-danger rounded-circle border ">
+												<a href="?excluir=true&nome=<?= $nome ?>"
+												   style="text-decoration: none; margin-left: 0.8vh; width: 4vh; height: 4vh;"
+												   class="text-danger rounded-circle border border-danger">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 													     fill="currentColor" class="bi bi-trash"
 													     viewBox="0 0 16 16">
