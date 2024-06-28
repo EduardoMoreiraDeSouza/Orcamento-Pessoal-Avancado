@@ -78,7 +78,7 @@ abstract class Formulario extends ValorFinal
 
     protected function nomeId()
     {
-        $this->setDados($this->fraseMaiuscula($this->fraseMinuscula(addslashes($_POST['nameId']))));
+        $this->setDados($this->fraseMaiuscula($this->fraseMinuscula(addslashes($_POST['nomeId']))));
 
         if ($this->dadosDefinidos())
             return $this->getDados();

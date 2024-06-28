@@ -78,6 +78,10 @@ $globais = new Globais;
 
                 <?php } ?>
 
+				<li class="nav-item h6">
+					<a class="nav-link text-light" href="./dev/index.html">Desenvolvedor</a>
+				</li>
+
 			</div>
 		</div>
 	</div>

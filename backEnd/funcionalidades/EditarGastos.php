@@ -10,65 +10,65 @@ class EditarGastos extends NovoCredito
 
     public function __construct()
     {
-        if (!$this -> VerificarLogin()) return false;
+        if (!$this->VerificarLogin()) return false;
 
-        $this -> setPaginaPai('gastos');
-        $this-> setId($this-> id());
-        $this -> setBancoCorretora($this -> bancoCorretora());
-        $this -> setFormaPagamento($this -> formaPagamento());
-        $this -> setClassificacao($this -> classificacao());
-        $this -> setDataCompraPagamento($this -> dataCompraPagamento());
-        $this -> setValor($this -> valor());
-        $this -> setParcelas($this -> parcelas());
+        $this->setPaginaPai('gastos');
+        $this->setId($this->nomeId());
+        $this->setBancoCorretora($this->bancoCorretora());
+        $this->setFormaPagamento($this->formaPagamento());
+        $this->setClassificacao($this->classificacao());
+        $this->setDataCompraPagamento($this->dataCompraPagamento());
+        $this->setValor($this->valor());
+        $this->setParcelas($this->parcelas());
 
         if (
-            !$this-> getId() or
-            !$this -> getBancoCorretora() or
-            !$this -> getFormaPagamento() or
-            !$this -> getClassificacao() or
-            !$this -> getDataCompraPagamento() or
-            !$this -> getValor() or
-            !$this -> getParcelas()
+            !$this->getId() or
+            !$this->getBancoCorretora() or
+            !$this->getFormaPagamento() or
+            !$this->getClassificacao() or
+            !$this->getDataCompraPagamento() or
+            !$this->getValor() or
+            !$this->getParcelas()
         )
-            return (bool)$this -> RetornarErro('pai', null);
+            return (bool)$this->RetornarErro('pai', null);
 
-        if ($this-> getValor() <= 0)
-            $this-> setValor($this-> getValor() * -1);
+        if ($this->getValor() <= 0)
+            $this->setValor($this->getValor() * -1);
 
-        if (!$this -> ObterDadosBancosCorretoras($this -> getBancoCorretora(), $this -> getSessao()))
-            return (bool)$this-> RetornarErro('pai', 'naoBancoCorretora');
+        if (!$this->ObterDadosBancosCorretoras($this->getBancoCorretora(), $this->getSessao()))
+            return (bool)$this->RetornarErro('pai', 'naoBancoCorretora');
 
-        if (!$this -> AlterarDadosGastos(
-            $this-> getId(),
-            $this-> getFormaPagamento(),
-            $this-> getBancoCorretora(),
-            $this-> getClassificacao(),
-            $this-> getValor(),
-            $this-> getDataCompraPagamento(),
-            $this-> getParcelas()
+        if (!$this->AlterarDadosGastos(
+            $this->getId(),
+            $this->getFormaPagamento(),
+            $this->getBancoCorretora(),
+            $this->getClassificacao(),
+            $this->getValor(),
+            $this->getDataCompraPagamento(),
+            $this->getParcelas()
         ))
-            return (bool)$this-> RetornarErro('pai', null);
+            return (bool)$this->RetornarErro('pai', null);
 
-        return !$this-> RetornarErro('pai', null);
+        return !$this->RetornarErro('pai', null);
     }
 
     protected function getFormaPagamento()
     {
-        return $this -> formaPagamento;
+        return $this->formaPagamento;
     }
 
     protected function setFormaPagamento($formaPagamento): void
     {
-        $this -> formaPagamento = $formaPagamento;
+        $this->formaPagamento = $formaPagamento;
     }
 
     protected function getId()
     {
-        return $this -> id;
+        return $this->id;
     }
 
     protected function setId($id): void
     {
-        $this -> id = $id;
+        $this->id = $id;
     }
 }

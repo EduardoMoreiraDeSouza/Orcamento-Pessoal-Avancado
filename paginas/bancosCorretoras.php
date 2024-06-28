@@ -325,7 +325,7 @@ if ($login->VerificarLogin()) {
 											<td>
 												<button style="text-decoration: none; width: 4vh; height: 4vh;"
 												        class="text-primary bg-transparent rounded-circle border border-primary"
-												        name="nameId"
+												        name="nomeId"
 												        value="<?= $nome ?>">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 													     fill="currentColor"

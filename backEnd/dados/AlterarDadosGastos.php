@@ -17,6 +17,7 @@ class AlterarDadosGastos extends EntradaDadosGastos
             WHERE id LIKE '$id' AND email LIKE '".$this-> getSessao()."';"
         );
 
+
         return (bool)$this-> ExecutarCodigoMySql();
     }
 }

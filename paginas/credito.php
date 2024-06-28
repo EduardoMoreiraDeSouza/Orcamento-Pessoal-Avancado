@@ -242,7 +242,7 @@ if ($login -> VerificarLogin()) {
                                    placeholder="Vencimento:" step="0.01" min="1" value="<?= $vencimento ?>">
                         </td>
                         <td>
-                            <button style="text-decoration: none;" class="text-primary bg-transparent" name="nameId"
+                            <button style="text-decoration: none;" class="text-primary bg-transparent" name="nomeId"
                                     value="<?= $nome ?>">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-pen" viewBox="0 0 16 16">
