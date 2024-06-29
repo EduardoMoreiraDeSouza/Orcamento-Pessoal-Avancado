@@ -11,9 +11,9 @@ class InformacoesData extends RetornarErro
         if ($data == null)
             $data = date("Y-m-d");
 
-        $dia = intval(substr($data, 8, 5));
-        $mes = intval(substr($data, 5, 2));
-        $ano = intval(substr($data, 0, 4));
+        $dia = substr($data, 8, 5);
+        $mes = substr($data, 5, 2);
+        $ano = substr($data, 0, 4);
 
         return match ($informacaoEsperada) {
             'd' => $dia,

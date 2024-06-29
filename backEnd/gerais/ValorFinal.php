@@ -4,7 +4,7 @@ require_once __DIR__ . "/./FormatacaoDados.php";
 
 class ValorFinal extends FormatacaoDados
 {
-    public function ValorFinal($tipo, $entidade)
+    public function ValorFinal($tipo, $entidade, $dataReferencia = null)
     {
 
         $this->timezone();
@@ -35,7 +35,7 @@ class ValorFinal extends FormatacaoDados
                 foreach ($gastos as $ignored) {
                     if ($gastos[$gastoAtual]['bancoCorretora'] == $entidade)
                         if ($gastos[$gastoAtual]['formaPagamento'] == 'Débito')
-                            $gastosDebitoTotal += $gastos[$gastoAtual]['valor'] * $this->parcelasDebitadas($gastos[$gastoAtual]);
+                            $gastosDebitoTotal += $gastos[$gastoAtual]['valor'] * $this->parcelasDebitadas($gastos[$gastoAtual], $dataReferencia);
                     $gastoAtual++;
                 }
 
@@ -46,7 +46,7 @@ class ValorFinal extends FormatacaoDados
             if ($receita)
                 foreach ($receita as $ignored) {
                     if ($receita[$receitaAtual]['bancoCorretora'] == $entidade)
-                        $receitaTotal += $receita[$receitaAtual]['valor'] * $this->parcelasRecebidas($receita[$receitaAtual]);
+                        $receitaTotal += $receita[$receitaAtual]['valor'] * $this->parcelasRecebidas($receita[$receitaAtual], $dataReferencia);
 
                     $receitaAtual++;
                 }
@@ -175,13 +175,11 @@ class ValorFinal extends FormatacaoDados
         $primeiraDataPagamento = $primeiroAnoPagamento . '-' . $primeiroMesPagamento . '-' . $this->InformacoesData('d', $receita['dataCompraPagamento']);
         $diferencaMeses = $this->diferencaMesesData($primeiraDataPagamento, $dataReferencia);
 
-        if ($diferencaMeses) {
-            if ($diferencaMeses > 0)
-                return $diferencaMeses;
-            else
-                return 0;
-        }
-
-        return $diferencaMeses;
+        if ($diferencaMeses > $receita['parcelas'])
+            return $receita['parcelas'];
+        elseif ($diferencaMeses > 0)
+            return $diferencaMeses;
+        else
+            return 1;
     }
 }

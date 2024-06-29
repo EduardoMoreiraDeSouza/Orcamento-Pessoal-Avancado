@@ -97,7 +97,7 @@ if ($login->VerificarLogin()) {
 				<div class="row">
 					<div class="row-md-12 text-center ">
 
-                        <?php include(__DIR__ . "/./filtros.php"); ?>
+                        <?php include(__DIR__ . "/./particoes/formularios/form_data_referencia.php") ?>
 
 						<h2 class="pt-4">
 							Bancos/Corretoras
@@ -142,13 +142,15 @@ if ($login->VerificarLogin()) {
                                 $quantidade = 0;
                                 $saldoTotal = 0;
 
+                                $dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao-> ultimoDiaMes($_SESSION['mes_referencia'], $_SESSION['ano_referencia']);
+
                                 while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
 
                                     $quantidade++;
                                     $bancoCorretora = $dadosBancosCorretoras['bancoCorretora'];
 
-                                    $valorFinal = new ValorFinal('bancoCorretora', $dadosBancosCorretoras['bancoCorretora']);
-                                    $saldo = $valorFinal->ValorFinal('bancoCorretora', $dadosBancosCorretoras['bancoCorretora']);
+                                    $valorFinal = new ValorFinal('bancoCorretora', $dadosBancosCorretoras['bancoCorretora'], $dataReferencia);
+                                    $saldo = $valorFinal->ValorFinal('bancoCorretora', $dadosBancosCorretoras['bancoCorretora'], $dataReferencia);
                                     $saldoTotal += floatval($saldo);
 
                                     ?>

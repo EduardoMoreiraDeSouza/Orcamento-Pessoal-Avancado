@@ -48,7 +48,7 @@
                     </option>
                 </select>
             </div>
-            <input class="rounded-2 form-control bg-success text-light" style="width: 22.5%; margin-left: -2%;"
+            <input class="rounded-2 form-control bg-success text-light" style="width: 25%; margin-left: -2%;"
                    type="text" name="ano_referencia" value="<?= $_SESSION['ano_referencia'] ?>">
 
             <div class="col-sm" style="margin-left: -14.7%;">

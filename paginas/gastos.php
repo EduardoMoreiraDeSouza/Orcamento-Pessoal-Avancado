@@ -155,8 +155,6 @@ if ($login->VerificarLogin()) {
 
 	                                $parcelasPagas = '';
 
-
-
 									if ($dados['formaPagamento'] == "Crédito") {
                                         $parcelasPagas = $valorFinal-> parcelasPagasCredito($dados, $dataReferencia);
                                     }
@@ -165,11 +163,8 @@ if ($login->VerificarLogin()) {
 										$parcelasPagas = $valorFinal-> parcelasDebitadas($dados, $dataReferencia);
                                     }
 
-
-
                                     if ($parcelasPagas <= $dados['parcelas'] and $dados['dataCompraPagamento'] <= $dataReferencia and $parcelasPagas > 0) {
 
-                                        $dataPagamento = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao->InformacoesData('d', $dados['dataCompraPagamento']);
                                         $saldoTotal += $dados['valor'];
 
 										if ($dados['formaPagamento'] == 'Crédito')
