@@ -4,21 +4,19 @@ require_once __DIR__ . "/./NovoDebito.php";
 
 class NovoCredito extends NovoDebito
 {
-    private $cartaoCredito;
-
     public function __construct()
     {
         if (!$this -> VerificarLogin()) return false;
 
         $this -> setPaginaPai('gastos');
-        $this -> setCartaoCredito($this -> cartaoCredito());
+        $this -> setBancoCorretora($this -> bancoCorretora());
         $this -> setClassificacao($this -> classificacao());
         $this -> setDataCompraPagamento($this -> dataCompraPagamento());
         $this -> setValor($this -> valor());
         $this -> setParcelas($this -> parcelas());
 
         if (
-            !$this -> getCartaoCredito() or
+            !$this -> getBancoCorretora() or
             !$this -> getClassificacao() or
             !$this -> getDataCompraPagamento() or
             !$this -> getValor() or
@@ -26,7 +24,7 @@ class NovoCredito extends NovoDebito
         )
             return (bool)$this -> RetornarErro('pai', null);
 
-        if (!$this -> ObterDadosCartoesCredito($this -> getCartaoCredito(), $this -> getSessao()))
+        if (!$this -> ObterDadosCartoesCredito($this -> getBancoCorretora(), $this -> getSessao()))
             return (bool)$this -> RetornarErro('pai', 'naoBancoCorretora');
 
         if ($this-> getValor() < 0)
@@ -34,11 +32,11 @@ class NovoCredito extends NovoDebito
 
         $this -> timezone();
 
-        if ($this -> ValorFinal('cartaoCredito', $this -> getCartaoCredito()) < $this-> getValor())
+        if ($this -> ValorFinal('cartaoCredito', $this -> getBancoCorretora()) < $this-> getValor())
             return (bool)$this -> RetornarErro('pai', 'limiteInsuficiente');
 
         if (!$this -> EntradaDadosGastos(
-            $this -> getCartaoCredito(),
+            $this -> getBancoCorretora(),
             'Crédito',
             $this -> getClassificacao(),
             $this -> getDataCompraPagamento(),
@@ -50,15 +48,4 @@ class NovoCredito extends NovoDebito
 
         return !$this -> RetornarErro('pai', null);
     }
-
-    public function getCartaoCredito()
-    {
-        return $this -> cartaoCredito;
-    }
-
-    public function setCartaoCredito($cartaoCredito): void
-    {
-        $this -> cartaoCredito = $cartaoCredito;
-    }
-
 }

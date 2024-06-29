@@ -28,7 +28,7 @@ abstract class Formulario extends ValorFinal
 
     protected function classificacao()
     {
-        $this->setDados(addslashes($_POST['clasificacao']));
+        $this->setDados(addslashes($_POST['classificacao']));
 
         if ($this->dadosDefinidos())
             return $this->getDados();

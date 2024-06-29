@@ -181,7 +181,7 @@ if ($login->VerificarLogin()) {
 
 													</select>
 
-													<select class="form-select" name="clasificacao" required>
+													<select class="form-select" name="classificacao" required>
 														<option value="" selected>Classificação</option>
 														<option value="Pessoal">Pessoal</option>
 														<option value="Necessário">Necessário</option>
@@ -250,7 +250,7 @@ if ($login->VerificarLogin()) {
 
 													</select>
 
-													<select class="form-select" name="clasificacao" required>
+													<select class="form-select" name="classificacao" required>
 														<option value="" selected>Classificação</option>
 														<option value="Salário">Salário</option>
 														<option value="Rendimentos">Rendimentos</option>

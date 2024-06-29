@@ -9,9 +9,6 @@ if ($login->VerificarLogin()) {
     require_once __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
 
     $formatacao = new FormatacaoDados();
-    $execucao = new ExecucaoCodigoMySql();
-
-    $execucao->timezone();
 
     if (isset($_GET['excluir']) and isset($_GET['id'])) {
         require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirGasto.php";
@@ -96,156 +93,17 @@ if ($login->VerificarLogin()) {
 				<div class="row">
 					<div class="row-md-12 text-center ">
 
+                        <?php include_once(__DIR__."/./particoes/formularios/form_data_referencia.php") ?>
+
 						<h2 class="pt-4">
 							Meus Gastos
 						</h2>
 
 						<main class="container mb-5">
 							<div class="container row mt-5 text-start">
-								<div class="col-auto">
 
-									<p>
-										<button class="btn btn-dark" type="button" data-bs-toggle="collapse"
-										        data-bs-target="#novoDebito"
-										        aria-expanded="false" aria-controls="collapseWidthExample">
-											Novo Débito
-										</button>
-									</p>
-
-									<div style="min-height: auto;" class="mb-3">
-										<div class="collapse collapse-horizontal" id="novoDebito">
-
-											<p style="font-size: medium; margin: 0;">Não sabe o valor das parcelas?
-												<br/>Coloque o valor total do gasto (Com juros, se tiver), e
-												no final coloque um * (Asterisco) para calcularmos para você!</p>
-
-											<div class="card card-body border border-dark bg-secondary"
-											     style="width: 90%;">
-												<form action="../backEnd/InteracaoFront/novoDebito.php" method="POST"
-												      class="form hstack gap-3">
-
-													<select class="form-select" name="bancoCorretora" required>
-														<option value="" selected>Banco | Corretora</option>
-
-                                                        <?php
-
-                                                        $codigoMySql = "SELECT * FROM dbName.bancosCorretoras WHERE email LIKE '" . $login->getSessao() . "';";
-                                                        $execucao->setCodigoMySql($codigoMySql);
-                                                        $resultadoExecucao = $execucao->ExecutarCodigoMySql();
-
-                                                        while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
-
-                                                            $bancoCorretora = $dadosBancosCorretoras['bancoCorretora'];
-
-                                                            ?>
-
-															<option value="<?= $bancoCorretora ?>"><?= $bancoCorretora ?></option>
-
-
-                                                            <?php
-                                                        } ?>
-
-													</select>
-
-													<select class="form-select" name="clasificacao" required>
-														<option value="" selected>Classificação</option>
-														<option value="Pessoal">Pessoal</option>
-														<option value="Necessário">Necessário</option>
-														<option value="Reserva">Reserva</option>
-														<option value="Dívidas">Dívidas</option>
-														<option value="Investimentos">Investimentos</option>
-														<option value="Boas Ações">Boas Ações</option>
-													</select>
-
-													<input type="date" class="container input-group-text"
-													       name="dataCompraPagamento"
-													       value="<?= date('Y-m-d') ?>" required>
-													<input type="text" class="container input-group-text" name="valor"
-													       placeholder="Valor das Parcelas" required>
-													<input type="number" class="container input-group-text"
-													       name="parcelas"
-													       title="Quantidade de Parcelas" step="1" min="1" value="1"
-													       required>
-
-													<input type="submit" class="container btn btn-dark" value="Debitar">
-
-												</form>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div class="col-auto">
-
-									<p>
-										<button class="btn btn-dark" type="button" data-bs-toggle="collapse"
-										        data-bs-target="#novoGastoCredito" aria-expanded="false"
-										        aria-controls="collapseWidthExample">
-											Novo Gasto no Crédito
-										</button>
-									</p>
-
-									<div style="min-height: auto;" class="mb-3">
-
-										<div class="collapse collapse-horizontal" id="novoGastoCredito">
-											<p style="font-size: medium; margin: 0;">Não sabe o valor das parcelas?
-												<br/>Coloque o valor total do gasto (Com
-												juros, se tiver), e
-												no final coloque um * (Asterisco) para calcularmos para você!</p>
-											<div class="card card-body border border-dark bg-secondary"
-											     style="width: 100%;">
-												<form action="../backEnd/InteracaoFront/novoCredito.php" method="POST"
-												      class="form hstack gap-3">
-													<select class="form-select" name="cartaoCredito" required>
-														<option value="" selected>Cartão</option>
-
-                                                        <?php
-
-                                                        $execucao->setCodigoMySql("SELECT * FROM dbName.cartoesCredito WHERE email LIKE '" . $login->getSessao() . "';");
-                                                        $resultadoExecucao = $execucao->ExecutarCodigoMySql();
-
-                                                        while ($dadosCartoesCredito = mysqli_fetch_assoc($resultadoExecucao)) {
-
-                                                            $bancoCorretora = $dadosCartoesCredito['bancoCorretora'];
-
-                                                            ?>
-
-															<option value="<?= $bancoCorretora ?>"><?= $bancoCorretora ?></option>
-
-
-                                                            <?php
-                                                        } ?>
-													</select>
-
-													<select class="form-select" name="clasificacao" required>
-														<option value="" selected>Classificação</option>
-														<option value="Pessoal">Pessoal</option>
-														<option value="Necessário">Necessário</option>
-														<option value="Reserva">Reserva</option>
-														<option value="Dívidas">Dívidas</option>
-														<option value="Investimentos">Investimentos</option>
-														<option value="Boas Ações">Boas Ações</option>
-													</select>
-
-													<input type="date" class="container input-group-text"
-													       name="dataCompraPagamento"
-													       value="<?= date('Y-m-d') ?>" required>
-													<input type="text" class="container input-group-text" name="valor"
-													       placeholder="Valor"
-													       step="0.01" value="" required>
-													<input type="number" class="container input-group-text"
-													       name="parcelas"
-													       title="Quantidade de Parcelas" step="1" min="1" value="1"
-													       required>
-
-													<input type="submit" class="container btn btn-dark"
-													       value="Creditar">
-
-												</form>
-											</div>
-										</div>
-									</div>
-								</div>
+                                <?php include_once(__DIR__."/./particoes/formularios/novo_debito.php") ?>
+                                <?php include_once(__DIR__."/./particoes/formularios/novo_gasto_credito.php") ?>
 
 							</div>
 
@@ -267,6 +125,7 @@ if ($login->VerificarLogin()) {
 
                                 <?php
 
+                                $execucao = new ExecucaoCodigoMySql();
                                 $execucao->setCodigoMySql("SELECT * FROM dbName.gastos WHERE email LIKE '" . $login->getSessao() . "';");
                                 $resultadoExecucao = $execucao->ExecutarCodigoMySql();
 
@@ -336,7 +195,7 @@ if ($login->VerificarLogin()) {
 												       step="0.01" value="<?= $parcelas ?>">
 											</td>
 											<td>
-												<select class="form-select" name="clasificacao" required>
+												<select class="form-select" name="classificacao" required>
 													<option value="Pessoal" <?= $classificacao == 'Pessoal' ? 'selected' : '' ?>>
 														Pessoal
 													</option>

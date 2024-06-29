@@ -203,7 +203,7 @@ if ($login->VerificarLogin()) {
                                                         } ?>
 													</select>
 
-													<select class="form-select" name="clasificacao" required>
+													<select class="form-select" name="classificacao" required>
 														<option value="" selected>Classificação</option>
 														<option value="Pessoal">Pessoal</option>
 														<option value="Necessário">Necessário</option>
