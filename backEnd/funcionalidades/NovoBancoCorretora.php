@@ -4,7 +4,7 @@ require_once __DIR__ . "/../formulario/Formulario.php";
 
 class NovoBancoCorretora extends Formulario
 {
-    private $nome;
+    private $bancoCorretora;
     private $saldo;
 
     public function __construct()
@@ -12,19 +12,19 @@ class NovoBancoCorretora extends Formulario
         if (!$this-> VerificarLogin()) return false;
 
         $this -> setPaginaPai('bancosCorretoras');
-        $this -> setNome($this -> nome());
+        $this -> setBancoCorretora($this -> bancoCorretora());
         $this -> setSaldo($this -> saldo());
 
         if (
-            !$this-> getNome()
+            !$this-> getBancoCorretora()
         )
             return (bool)$this-> RetornarErro('pai', null);
 
-        if ($this -> ObterDadosBancosCorretoras($this -> getNome(), $this -> getSessao()))
+        if ($this -> ObterDadosBancosCorretoras($this -> getBancoCorretora(), $this -> getSessao()))
             return (bool)$this-> RetornarErro('pai', 'x2bancosCorretoras');
 
         if (!$this -> EntradaDadosBancosCorretoras(
-            $this -> getNome(),
+            $this -> getBancoCorretora(),
             $this -> getSessao()
         ))
             return (bool)$this-> RetornarErro('pai', null);
@@ -33,7 +33,7 @@ class NovoBancoCorretora extends Formulario
 
         if ($this-> getSaldo() > 0) {
             if (!$this -> EntradaDadosReceita(
-                $this -> getNome(),
+                $this -> getBancoCorretora(),
                 'correcaoSaldo',
                 date('Y-m-d'),
                 $this -> getSaldo(),
@@ -44,7 +44,7 @@ class NovoBancoCorretora extends Formulario
 
         elseif ($this-> getSaldo() < 0) {
             if (!$this -> EntradaDadosGastos(
-                $this -> getNome(),
+                $this -> getBancoCorretora(),
                 'Débito',
                 'correcaoSaldo',
                 date('Y-m-d'),
@@ -58,14 +58,14 @@ class NovoBancoCorretora extends Formulario
     }
 
 
-    protected function getNome()
+    protected function getBancoCorretora()
     {
-        return $this->nome;
+        return $this->bancoCorretora;
     }
 
-    protected function setNome($nome)
+    protected function setBancoCorretora($bancoCorretora)
     {
-        $this->nome = $nome;
+        $this->bancoCorretora = $bancoCorretora;
     }
 
     protected function getSaldo()

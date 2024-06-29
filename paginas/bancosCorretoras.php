@@ -15,11 +15,11 @@ if ($login->VerificarLogin()) {
 
     $execucao->timezone();
 
-    if (isset($_GET['excluir']) and isset($_GET['nome'])) {
+    if (isset($_GET['excluir']) and isset($_GET['bancoCorretora'])) {
         require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirBancoCorretora.php";
 
         $exluir = new ExcluirBancoCorretora();
-        $exluir->ExcluirBancoCorretora($_GET['nome'], $login->getSessao());
+        $exluir->ExcluirBancoCorretora($_GET['bancoCorretora'], $login->getSessao());
         $exluir->Redirecionar('bancosCorretoras', true);
     }
     ?>
@@ -74,10 +74,10 @@ if ($login->VerificarLogin()) {
 							<a class="nav-link text-light" href="../paginas/credito.php">Cartões de Crédito</a>
 						</li>
 						<li class="nav-item h6">
-							<a class="nav-link text-light" href="#">Investimentos</a>
+							<a class="nav-link text-light" href="#">Investimentos (Em Breve)</a>
 						</li>
 						<li class="nav-item h6">
-							<a class="nav-link text-light" href="#">Rendimentos</a>
+							<a class="nav-link text-light" href="#">Rendimentos (Em Breve)</a>
 						</li>
 						<li class="nav-item h6">
 							<a class="nav-link active text-light" aria-current="page"
@@ -121,7 +121,7 @@ if ($login->VerificarLogin()) {
 												      method="POST"
 												      class="form hstack gap-3">
 
-													<input type="text" class="container input-group-text" name="nome"
+													<input type="text" class="container input-group-text" name="bancoCorretora"
 													       placeholder="Nome:"
 													       required>
 													<input type="number" class="container input-group-text" name="saldo"
@@ -169,11 +169,11 @@ if ($login->VerificarLogin()) {
 
                                                         while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
 
-                                                            $nome = $dadosBancosCorretoras['nome'];
+                                                            $bancoCorretora = $dadosBancosCorretoras['bancoCorretora'];
 
                                                             ?>
 
-															<option value="<?= $nome ?>"><?= $nome ?></option>
+															<option value="<?= $bancoCorretora ?>"><?= $bancoCorretora ?></option>
 
 
                                                             <?php
@@ -238,11 +238,11 @@ if ($login->VerificarLogin()) {
 
                                                         while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
 
-                                                            $nome = $dadosBancosCorretoras['nome'];
+                                                            $bancoCorretora = $dadosBancosCorretoras['bancoCorretora'];
 
                                                             ?>
 
-															<option value="<?= $nome ?>"><?= $nome ?></option>
+															<option value="<?= $bancoCorretora ?>"><?= $bancoCorretora ?></option>
 
 
                                                             <?php
@@ -279,7 +279,7 @@ if ($login->VerificarLogin()) {
 
 							</div>
 
-							<table class="table table-dark text-center" style="width: 100%;">
+							<table class="table table-dark text-center">
 								<thead>
 								<tr>
 									<th scope="col">#</th>
@@ -301,10 +301,10 @@ if ($login->VerificarLogin()) {
                                 while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
 
                                     $quantidade++;
-                                    $nome = $dadosBancosCorretoras['nome'];
+                                    $bancoCorretora = $dadosBancosCorretoras['bancoCorretora'];
 
-                                    $valorFinal = new ValorFinal('bancoCorretora', $dadosBancosCorretoras['nome']);
-                                    $saldo = $valorFinal->ValorFinal('bancoCorretora', $dadosBancosCorretoras['nome']);
+                                    $valorFinal = new ValorFinal('bancoCorretora', $dadosBancosCorretoras['bancoCorretora']);
+                                    $saldo = $valorFinal->ValorFinal('bancoCorretora', $dadosBancosCorretoras['bancoCorretora']);
                                     $saldoTotal += floatval($saldo);
 
                                     ?>
@@ -313,9 +313,9 @@ if ($login->VerificarLogin()) {
 										<tr>
 											<th scope="row"><?= $quantidade ?>º</th>
 											<td>
-												<input type="text" class="container input-group-text" name="nome"
+												<input type="text" class="container input-group-text" name="bancoCorretora"
 												       placeholder="Nome:"
-												       value="<?= $nome ?>" required>
+												       value="<?= $bancoCorretora ?>" required>
 											</td>
 											<td>
 												<input type="text" class="container input-group-text" name="saldo"
@@ -325,8 +325,8 @@ if ($login->VerificarLogin()) {
 											<td>
 												<button style="text-decoration: none; width: 4vh; height: 4vh;"
 												        class="text-primary bg-transparent rounded-circle border border-primary"
-												        name="nomeId"
-												        value="<?= $nome ?>">
+												        name="bancoCorretoraId"
+												        value="<?= $bancoCorretora ?>">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 													     fill="currentColor"
 													     class="bi bi-pen" viewBox="0 0 16 16">
@@ -334,7 +334,7 @@ if ($login->VerificarLogin()) {
 													</svg>
 												</button>
 
-												<a href="?excluir=true&nome=<?= $nome ?>"
+												<a href="?excluir=true&bancoCorretora=<?= $bancoCorretora ?>"
 												   style="text-decoration: none; margin-left: 0.8vh; width: 4vh; height: 4vh;"
 												   class="text-danger rounded-circle border border-danger">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"

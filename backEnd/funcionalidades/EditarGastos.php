@@ -13,7 +13,7 @@ class EditarGastos extends NovoCredito
         if (!$this->VerificarLogin()) return false;
 
         $this->setPaginaPai('gastos');
-        $this->setId($this->nomeId());
+        $this->setId($this->bancoCorretoraId());
         $this->setBancoCorretora($this->bancoCorretora());
         $this->setFormaPagamento($this->formaPagamento());
         $this->setClassificacao($this->classificacao());

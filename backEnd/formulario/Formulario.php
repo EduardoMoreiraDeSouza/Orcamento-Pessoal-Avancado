@@ -6,19 +6,9 @@ abstract class Formulario extends ValorFinal
 {
     private $dados;
 
-    protected function nome()
-    {
-        $this->setDados($this->fraseMaiuscula($this->fraseMinuscula(addslashes($_POST['nome']))));
-
-        if ($this->dadosDefinidos())
-            return $this->getDados();
-
-        return false;
-    }
-
     protected function bancoCorretora()
     {
-        $this->setDados(addslashes($_POST['bancoCorretora']));
+        $this->setDados($this->fraseMaiuscula($this->fraseMinuscula(addslashes($_POST['bancoCorretora']))));
 
         if ($this->dadosDefinidos())
             return $this->getDados();
@@ -76,9 +66,9 @@ abstract class Formulario extends ValorFinal
         return false;
     }
 
-    protected function nomeId()
+    protected function bancoCorretoraId()
     {
-        $this->setDados($this->fraseMaiuscula($this->fraseMinuscula(addslashes($_POST['nomeId']))));
+        $this->setDados($this->fraseMaiuscula($this->fraseMinuscula(addslashes($_POST['bancoCorretoraId']))));
 
         if ($this->dadosDefinidos())
             return $this->getDados();

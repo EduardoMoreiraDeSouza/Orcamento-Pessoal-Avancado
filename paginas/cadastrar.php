@@ -64,19 +64,19 @@ $globais = new Globais;
 						<a class="nav-link text-light" href="../paginas/credito.php">Cartões de Crédito</a>
 					</li>
 					<li class="nav-item h6">
-						<a class="nav-link text-light" href="#">Investimentos</a>
+						<a class="nav-link text-light" href="#">Investimentos (Em Breve)</a>
 					</li>
 					<li class="nav-item h6">
-						<a class="nav-link text-light" href="#">Rendimentos</a>
+						<a class="nav-link text-light" href="#">Rendimentos (Em Breve)</a>
 					</li>
 					<li class="nav-item h6">
 						<a class="nav-link active text-light" aria-current="page"
 						   href="../backEnd/InteracaoFront/sair.php">Sair</a>
 					</li>
 
-				</ul>
+                    <?php } ?>
 
-                <?php } ?>
+				</ul>
 
 			</div>
 		</div>
@@ -96,7 +96,7 @@ $globais = new Globais;
 
 					<main class="container w-50 mt-4 p-3 text-start">
 
-						<h1 class="text-center">Cadastrar</h1>
+						<h3 class="text-center">Cadastrar</h3>
 
 						<form class="mt-2" action="../backEnd/InteracaoFront/cadastrar.php" method="POST">
 

@@ -11,6 +11,9 @@ class VerificarSenha extends AlterarDadosReceita
             $this -> ObterDadosUsuarios($email)['senha'] == $senha
         ) return true;
 
+        elseif (!$this -> ObterDadosUsuarios($email))
+            return (bool)$this-> RetornarErro('pai', 'cadastrar');
+
         $this -> Comunicar('senha');
         return false;
     }

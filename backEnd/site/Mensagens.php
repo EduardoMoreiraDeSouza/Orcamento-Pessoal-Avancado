@@ -26,7 +26,7 @@ abstract class Mensagens extends ScriptJS
             'cadastro' => 'Agora você está cadastrado em nosso sitema!',
 
             'x2bancosCorretoras' => 'Este Banco/Corretora já está cadastrado!',
-            'x2cartoesCredito' => 'Já existe um cartão de crédito com esse nome!',
+            'x2cartoesCredito' => 'Já existe um cartão de crédito com esse bancoCorretora!',
             'x2email' => 'Este Email já está cadastrado!',
 
             'naoBancoCorretora' => 'O banco/corretora selecionado não existe!',

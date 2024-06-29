@@ -14,13 +14,13 @@ class NovoCartaoCredito extends NovoBancoCorretora
 
         $this -> setPaginaPai('credito');
 
-        $this-> setNome($this-> nome());
+        $this-> setBancoCorretora($this-> bancoCorretora());
         $this-> setLimite($this-> valor());
         $this-> setFechamento($this-> fechamento());
         $this-> setVencimento($this-> vencimento());
 
         if (
-            !$this-> getNome() or
+            !$this-> getBancoCorretora() or
             !$this-> getLimite() or
             !$this-> getFechamento() or
             !$this-> getVencimento()
@@ -30,10 +30,10 @@ class NovoCartaoCredito extends NovoBancoCorretora
         elseif ($this-> getFechamento() == $this-> getVencimento())
             return (bool)$this-> RetornarErro('pai', 'fechamentoVencimento');
 
-        elseif ($this-> ObterDadosCartoesCredito($this-> getNome(), $this-> getSessao()))
+        elseif ($this-> ObterDadosCartoesCredito($this-> getBancoCorretora(), $this-> getSessao()))
             return (bool)$this-> RetornarErro('pai', 'x2cartoesCredito');
 
-        elseif (!$this-> EntradaDadosCartoesCredito($this-> getNome(),
+        elseif (!$this-> EntradaDadosCartoesCredito($this-> getBancoCorretora(),
             $this-> getSessao(),
             $this-> getLimite(),
             $this-> getFechamento(),

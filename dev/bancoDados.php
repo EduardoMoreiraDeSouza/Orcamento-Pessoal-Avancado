@@ -26,10 +26,10 @@ function criarBancoDados()
 
     $codigoMySql = "CREATE TABLE bancosCorretoras(
        
-        nome VARCHAR(60),
+        bancoCorretora VARCHAR(60),
         email VARCHAR(60) NOT NULL,
         
-        CONSTRAINT PK_nome_bancoCorretoras PRIMARY KEY (nome),
+        CONSTRAINT PK_bancoCorretora_bancoCorretoras PRIMARY KEY (bancoCorretora),
         
         CONSTRAINT FK_email_bancoCorretoras FOREIGN KEY (email)
         REFERENCES usuarios(email) on DELETE CASCADE ON UPDATE CASCADE
@@ -39,19 +39,19 @@ function criarBancoDados()
 
     $codigoMySql = "CREATE TABLE cartoesCredito(
        
-        nome VARCHAR(60),
+        bancoCorretora VARCHAR(60),
         email VARCHAR(60) NOT NULL,
         limite DECIMAL(12, 2) NULL,
         fechamento INT(2),
         vencimento INT(2),
         
-        CONSTRAINT PK_nome_cartoesCredito PRIMARY KEY (nome),
+        CONSTRAINT PK_bancoCorretora_cartoesCredito PRIMARY KEY (bancoCorretora),
         
         CONSTRAINT FK_email_cartoesCredito FOREIGN KEY (email)
         REFERENCES usuarios(email) ON DELETE CASCADE ON UPDATE CASCADE,
         
-        CONSTRAINT FK_nome_cartoesCredito FOREIGN KEY (nome)
-        REFERENCES bancosCorretoras(nome) ON DELETE CASCADE ON UPDATE CASCADE
+        CONSTRAINT FK_bancoCorretora_cartoesCredito FOREIGN KEY (bancoCorretora)
+        REFERENCES bancosCorretoras(bancoCorretora) ON DELETE CASCADE ON UPDATE CASCADE
     
     ) DEFAULT CHARSET = utf8;";
     mysqli_query($conexaoDB, $codigoMySql);
@@ -61,7 +61,7 @@ function criarBancoDados()
         email VARCHAR(60) NOT NULL,
         id INT AUTO_INCREMENT,
         formaPagamento VARCHAR(7) NOT NULL,
-        fiador VARCHAR(60) NOT NULL,
+        bancoCorretora VARCHAR(60) NOT NULL,
         classificacao VARCHAR(13) NOT NULL,
         valor DECIMAL(12, 2) NULL,
         parcelas INT(4),
@@ -71,8 +71,8 @@ function criarBancoDados()
         CONSTRAINT FK_email_gastos FOREIGN KEY (email)
         REFERENCES usuarios(email) ON DELETE CASCADE ON UPDATE CASCADE,
         
-        CONSTRAINT FK_fiador_gastos FOREIGN KEY (fiador)
-        REFERENCES bancosCorretoras(nome) ON DELETE CASCADE ON UPDATE CASCADE 
+        CONSTRAINT FK_bancoCorretora_gastos FOREIGN KEY (bancoCorretora)
+        REFERENCES bancosCorretoras(bancoCorretora) ON DELETE CASCADE ON UPDATE CASCADE 
     
     ) DEFAULT CHARSET = utf8;";
     mysqli_query($conexaoDB, $codigoMySql);
@@ -82,10 +82,10 @@ function criarBancoDados()
         email VARCHAR(60) NOT NULL,
         id INT AUTO_INCREMENT,
         bancoCorretora VARCHAR(60) NOT NULL,
-        classificacao VARCHAR(13) NOT NULL,
+        classificacao VARCHAR(15) NOT NULL,
         valor DECIMAL(12, 2) NULL,
         parcelas INT(4),
-        dataPagamento DATE,
+        dataCompraPagamento DATE,
         
         CONSTRAINT PK_id_receitas PRIMARY KEY (id),
         
@@ -93,7 +93,7 @@ function criarBancoDados()
         REFERENCES usuarios(email) ON DELETE CASCADE ON UPDATE CASCADE,
         
         CONSTRAINT FK_bancoCorretora_receitas FOREIGN KEY (bancoCorretora)
-        REFERENCES bancosCorretoras(nome) ON DELETE CASCADE ON UPDATE CASCADE 
+        REFERENCES bancosCorretoras(bancoCorretora) ON DELETE CASCADE ON UPDATE CASCADE 
                      
     ) DEFAULT CHARSET = utf8;";
     mysqli_query($conexaoDB, $codigoMySql);
@@ -117,7 +117,7 @@ if (isset($_POST['criarBancoDados'])) {
     echo "<script>
 
             alert('Banco de Dados Criado com Sucesso!')
-            window.location.href = './index.html'
+            window.location.href = 'index.php'
 
         </script>";
 }
@@ -129,7 +129,7 @@ if (isset($_POST['excluirBancoDados'])) {
     echo "<script>
 
             alert('Banco de Dados Criado com Sucesso!')
-            window.location.href = './index.html'
+            window.location.href = 'index.php'
 
         </script>";
 

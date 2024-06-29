@@ -72,10 +72,10 @@ if ($login->VerificarLogin()) {
 							<a class="nav-link text-light" href="../paginas/credito.php">Cartões de Crédito</a>
 						</li>
 						<li class="nav-item h6">
-							<a class="nav-link text-light" href="#">Investimentos</a>
+							<a class="nav-link text-light" href="#">Investimentos (Em Breve)</a>
 						</li>
 						<li class="nav-item h6">
-							<a class="nav-link text-light" href="#">Rendimentos</a>
+							<a class="nav-link text-light" href="#">Rendimentos (Em Breve)</a>
 						</li>
 						<li class="nav-item h6">
 							<a class="nav-link active text-light" aria-current="page"
@@ -135,11 +135,11 @@ if ($login->VerificarLogin()) {
 
                                                         while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
 
-                                                            $nome = $dadosBancosCorretoras['nome'];
+                                                            $bancoCorretora = $dadosBancosCorretoras['bancoCorretora'];
 
                                                             ?>
 
-															<option value="<?= $nome ?>"><?= $nome ?></option>
+															<option value="<?= $bancoCorretora ?>"><?= $bancoCorretora ?></option>
 
 
                                                             <?php
@@ -206,11 +206,11 @@ if ($login->VerificarLogin()) {
 
                                                         while ($dadosCartoesCredito = mysqli_fetch_assoc($resultadoExecucao)) {
 
-                                                            $nome = $dadosCartoesCredito['nome'];
+                                                            $bancoCorretora = $dadosCartoesCredito['bancoCorretora'];
 
                                                             ?>
 
-															<option value="<?= $nome ?>"><?= $nome ?></option>
+															<option value="<?= $bancoCorretora ?>"><?= $bancoCorretora ?></option>
 
 
                                                             <?php
@@ -249,7 +249,7 @@ if ($login->VerificarLogin()) {
 
 							</div>
 
-							<table class="table table-dark text-center" style="width: 100%">
+							<table class="table table-dark text-center">
 
 								<thead>
 								<tr>
@@ -278,9 +278,10 @@ if ($login->VerificarLogin()) {
                                     $quantidade++;
 
                                     $id = $dadosGastos['id'];
-                                    $fiador = $dadosGastos['fiador'];
+                                    $bancoCorretora = $dadosGastos['bancoCorretora'];
                                     $formaPagamento = $dadosGastos['formaPagamento'];
                                     $valor = $dadosGastos['valor'];
+									$saldoTotal += $valor;
                                     $parcelas = $dadosGastos['parcelas'];
                                     $classificacao = $dadosGastos['classificacao'];
                                     $dataCompraPagamento = $dadosGastos['dataCompraPagamento'];
@@ -302,11 +303,11 @@ if ($login->VerificarLogin()) {
 
                                                     while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao2)) {
 
-                                                        $nome = $dadosBancosCorretoras['nome'];
+                                                        $bancoCorretora = $dadosBancosCorretoras['bancoCorretora'];
 
                                                         ?>
 
-														<option value="<?= $nome ?>" <?= $nome == $fiador ? 'selected' : '' ?>><?= $nome ?></option>
+														<option value="<?= $bancoCorretora ?>" <?= $bancoCorretora == $bancoCorretora ? 'selected' : '' ?>><?= $bancoCorretora ?></option>
 
 
                                                         <?php
@@ -365,7 +366,7 @@ if ($login->VerificarLogin()) {
 											<td>
 												<button style="text-decoration: none; width: 4vh; height: 4vh;"
 												        class="text-primary bg-transparent rounded-circle border border-primary"
-												        name="nomeId"
+												        name="bancoCorretoraId"
 												        value="<?= $id ?>">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 													     fill="currentColor"
@@ -394,8 +395,8 @@ if ($login->VerificarLogin()) {
 
 								<th scope="row">#</th>
 								<td>Total</td>
-								<td>R$ <?= $formatacao->formatarValor($saldoTotal) ?></td>
 								<td></td>
+                                <td>R$ <?= $formatacao->formatarValor($saldoTotal) ?></td>
 								<td></td>
 								<td></td>
 								<td></td>

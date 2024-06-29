@@ -4,12 +4,12 @@ require_once __DIR__ . "/./EntradaDadosGastos.php";
 
 class AlterarDadosGastos extends EntradaDadosGastos
 {
-    public function AlterarDadosGastos($id, $formaPagamento, $fiador, $classificacao, $valor, $dataCompraPagamento, $parcelas)
+    public function AlterarDadosGastos($id, $formaPagamento, $bancoCorretora, $classificacao, $valor, $dataCompraPagamento, $parcelas)
     {
         $this->setCodigoMySql(
             "UPDATE dbName.gastos SET
                 formaPagamento = '$formaPagamento',
-                fiador = '$fiador',
+                bancoCorretora = '$bancoCorretora',
                 classificacao = '$classificacao',
                 valor = '$valor',
                 parcelas = '$parcelas',

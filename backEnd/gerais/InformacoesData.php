@@ -69,4 +69,23 @@ class InformacoesData extends RetornarErro
 
         return intval(($diasAnos + $diasMeses + $dias)/30);
     }
+
+    public function ultimoDiaMes($mes, $ano) {
+
+        if (gettype($ano / 4) == "integer")
+            $fevereiro = 29;
+        else
+            $fevereiro = 28;
+
+        if ($mes == '01' or $mes == '03' or $mes == '05' or $mes == '07' or $mes == '08' or $mes == '10' or $mes == '12')
+            return 31;
+
+        if ($mes == '02')
+            return $fevereiro;
+
+        if ($mes == '04' or $mes == '06' or $mes == '09' or $mes == '11')
+            return 30;
+
+        return false;
+    }
 }

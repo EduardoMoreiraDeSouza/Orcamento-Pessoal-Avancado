@@ -18,7 +18,7 @@ $globais = new Globais;
 
 	<link href="../css/style.css" rel="stylesheet">
 
-	<title>Orçamento Pessoal - Entrar</title>
+	<title>Orçamento Pessoal - Desenvolvedor</title>
 
 </head>
 <body>
@@ -27,15 +27,15 @@ $globais = new Globais;
 	<div class="container-fluid">
 		<a class="navbar-brand" href="../index.php">< Orçamento Pessoal ></a>
 
-        <?php if (!empty($globais->getSessao())) { ?>
+		<?php if (!empty($globais->getSessao())) { ?>
 
-			<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-			        data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
-			        aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
+		<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+		        data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
+		        aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
 
-        <?php } ?>
+		<?php } ?>
 
 		<div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
 		     aria-labelledby="offcanvasDarkNavbarLabel">
@@ -49,7 +49,7 @@ $globais = new Globais;
 			<div class="offcanvas-body">
 				<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 
-                    <?php if (!empty($globais->getSessao())) { ?>
+					<?php if (!empty($globais->getSessao())) { ?>
 
 					<li class="nav-item h6">
 						<a class="nav-link text-light" href="../paginas/bancosCorretoras.php">Bancos/Corretoras</a>
@@ -74,10 +74,8 @@ $globais = new Globais;
 						   href="../backEnd/InteracaoFront/sair.php">Sair</a>
 					</li>
 
-                    <?php } ?>
-
+					<?php } ?>
 				</ul>
-
 			</div>
 		</div>
 	</div>
@@ -86,40 +84,36 @@ $globais = new Globais;
 <div class="box">
 	<section class="banner">
 		<div class="overlay"></div>
+
+		<?php if (empty($globais->getSessao())) { ?>
+
 		<div class="container chamada-banner introducao">
 			<div class="row">
 				<div class="row-md-12 text-center ">
 					<h2 class="pt-4">
-						Orçamento Pessoal
+						Desenvolvedor
 					</h2>
 
-					<main class="container mt-5 w-50 p-3 text-start">
-
-						<h3 class="text-center">Entrar</h3>
-
-						<form class="mt-3" action="../backEnd/InteracaoFront/entrar.php" method="POST">
-							<div class="mb-3">
-								<label for="exampleInputEmail1" class="form-label">E-mail:</label>
-								<input type="text" name="email" class="form-control">
-							</div>
-							<div class="mb-3">
-								<label for="exampleInputPassword1" class="form-label">Senha:</label>
-								<input type="password" name="senha" class="form-control">
-							</div>
-							<button type="submit" class="btn btn-primary container-fluid mt-3 mb-5">Entrar</button>
-
+					<main class="container-fluid text-center">
+						<form method="POST" action="./bancoDados.php" class="" style="padding: 5rem;">
+							<ol class="container">
+								<ul class="pt-5">
+									<input type="submit" class="btn btn-success btn-lg container-fluid" name="criarBancoDados"
+									       value="Criar Banco de Dados">
+								</ul>
+								<ul class="pt-1">
+									<input type="submit" class="btn btn-danger btn-lg container-fluid" name="excluirBancoDados"
+									       value="Excluir Banco de Dados">
+								</ul>
+							</ol>
 						</form>
-
 					</main>
-
-					<a class="nav-link active text-light cadastrar mb-5" aria-current="page"
-					   href="../paginas/cadastrar.php">
-						Cadastrar
-					</a>
-
 				</div>
 			</div>
 		</div>
+
+		<?php } ?>
+
 	</section>
 </div>
 

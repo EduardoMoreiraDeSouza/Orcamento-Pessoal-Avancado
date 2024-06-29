@@ -62,3 +62,11 @@ div.introducao {
     padding: 0.8vh 13.4vh;
     background: #726f6f;
 }
+
+table {
+    width: 100%; !important;
+}
+
+table ol, ul, li {
+    width: 100%; !important;
+}

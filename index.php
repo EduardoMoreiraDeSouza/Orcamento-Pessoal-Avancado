@@ -64,23 +64,23 @@ $globais = new Globais;
 						<a class="nav-link text-light" href="./paginas/credito.php">Cartões de Crédito</a>
 					</li>
 					<li class="nav-item h6">
-						<a class="nav-link text-light" href="#">Investimentos</a>
+						<a class="nav-link text-light" href="#">Investimentos (Em Breve)</a>
 					</li>
 					<li class="nav-item h6">
-						<a class="nav-link text-light" href="#">Rendimentos</a>
+						<a class="nav-link text-light" href="#">Rendimentos (Em Breve)</a>
 					</li>
 					<li class="nav-item h6">
 						<a class="nav-link active text-light" aria-current="page"
 						   href="./backEnd/InteracaoFront/sair.php">Sair</a>
 					</li>
 
+                    <?php } ?>
+
+					<li class="nav-item h6">
+						<a class="nav-link text-light" href="dev/index.php">Desenvolvedor</a>
+					</li>
+
 				</ul>
-
-                <?php } ?>
-
-				<li class="nav-item h6">
-					<a class="nav-link text-light" href="./dev/index.html">Desenvolvedor</a>
-				</li>
 
 			</div>
 		</div>
@@ -111,6 +111,12 @@ $globais = new Globais;
 							<a class="nav-link active text-light cadastrar" aria-current="page"
 							   href="./paginas/cadastrar.php">
 								Cadastrar
+							</a>
+						</li>
+						<li class="pt-2 mb-5">
+							<a class="nav-link active text-light cadastrar" aria-current="page"
+							   href="dev/index.php">
+								Desenvolvedor
 							</a>
 						</li>
 					</ul>

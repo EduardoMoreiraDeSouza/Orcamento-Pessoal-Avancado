@@ -20,9 +20,6 @@ class Entrar extends NovoCartaoCredito
         )
             return (bool)$this-> RetornarErro('pai', null);
 
-        if (!$this -> ObterDadosUsuarios($this -> getEmail()))
-            return (bool)$this-> RetornarErro('pai', 'cadastrar');
-
         $this -> setSessao($this -> getEmail());
 
         return !$this-> RetornarErro('inicio', 'entrarSucesso');

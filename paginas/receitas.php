@@ -9,9 +9,11 @@ if ($login->VerificarLogin()) {
     require_once __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
 
     $formatacao = new FormatacaoDados();
-
     $execucao = new ExecucaoCodigoMySql();
     $execucao->timezone();
+	$codigoVariante = '';
+    $anoReferencia = '';
+    $mesReferencia = '';
 
     if (isset($_GET['excluir']) and isset($_GET['id'])) {
         require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirReceita.php";
@@ -21,6 +23,8 @@ if ($login->VerificarLogin()) {
 
         $exluir->Redirecionar('receitas', true);
     }
+
+    include_once("./filtros.php");
 
     ?>
 
@@ -74,10 +78,10 @@ if ($login->VerificarLogin()) {
 							<a class="nav-link text-light" href="../paginas/credito.php">Cartões de Crédito</a>
 						</li>
 						<li class="nav-item h6">
-							<a class="nav-link text-light" href="#">Investimentos</a>
+							<a class="nav-link text-light" href="#">Investimentos (Em Breve)</a>
 						</li>
 						<li class="nav-item h6">
-							<a class="nav-link text-light" href="#">Rendimentos</a>
+							<a class="nav-link text-light" href="#">Rendimentos (Em Breve)</a>
 						</li>
 						<li class="nav-item h6">
 							<a class="nav-link active text-light" aria-current="page"
@@ -96,7 +100,63 @@ if ($login->VerificarLogin()) {
 			<div class="overlay"></div>
 			<div class="container chamada-banner introducao">
 				<div class="row">
-					<div class="row-md-12 text-center ">
+					<div class="row-md-12 text-center">
+
+						<form class="mt-2 position-absolute" method="get">
+							<div class="container" style="padding: 0">
+								<div class="row">
+									<div class="col-sm">
+										<svg xmlns="http://www.w3.org/2000/svg" width="37" height="37"
+										     fill="currentColor" class="bi bi-calendar-month-fill" viewBox="0 0 16 16">
+											<path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zm.104 7.305L4.9 10.18H3.284l.8-2.375zm9.074 2.297c0-.832-.414-1.36-1.062-1.36-.692 0-1.098.492-1.098 1.36v.253c0 .852.406 1.364 1.098 1.364.671 0 1.062-.516 1.062-1.364z"/>
+											<path d="M16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2M2.56 12.332h-.71L3.748 7h.696l1.898 5.332h-.719l-.539-1.602H3.1zm7.29-4.105v4.105h-.668v-.539h-.027c-.145.324-.532.605-1.188.605-.847 0-1.453-.484-1.453-1.425V8.227h.676v2.554c0 .766.441 1.012.98 1.012.59 0 1.004-.371 1.004-1.023V8.227zm1.273 4.41c.075.332.422.636.985.636.648 0 1.07-.378 1.07-1.023v-.605h-.02c-.163.355-.613.648-1.171.648-.957 0-1.64-.672-1.64-1.902v-.34c0-1.207.675-1.887 1.64-1.887.558 0 1.004.293 1.195.64h.02v-.577h.648v4.03c0 1.052-.816 1.579-1.746 1.579-1.043 0-1.574-.516-1.668-1.2z"/>
+										</svg>
+									</div>
+
+									<div class="col-sm" style="margin-left: -4.8vh; width: 22vh;">
+										<select class="form-control form-control bg-danger text-light text-center"
+										        name="mes_referencia">
+											<option <?= $mesReferencia == 'todos' ? 'selected' : '' ?> value="todos">
+												Todos
+											</option>
+											<option <?= $mesReferencia == '1' ? 'selected' : '' ?> value="1">1 (Jan)
+											</option>
+											<option <?= $mesReferencia == '2' ? 'selected' : '' ?> value="2">2 (Fev)
+											</option>
+											<option <?= $mesReferencia == '3' ? 'selected' : '' ?> value="3">3 (Mar)
+											</option>
+											<option <?= $mesReferencia == '4' ? 'selected' : '' ?> value="4">4 (Abr)
+											</option>
+											<option <?= $mesReferencia == '5' ? 'selected' : '' ?> value="5">5 (Mai)
+											</option>
+											<option <?= $mesReferencia == '6' ? 'selected' : '' ?> value="6">6 (Jun)
+											</option>
+											<option <?= $mesReferencia == '7' ? 'selected' : '' ?> value="7">7 (Jul)
+											</option>
+											<option <?= $mesReferencia == '8' ? 'selected' : '' ?> value="8">8 (Ago)
+											</option>
+											<option <?= $mesReferencia == '9' ? 'selected' : '' ?> value="9">9 (Set)
+											</option>
+											<option <?= $mesReferencia == '10' ? 'selected' : '' ?> value="10">10
+												(Out)
+											</option>
+											<option <?= $mesReferencia == '11' ? 'selected' : '' ?> value="11">11
+												(Nov)
+											</option>
+											<option <?= $mesReferencia == '12' ? 'selected' : '' ?> value="12">12
+												(Dez)
+											</option>
+										</select>
+									</div>
+									<input class="rounded-2 form-control bg-danger text-light" style="width: 9vh; margin-left: -1vh;"
+									       type="text" name="ano_referencia" value="<?= $anoReferencia ?>">
+
+									<div class="col-sm" style="margin-left: -3.2vh;">
+										<button type="submit" class="btn btn-danger border-light">Ok</button>
+									</div>
+								</div>
+							</div>
+						</form>
 
 						<h2 class="pt-4">
 							Minhas Receitas
@@ -121,7 +181,7 @@ if ($login->VerificarLogin()) {
 												      method="POST"
 												      class="form hstack gap-3">
 
-													<input type="text" class="container input-group-text" name="nome"
+													<input type="text" class="container input-group-text" name="bancoCorretora"
 													       placeholder="Nome:"
 													       required>
 													<input type="number" class="container input-group-text" name="saldo"
@@ -149,7 +209,8 @@ if ($login->VerificarLogin()) {
 									<div style="min-height: auto;" class="mb-3">
 										<div class="collapse collapse-horizontal" id="novaReceita">
 
-											<p style="font-size: medium; margin: 0;">Não sabe o valor das parcelas? <br/>Coloque o valor total da receita (Com
+											<p style="font-size: medium; margin: 0;">Não sabe o valor das parcelas?
+												<br/>Coloque o valor total da receita (Com
 												juros, se tiver), e
 												no final coloque um * (Asterisco) para calcularmos para você!</p>
 
@@ -169,11 +230,11 @@ if ($login->VerificarLogin()) {
 
                                                         while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
 
-                                                            $nome = $dadosBancosCorretoras['nome'];
+                                                            $bancoCorretora = $dadosBancosCorretoras['bancoCorretora'];
 
                                                             ?>
 
-															<option value="<?= $nome ?>"><?= $nome ?></option>
+															<option value="<?= $bancoCorretora ?>"><?= $bancoCorretora ?></option>
 
 
                                                             <?php
@@ -213,7 +274,7 @@ if ($login->VerificarLogin()) {
 
 								<thead>
 								<tr>
-									<th scope="col">#</th>
+									<th scope="col">Pagos</th>
 									<th scope="col">Banco/Corretora</th>
 									<th scope="col">Valor</th>
 									<th scope="col">Classificacao</th>
@@ -224,124 +285,184 @@ if ($login->VerificarLogin()) {
 								</thead>
 								<tbody>
 
+								<form class="form-inline" method="get">
+									<tr class="form-group">
+										<th>
+											*
+										</th>
+										<td>
+											<select class="form-control bg-secondary text-light border-secondary" name="filtrar_bancoCorretora">
+												<option value="" selected>Filtrar</option>
+												<option value="A-Z">A-Z</option>
+												<option value="Z-A">Z-A</option>
+											</select>
+										</td>
+										<td>
+											<select class="form-control bg-secondary text-light border-secondary" name="filtrar_valor">
+												<option value="" selected>Filtrar</option>
+												<option value="Maior">Maior</option>
+												<option value="Menor">Menor</option>
+											</select>
+										</td>
+										<td>
+											<select class="form-control bg-secondary text-light border-secondary" name="filtrar_classificacao">
+												<option value="" selected>Filtrar</option>
+												<option value="A-Z">A-Z</option>
+												<option value="Z-A">Z-A</option>
+											</select>
+										</td>
+										<td>
+											<select class="form-control bg-secondary text-light border-secondary" name="filtrar_parcelas">
+												<option value="" selected>Filtrar</option>
+												<option value="Maior">Maior</option>
+												<option value="Menor">Menor</option>
+											</select>
+										</td>
+										<td>
+											<select class="form-control bg-secondary text-light border-secondary" name="filtrar_data">
+												<option value="" selected>Filtrar</option>
+												<option value="Novos">Novos</option>
+												<option value="Antigos">Antigos</option>
+											</select>
+										</td>
+										<td>
+											<button type="submit" class="btn btn-primary" name="filtrar">Filtrar</button>
+										</td>
+									</tr>
+								</form>
+
                                 <?php
 
-                                $execucao->setCodigoMySql("SELECT * FROM dbName.receitas WHERE email LIKE '" . $login->getSessao() . "';");
+                                $execucao->setCodigoMySql("SELECT * FROM dbName.receitas WHERE email LIKE '" . $login->getSessao() . "' $codigoVariante;");
                                 $resultadoExecucao = $execucao->ExecutarCodigoMySql();
 
-                                $quantidade = 0;
                                 $saldoTotal = 0;
 
                                 while ($dadosReceitas = mysqli_fetch_assoc($resultadoExecucao)) {
 
-                                    $quantidade++;
+                                    $parcelasPassadas = $dadosReceitas['parcelas'];
 
-                                    $id = $dadosReceitas['id'];
-                                    $bancoCorretora = $dadosReceitas['bancoCorretora'];
-                                    $valor = $dadosReceitas['valor'];
-                                    $parcelas = $dadosReceitas['parcelas'];
-                                    $classificacao = $dadosReceitas['classificacao'];
-                                    $dataCompraPagamento = $dadosReceitas['dataPagamento'];
+                                    if ($mesReferencia < 10)
+                                        $mesReferencia = '0' . str_replace('0', '', $mesReferencia);
 
-                                    ?>
+									$dataReferencia = $anoReferencia . "-" . $mesReferencia . "-" . $execucao->ultimoDiaMes($mesReferencia, $anoReferencia);
 
-									<form action="../backEnd/InteracaoFront/editarReceita.php" method="POST">
-										<tr>
-											<th scope="row"><?= $quantidade ?>º</th>
-											<td>
-												<select class="form-select" name="bancoCorretora" required>
+                                    if ($mesReferencia != 'todos') {
+                                        $parcelasPassadas =
+                                            $execucao->diferencaMesesData(
+                                                $dadosReceitas['dataCompraPagamento'],
+                                                $dataReferencia
+                                            );
+                                    }
 
-                                                    <?php
+									$parcelasPassadas++;
 
-                                                    $execucao2 = new ExecucaoCodigoMySql();
-                                                    $codigoMySql2 = "SELECT * FROM dbName.bancosCorretoras WHERE email LIKE '" . $login->getSessao() . "';";
-                                                    $execucao2->setCodigoMySql($codigoMySql2);
-                                                    $resultadoExecucao2 = $execucao2->ExecutarCodigoMySql();
+                                    if ($parcelasPassadas <= $dadosReceitas['parcelas'] and $dadosReceitas['dataCompraPagamento'] <= $dataReferencia) {
 
-                                                    while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao2)) {
+                                        $saldoTotal += $dadosReceitas['valor'];
+										$dataPagamento = $anoReferencia . "-" . $mesReferencia . "-" . $execucao->InformacoesData('d', $dadosReceitas['dataCompraPagamento']);
 
-                                                        $nome = $dadosBancosCorretoras['nome'];
+                                        ?>
 
-                                                        ?>
+										<form class="form-inline" action="../backEnd/InteracaoFront/editarReceita.php" method="POST">
 
-														<option value="<?= $nome ?>" <?= $nome == $bancoCorretora ? 'selected' : '' ?>><?= $nome ?></option>
-
+											<tr>
+												<th scope="row"><?= $parcelasPassadas."/".$dadosReceitas['parcelas'] ?></th>
+												<td>
+													<select class="form-select" name="bancoCorretora" required>
 
                                                         <?php
-                                                    } ?>
 
-												</select>
-											</td>
-											<td>
-												<input type="text" class="container input-group-text" name="valor"
-												       placeholder="Valor:"
-												       value="R$ <?= $formatacao->formatarValor($valor) ?>">
-											</td>
+                                                        $execucao2 = new ExecucaoCodigoMySql();
+                                                        $codigoMySql2 = "SELECT * FROM dbName.bancosCorretoras WHERE email LIKE '" . $login->getSessao() . "';";
+                                                        $execucao2->setCodigoMySql($codigoMySql2);
+                                                        $resultadoExecucao2 = $execucao2->ExecutarCodigoMySql();
 
-											<td>
-												<select class="form-select" name="clasificacao" required>
-													<option value="Pessoal" <?= $classificacao == 'Salário' ? 'selected' : '' ?>>
-														Salário
-													</option>
-													<option value="Necessário" <?= $classificacao == 'Rendimentos' ? 'selected' : '' ?>>
-														Rendimentos
-													</option>
-													<option value="Reserva" <?= $classificacao == 'Empreendimentos' ? 'selected' : '' ?>>
-														Empreendimentos
-													</option>
-													<option value="Dívidas" <?= $classificacao == 'Emprestimos' ? 'selected' : '' ?>>
-														Emprestimos
-													</option>
-													<option value="Investimentos" <?= $classificacao == 'Reserva' ? 'selected' : '' ?>>
-														Reserva
-													</option>
-													<option value="Boas Ações" <?= $classificacao == 'Outros' ? 'selected' : '' ?>>
-														Boas
-														Outros
-													</option>
-													<option value="Boas Ações" <?= $classificacao == 'correcaoSaldo' ? 'selected' : '' ?>>
-														Correção de Saldo
-													</option>
-												</select>
-											</td>
-											<td>
-												<input type="text" class="container input-group-text" name="parcelas"
-												       placeholder="Parcelas:"
-												       step="0.01" value="<?= $parcelas ?>">
-											</td>
-											<td>
-												<input type="date" class="container input-group-text"
-												       name="dataCompraPagamento"
-												       value="<?= $dataCompraPagamento ?>">
-											</td>
-											<td>
-												<button style="text-decoration: none; width: 4vh; height: 4vh;"
-												        class="text-primary bg-transparent rounded-circle border border-primary"
-												        name="nomeId"
-												        value="<?= $id ?>">
-													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-													     fill="currentColor"
-													     class="bi bi-pen" viewBox="0 0 16 16">
-														<path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
-													</svg>
-												</button>
+                                                        while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao2)) {
 
-												<a href="?excluir=true&id=<?= $id ?>"
-												   style="text-decoration: none; margin-left: 0.8vh; width: 4vh; height: 4vh;"
-												   class="text-danger rounded-circle border border-danger">
-													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-													     fill="currentColor" class="bi bi-trash"
-													     viewBox="0 0 16 16">
-														<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-														<path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-													</svg>
-												</a>
+                                                            $bancoCorretora = $dadosBancosCorretoras['bancoCorretora'];
 
-											</td>
-										</tr>
-									</form>
+                                                            ?>
 
-                                    <?php
+															<option value="<?= $bancoCorretora ?>" <?= $bancoCorretora == $dadosReceitas['bancoCorretora'] ? 'selected' : '' ?>><?= $bancoCorretora ?></option>
+
+
+                                                            <?php
+                                                        } ?>
+
+													</select>
+												</td>
+												<td>
+													<input type="text" class="form-control input-group-text" name="valor"
+													       placeholder="Valor:"
+													       value="R$ <?= $formatacao->formatarValor($dadosReceitas['valor']) ?>">
+												</td>
+
+												<td>
+													<select class="form-select" name="clasificacao" required>
+														<option value="Salário" <?= $dadosReceitas['classificacao'] == 'Salário' ? 'selected' : '' ?>>
+															Salário
+														</option>
+														<option value="Rendimentos" <?= $dadosReceitas['classificacao'] == 'Rendimentos' ? 'selected' : '' ?>>
+															Rendimentos
+														</option>
+														<option value="Empreendimentos" <?= $dadosReceitas['classificacao'] == 'Empreendimentos' ? 'selected' : '' ?>>
+															Empreendimentos
+														</option>
+														<option value="Emprestimos" <?= $dadosReceitas['classificacao'] == 'Emprestimos' ? 'selected' : '' ?>>
+															Emprestimos
+														</option>
+														<option value="Reserva" <?= $dadosReceitas['classificacao'] == 'Reserva' ? 'selected' : '' ?>>
+															Reserva
+														</option>
+														<option value="Outros" <?= $dadosReceitas['classificacao'] == 'Outros' ? 'selected' : '' ?>>
+															Outros
+														</option>
+														<option value="correcaoSaldo" <?= $dadosReceitas['classificacao'] == 'correcaoSaldo' ? 'selected' : '' ?>>
+															Correção de Saldo
+														</option>
+													</select>
+												</td>
+												<td>
+													<input type="text" class="form-control input-group-text"
+													       name="parcelas"
+													       placeholder="Parcelas:"
+													       step="0.01" value="<?= $dadosReceitas['parcelas'] ?>">
+												</td>
+												<td>
+													<input type="date" class="form-control input-group-text"
+													       name="dataCompraPagamento"
+													       value="<?= $dataPagamento ?>">
+												</td>
+												<td>
+													<button style="text-decoration: none; width: 4vh; height: 4vh;"
+													        class="text-primary bg-transparent rounded-circle border border-primary"
+													        name="bancoCorretoraId"
+													        value="<?= $dadosReceitas['id'] ?>">
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+														     fill="currentColor"
+														     class="bi bi-pen" viewBox="0 0 16 16">
+															<path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+														</svg>
+													</button>
+
+													<a href="?excluir=true&id=<?= $dadosReceitas['id'] ?>"
+													   style="text-decoration: none; margin-left: 0.8vh; width: 4vh; height: 4vh;"
+													   class="text-danger rounded-circle border border-danger">
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+														     fill="currentColor" class="bi bi-trash"
+														     viewBox="0 0 16 16">
+															<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+															<path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+														</svg>
+													</a>
+
+												</td>
+											</tr>
+										</form>
+
+                                        <?php
+                                    }
                                 } ?>
 
 								<th scope="row">#</th>
