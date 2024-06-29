@@ -23,11 +23,11 @@
                     <select class="form-select" name="bancoCorretora" required>
 
                         <option value="" selected>Banco | Corretora</option>
-                        <?php include_once(__DIR__ . '/../loops/nomes_bancos_corretoras.php') ?>
+                        <?php include(__DIR__ . '/../loops/nomes_bancos_corretoras.php') ?>
 
                     </select>
 
-                    <?php include_once(__DIR__ . '/../classificacao/tipos_gastos.php') ?>
+                    <?php include(__DIR__ . '/../classificacao/tipos_gastos.php') ?>
 
                     <input type="date" class="container input-group-text"
                            name="dataCompraPagamento"

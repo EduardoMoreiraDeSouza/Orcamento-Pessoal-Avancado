@@ -53,7 +53,15 @@ class ValorFinal extends FormatacaoDados
                     $receitaAtual++;
                 }
 
-            return $receitaTotal - $gastosDebitoTotal;
+            $saldoFinal = $receitaTotal - $gastosDebitoTotal;
+
+            $this-> AlterarDadosBancosCorretoras(
+                $entidade,
+                $entidade,
+                $saldoFinal,
+            );
+
+            return $saldoFinal;
         }
 
         return false;

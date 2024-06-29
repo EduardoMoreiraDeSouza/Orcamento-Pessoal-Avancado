@@ -12,7 +12,6 @@ if ($login->VerificarLogin()) {
     $formatacao = new FormatacaoDados();
     $execucao = new ExecucaoCodigoMySql();
 
-
     $execucao->timezone();
 
     if (isset($_GET['excluir']) and isset($_GET['bancoCorretora'])) {
@@ -46,11 +45,11 @@ if ($login->VerificarLogin()) {
 		<div class="container-fluid">
 			<a class="navbar-brand" href="../index.php">< Orçamento Pessoal ></a>
 
-				<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-				        data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
-				        aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
+			<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+			        data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
+			        aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
 
 			<div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
 			     aria-labelledby="offcanvasDarkNavbarLabel">
@@ -98,188 +97,23 @@ if ($login->VerificarLogin()) {
 				<div class="row">
 					<div class="row-md-12 text-center ">
 
+                        <?php include(__DIR__ . "/./filtros.php"); ?>
+
 						<h2 class="pt-4">
 							Bancos/Corretoras
 						</h2>
 
 						<main class="container mb-5">
 							<div class="container row text-start">
-								<div class="col-auto">
-									<p>
-										<button class="btn btn-dark" type="button" data-bs-toggle="collapse"
-										        data-bs-target="#novoBancoCorretora" aria-expanded="false"
-										        aria-controls="collapseWidthExample">
-											Novo Banco/Corretora
-										</button>
-									</p>
 
-									<div style="min-height: auto;" class="mb-4">
-										<div class="collapse collapse-horizontal" id="novoBancoCorretora">
-											<div class="card card-body border border-dark bg-secondary"
-											     style="width: 80%;">
-												<form action="../backEnd/InteracaoFront/novoBancoCorretora.php"
-												      method="POST"
-												      class="form hstack gap-3">
-
-													<input type="text" class="container input-group-text" name="bancoCorretora"
-													       placeholder="Nome:"
-													       required>
-													<input type="number" class="container input-group-text" name="saldo"
-													       placeholder="Saldo:" step="0.01">
-
-													<input type="submit" class="container btn btn-dark" value="Criar">
-
-												</form>
-											</div>
-										</div>
-									</div>
-
-								</div>
-
-								<div class="col-auto">
-
-									<p>
-										<button class="btn btn-dark" type="button" data-bs-toggle="collapse"
-										        data-bs-target="#novoDebito"
-										        aria-expanded="false" aria-controls="collapseWidthExample">
-											Novo Débito
-										</button>
-									</p>
-
-									<div style="min-height: auto;" class="mb-3">
-										<div class="collapse collapse-horizontal" id="novoDebito">
-
-											<p style="font-size: medium; margin: 0;">Não sabe o valor das parcelas? <br/>Coloque o valor total do gasto (Com
-												juros, se tiver), e
-												no final coloque um * (Asterisco) para calcularmos para você!</p>
-
-											<div class="card card-body border border-dark bg-secondary"
-											     style="width: 95%;">
-												<form action="../backEnd/InteracaoFront/novoDebito.php" method="POST"
-												      class="form hstack gap-3">
-
-													<select class="form-select" name="bancoCorretora" required>
-														<option value="" selected>Banco | Corretora</option>
-
-                                                        <?php
-
-                                                        $codigoMySql = "SELECT * FROM dbName.bancosCorretoras WHERE email LIKE '" . $login->getSessao() . "';";
-                                                        $execucao->setCodigoMySql($codigoMySql);
-                                                        $resultadoExecucao = $execucao->ExecutarCodigoMySql();
-
-                                                        while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
-
-                                                            $bancoCorretora = $dadosBancosCorretoras['bancoCorretora'];
-
-                                                            ?>
-
-															<option value="<?= $bancoCorretora ?>"><?= $bancoCorretora ?></option>
-
-
-                                                            <?php
-                                                        } ?>
-
-													</select>
-
-													<select class="form-select" name="classificacao" required>
-														<option value="" selected>Classificação</option>
-														<option value="Pessoal">Pessoal</option>
-														<option value="Necessário">Necessário</option>
-														<option value="Reserva">Reserva</option>
-														<option value="Dívidas">Dívidas</option>
-														<option value="Investimentos">Investimentos</option>
-														<option value="Boas Ações">Boas Ações</option>
-													</select>
-
-													<input type="date" class="container input-group-text"
-													       name="dataCompraPagamento"
-													       value="<?= date('Y-m-d') ?>" required>
-													<input type="text" class="container input-group-text" name="valor"
-													       placeholder="Valor das Parcelas" required>
-													<input type="number" class="container input-group-text"
-													       name="parcelas"
-													       title="Quantidade de Parcelas" step="1" min="1" value="1"
-													       required>
-
-													<input type="submit" class="container btn btn-dark" value="Debitar">
-
-												</form>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div class="col-auto">
-
-									<p>
-										<button class="btn btn-dark" type="button" data-bs-toggle="collapse"
-										        data-bs-target="#novaReceita"
-										        aria-expanded="false" aria-controls="collapseWidthExample">
-											Nova Receita
-										</button>
-									</p>
-
-									<div style="min-height: auto;" class="mb-3">
-										<div class="collapse collapse-horizontal" id="novaReceita">
-											<div class="card card-body border border-dark bg-secondary"
-											     style="width: 95%;">
-
-												<form action="../backEnd/InteracaoFront/novaReceita.php" method="POST"
-												      class="form hstack gap-3">
-
-													<select class="form-select" name="bancoCorretora" required>
-
-														<option value="" selected>Banco | Corretora</option>
-
-                                                        <?php
-
-                                                        $execucao->setCodigoMySql($codigoMySql);
-                                                        $resultadoExecucao = $execucao->ExecutarCodigoMySql();
-
-                                                        while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
-
-                                                            $bancoCorretora = $dadosBancosCorretoras['bancoCorretora'];
-
-                                                            ?>
-
-															<option value="<?= $bancoCorretora ?>"><?= $bancoCorretora ?></option>
-
-
-                                                            <?php
-                                                        } ?>
-
-													</select>
-
-													<select class="form-select" name="classificacao" required>
-														<option value="" selected>Classificação</option>
-														<option value="Salário">Salário</option>
-														<option value="Rendimentos">Rendimentos</option>
-														<option value="Empreendimentos">Empreendimentos</option>
-														<option value="Emprestimos">Empréstimos</option>
-														<option value="Reserva">Reserva</option>
-														<option value="Outros">Outros</option>
-													</select>
-													<input type="date" class="container input-group-text"
-													       name="dataCompraPagamento"
-													       value="<?= date('Y-m-d') ?>" required>
-													<input type="text" class="container input-group-text" name="valor"
-													       placeholder="Valor"
-													       required>
-													<input type="number" class="container input-group-text"
-													       name="parcelas"
-													       title="Quantidade de Parcelas" step="1" min="0" value="1">
-													<input type="submit" class="container btn btn-dark"
-													       value="Depositar">
-
-												</form>
-											</div>
-										</div>
-									</div>
-								</div>
+                                <?php include_once(__DIR__ . "/./particoes/formularios/novo_banco_corretora.php") ?>
+                                <?php include_once(__DIR__ . "/./particoes/formularios/nova_receita.php") ?>
+                                <?php include_once(__DIR__ . "/./particoes/formularios/novo_debito.php") ?>
 
 							</div>
 
 							<table class="table table-dark text-center">
+
 								<thead>
 								<tr>
 									<th scope="col">#</th>
@@ -288,11 +122,21 @@ if ($login->VerificarLogin()) {
 									<th scope="col">Ações</th>
 								</tr>
 								</thead>
+
 								<tbody>
+
+								<form class="form-inline" method="post">
+									<tr class="form-group">
+										<th>*</th>
+										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_banco_corretora.php") ?></td>
+										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_saldo.php") ?></td>
+										<td><?php include_once(__DIR__ . "/./particoes/botoes/submit_filtros.php") ?></td>
+									</tr>
+								</form>
 
                                 <?php
 
-                                $execucao->setCodigoMySql($codigoMySql);
+                                $execucao->setCodigoMySql("SELECT * FROM dbName.bancosCorretoras WHERE email LIKE '" . $login->getSessao() . "' ".$_SESSION['codigo_variante'].";");
                                 $resultadoExecucao = $execucao->ExecutarCodigoMySql();
 
                                 $quantidade = 0;
@@ -313,7 +157,8 @@ if ($login->VerificarLogin()) {
 										<tr>
 											<th scope="row"><?= $quantidade ?>º</th>
 											<td>
-												<input type="text" class="container input-group-text" name="bancoCorretora"
+												<input type="text" class="container input-group-text"
+												       name="bancoCorretora"
 												       placeholder="Nome:"
 												       value="<?= $bancoCorretora ?>" required>
 											</td>

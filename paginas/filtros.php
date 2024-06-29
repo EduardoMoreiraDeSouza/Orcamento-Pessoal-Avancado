@@ -1,11 +1,12 @@
 <?php
-
 if (!isset($_SESSION['ano_referencia']))
     $_SESSION['ano_referencia'] = '';
 if (!isset($_SESSION['mes_referencia']))
     $_SESSION['mes_referencia'] = '';
 if (!isset($_SESSION['codigo_variante']))
     $_SESSION['codigo_variante'] = '';
+
+$_SESSION['codigo_variante'] = '';
 
 // Set Ano de Referencia
 
@@ -51,6 +52,16 @@ elseif (isset($_POST['filtrar_valor']) and !empty($_POST['filtrar_valor'])) {
         $filtro = 'ASC';
 
     $_SESSION['codigo_variante'] = " ORDER BY valor " . $filtro;
+}
+
+elseif (isset($_POST['filtrar_saldo']) and !empty($_POST['filtrar_saldo'])) {
+
+    if ($_POST['filtrar_saldo'] == 'Maior')
+        $filtro = 'DESC';
+    else
+        $filtro = 'ASC';
+
+    $_SESSION['codigo_variante'] = " ORDER BY saldo " . $filtro;
 }
 
 elseif (isset($_POST['filtrar_classificacao']) and !empty($_POST['filtrar_classificacao'])) {

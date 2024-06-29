@@ -23,7 +23,7 @@
 
 	                <select class="form-select" name="bancoCorretora" required>
 		                <option value="" selected>Banco | Corretora</option>
-                        <?php include_once(__DIR__ . '/../loops/nomes_bancos_corretoras.php') ?>
+                        <?php include(__DIR__ . '/../loops/nomes_bancos_corretoras.php') ?>
 	                </select>
 
                     <select class="form-select" name="classificacao" required>

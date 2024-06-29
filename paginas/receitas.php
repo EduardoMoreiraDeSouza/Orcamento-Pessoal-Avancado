@@ -107,6 +107,7 @@ if ($login->VerificarLogin()) {
 
                                 <?php include_once(__DIR__ . "/./particoes/formularios/novo_banco_corretora.php") ?>
                                 <?php include_once(__DIR__ . "/./particoes/formularios/nova_receita.php") ?>
+                                <?php include_once(__DIR__ . "/./particoes/formularios/novo_debito.php") ?>
 
 							</div>
 

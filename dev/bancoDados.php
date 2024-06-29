@@ -28,6 +28,7 @@ function criarBancoDados()
        
         bancoCorretora VARCHAR(60),
         email VARCHAR(60) NOT NULL,
+        saldo DECIMAL(12, 2) NULL,
         
         CONSTRAINT PK_bancoCorretora_bancoCorretoras PRIMARY KEY (bancoCorretora),
         

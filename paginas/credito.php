@@ -150,7 +150,7 @@ if ($login->VerificarLogin()) {
 													       placeholder="Limite:" step="0.01" required>
 													<input type="number" class="container input-group-text"
 													       name="fechamento"
-													       placeholder="fechamento" max="31" min="1" required>
+													       placeholder="fechamento" max="31" min="1" step="1" required>
 													<input type="number" class="container input-group-text"
 													       name="vencimento"
 													       placeholder="vencimento" max="31" min="1" required>
@@ -294,7 +294,7 @@ if ($login->VerificarLogin()) {
 											<td>
 												<input type="number" class="container input-group-text"
 												       name="fechamento"
-												       placeholder="Fechamento:" step="0.01" min="1"
+												       placeholder="Fechamento:" step="1" max="31" min="1"
 												       value="<?= $fechamento ?>">
 											</td>
 											<td>

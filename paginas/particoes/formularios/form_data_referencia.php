@@ -1,4 +1,4 @@
-<?php require_once("./filtros.php"); ?>
+<?php include(__DIR__ . "/../../filtros.php"); ?>
 
 <form class="mt-2 position-absolute" method="post">
     <div class="container" style="padding: 0">
