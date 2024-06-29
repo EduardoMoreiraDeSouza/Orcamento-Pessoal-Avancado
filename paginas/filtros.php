@@ -4,88 +4,87 @@ if (!isset($_SESSION['ano_referencia']))
     $_SESSION['ano_referencia'] = '';
 if (!isset($_SESSION['mes_referencia']))
     $_SESSION['mes_referencia'] = '';
-if (!isset($_SESSION['codigoVariante']))
-    $_SESSION['codigoVariante'] = '';
+if (!isset($_SESSION['codigo_variante']))
+    $_SESSION['codigo_variante'] = '';
 
 // Set Ano de Referencia
 
-if (isset($_GET['ano_referencia']))
-    $anoReferencia = $_GET['ano_referencia'];
+if (isset($_POST['ano_referencia']))
+    $_SESSION['ano_referencia'] = $_POST['ano_referencia'];
 else
     if ($_SESSION['ano_referencia'] == '')
-        $anoReferencia = intval(date('Y'));
-    else
-        $anoReferencia = $_SESSION['ano_referencia'];
+        $_SESSION['ano_referencia'] = date('Y');
 
 // Set Mes de Referencia
 
-if (isset($_GET['mes_referencia'])) {
-    $mesReferencia = $_GET['mes_referencia'];
+if (isset($_POST['mes_referencia'])) {
+    $_SESSION['mes_referencia'] = $_POST['mes_referencia'];
 
-    if ($mesReferencia != 'todos')
-        if ($mesReferencia < 1 or $mesReferencia > 12)
-            $mesReferencia = intval(date('m'));
+    if ($_SESSION['mes_referencia'] != 'todos')
+        if ($_SESSION['mes_referencia'] < 1 or $_SESSION['mes_referencia'] > 12)
+            $_SESSION['mes_referencia'] = date('m');
 
 } else
     if ($_SESSION['mes_referencia'] == '')
-        $mesReferencia = intval(date('m'));
-    else
-        $mesReferencia = $_SESSION['mes_referencia'];
+        $_SESSION['mes_referencia'] = date('m');
 
-
-$_SESSION['ano_referencia'] = $anoReferencia;
-$_SESSION['mes_referencia'] = $mesReferencia;
+if ($_SESSION['mes_referencia'] < 10)
+    $_SESSION['mes_referencia'] = '0' . str_replace('0', '', $_SESSION['mes_referencia']);
 
 /*******/
 
-if (isset($_GET['filtrar_bancoCorretora']) and !empty($_GET['filtrar_bancoCorretora'])) {
+if (isset($_POST['filtrar_bancoCorretora']) and !empty($_POST['filtrar_bancoCorretora'])) {
 
-    if ($_GET['filtrar_bancoCorretora'] == 'A-Z')
+    if ($_POST['filtrar_bancoCorretora'] == 'A-Z')
         $filtro = 'ASC';
     else
         $filtro = 'DESC';
 
-    $codigoVariante = " ORDER BY bancoCorretora " . $filtro;
+    $_SESSION['codigo_variante'] = " ORDER BY bancoCorretora " . $filtro;
 }
 
-elseif (isset($_GET['filtrar_valor']) and !empty($_GET['filtrar_valor'])) {
+elseif (isset($_POST['filtrar_valor']) and !empty($_POST['filtrar_valor'])) {
 
-    if ($_GET['filtrar_valor'] == 'Maior')
+    if ($_POST['filtrar_valor'] == 'Maior')
         $filtro = 'DESC';
     else
         $filtro = 'ASC';
 
-    $codigoVariante = " ORDER BY valor " . $filtro;
+    $_SESSION['codigo_variante'] = " ORDER BY valor " . $filtro;
 }
 
-elseif (isset($_GET['filtrar_classificacao']) and !empty($_GET['filtrar_classificacao'])) {
-    if ($_GET['filtrar_classificacao'] == 'A-Z')
+elseif (isset($_POST['filtrar_classificacao']) and !empty($_POST['filtrar_classificacao'])) {
+    if ($_POST['filtrar_classificacao'] == 'A-Z')
         $filtro = 'ASC';
     else
         $filtro = 'DESC';
 
-    $codigoVariante = " ORDER BY classificacao " . $filtro;
+    $_SESSION['codigo_variante'] = " ORDER BY classificacao " . $filtro;
 }
 
-elseif (isset($_GET['filtrar_parcelas']) and !empty($_GET['filtrar_parcelas'])) {
-    if ($_GET['filtrar_parcelas'] == 'Maior')
+elseif (isset($_POST['filtrar_parcelas']) and !empty($_POST['filtrar_parcelas'])) {
+    if ($_POST['filtrar_parcelas'] == 'Maior')
         $filtro = 'DESC';
     else
         $filtro = 'ASC';
 
-    $codigoVariante = " ORDER BY parcelas " . $filtro;
+    $_SESSION['codigo_variante'] = " ORDER BY parcelas " . $filtro;
 }
 
-elseif (isset($_GET['filtrar_data']) and !empty($_GET['filtrar_data'])) {
-    if ($_GET['filtrar_data'] == 'Novos')
+elseif (isset($_POST['filtrar_data']) and !empty($_POST['filtrar_data'])) {
+    if ($_POST['filtrar_data'] == 'Novos')
         $filtro = 'ASC';
     else
         $filtro = 'DESC';
 
-    $codigoVariante = " ORDER BY dataCompraPagamento " . $filtro;
+    $_SESSION['codigo_variante'] = " ORDER BY dataCompraPagamento " . $filtro;
 }
 
-if (isset($codigoVariante) and !empty($codigoVariante))
-    $_SESSION['codigoVariante'] = $codigoVariante;
-else
-    $codigoVariante = $_SESSION['codigoVariante'];
+elseif (isset($_POST['filtrar_forma_pagamento']) and !empty($_POST['filtrar_forma_pagamento'])) {
+    if ($_POST['filtrar_forma_pagamento'] == 'A-Z')
+        $filtro = 'ASC';
+    else
+        $filtro = 'DESC';
+
+    $_SESSION['codigo_variante'] = " ORDER BY formaPagamento " . $filtro;
+}

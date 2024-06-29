@@ -1,6 +1,6 @@
 <?php require_once("./filtros.php"); ?>
 
-<form class="mt-2 position-absolute" method="get">
+<form class="mt-2 position-absolute" method="post">
     <div class="container" style="padding: 0">
         <div class="row">
             <div class="col-sm">
@@ -14,40 +14,40 @@
             <div class="col-sm" style="margin-left: -12%; width: 15%;">
                 <select class="form-control form-control bg-danger text-light text-center"
                         name="mes_referencia">
-                    <option <?= $mesReferencia == 'todos' ? 'selected' : '' ?> value="todos">
+                    <option <?= $_SESSION['mes_referencia'] == 'todos' ? 'selected' : '' ?> value="todos">
                         Todos
                     </option>
-                    <option <?= $mesReferencia == '1' ? 'selected' : '' ?> value="1">1 (Jan)
+                    <option <?= $_SESSION['mes_referencia'] == '1' ? 'selected' : '' ?> value="1">1 (Jan)
                     </option>
-                    <option <?= $mesReferencia == '2' ? 'selected' : '' ?> value="2">2 (Fev)
+                    <option <?= $_SESSION['mes_referencia'] == '2' ? 'selected' : '' ?> value="2">2 (Fev)
                     </option>
-                    <option <?= $mesReferencia == '3' ? 'selected' : '' ?> value="3">3 (Mar)
+                    <option <?= $_SESSION['mes_referencia'] == '3' ? 'selected' : '' ?> value="3">3 (Mar)
                     </option>
-                    <option <?= $mesReferencia == '4' ? 'selected' : '' ?> value="4">4 (Abr)
+                    <option <?= $_SESSION['mes_referencia'] == '4' ? 'selected' : '' ?> value="4">4 (Abr)
                     </option>
-                    <option <?= $mesReferencia == '5' ? 'selected' : '' ?> value="5">5 (Mai)
+                    <option <?= $_SESSION['mes_referencia'] == '5' ? 'selected' : '' ?> value="5">5 (Mai)
                     </option>
-                    <option <?= $mesReferencia == '6' ? 'selected' : '' ?> value="6">6 (Jun)
+                    <option <?= $_SESSION['mes_referencia'] == '6' ? 'selected' : '' ?> value="6">6 (Jun)
                     </option>
-                    <option <?= $mesReferencia == '7' ? 'selected' : '' ?> value="7">7 (Jul)
+                    <option <?= $_SESSION['mes_referencia'] == '7' ? 'selected' : '' ?> value="7">7 (Jul)
                     </option>
-                    <option <?= $mesReferencia == '8' ? 'selected' : '' ?> value="8">8 (Ago)
+                    <option <?= $_SESSION['mes_referencia'] == '8' ? 'selected' : '' ?> value="8">8 (Ago)
                     </option>
-                    <option <?= $mesReferencia == '9' ? 'selected' : '' ?> value="9">9 (Set)
+                    <option <?= $_SESSION['mes_referencia'] == '9' ? 'selected' : '' ?> value="9">9 (Set)
                     </option>
-                    <option <?= $mesReferencia == '10' ? 'selected' : '' ?> value="10">10
+                    <option <?= $_SESSION['mes_referencia'] == '10' ? 'selected' : '' ?> value="10">10
                         (Out)
                     </option>
-                    <option <?= $mesReferencia == '11' ? 'selected' : '' ?> value="11">11
+                    <option <?= $_SESSION['mes_referencia'] == '11' ? 'selected' : '' ?> value="11">11
                         (Nov)
                     </option>
-                    <option <?= $mesReferencia == '12' ? 'selected' : '' ?> value="12">12
+                    <option <?= $_SESSION['mes_referencia'] == '12' ? 'selected' : '' ?> value="12">12
                         (Dez)
                     </option>
                 </select>
             </div>
             <input class="rounded-2 form-control bg-danger text-light" style="width: 20%; margin-left: -2%;"
-                   type="text" name="ano_referencia" value="<?= $anoReferencia ?>">
+                   type="text" name="ano_referencia" value="<?= $_SESSION['ano_referencia'] ?>">
 
             <div class="col-sm" style="margin-left: -12%;">
                 <button type="submit" class="btn btn-danger border-light">Ok</button>

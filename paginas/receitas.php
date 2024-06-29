@@ -9,7 +9,6 @@ if ($login->VerificarLogin()) {
     require_once __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
 
     $formatacao = new FormatacaoDados();
-	$codigoVariante = '';
 
     if (isset($_GET['excluir']) and isset($_GET['id'])) {
         require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirReceita.php";
@@ -96,7 +95,7 @@ if ($login->VerificarLogin()) {
 				<div class="row">
 					<div class="row-md-12 text-center">
 
-						<?php include_once(__DIR__."/./particoes/formularios/form_data_referencia.php") ?>
+                        <?php include_once(__DIR__ . "/./particoes/formularios/form_data_referencia.php") ?>
 
 						<h2 class="pt-4">
 							Minhas Receitas
@@ -106,8 +105,8 @@ if ($login->VerificarLogin()) {
 
 							<div class="container row mt-5 text-start">
 
-                                <?php include_once(__DIR__."/./particoes/formularios/novo_banco_corretora.php") ?>
-								<?php include_once(__DIR__."/./particoes/formularios/nova_receita.php") ?>
+                                <?php include_once(__DIR__ . "/./particoes/formularios/novo_banco_corretora.php") ?>
+                                <?php include_once(__DIR__ . "/./particoes/formularios/nova_receita.php") ?>
 
 							</div>
 
@@ -126,37 +125,31 @@ if ($login->VerificarLogin()) {
 								</thead>
 								<tbody>
 
-								<form class="form-inline" method="get">
+								<form class="form-inline" method="post">
 									<tr class="form-group">
-										<th>
-											*
-										</th>
-										<td><?php include_once(__DIR__."/./particoes/filtros/select_filtrar_banco_corretora.php") ?></td>
-										<td><?php include_once(__DIR__."/./particoes/filtros/select_filtrar_valor.php") ?></td>
-										<td><?php include_once(__DIR__."/./particoes/filtros/select_filtrar_classificacao.php") ?></td>
-										<td><?php include_once(__DIR__."/./particoes/filtros/select_filtrar_parcelas.php") ?></td>
-										<td><?php include_once(__DIR__."/./particoes/filtros/select_filtrar_data.php") ?></td>
-										<td><?php include_once(__DIR__."/./particoes/botoes/submit_filtros.php") ?></td>
+										<th>*</th>
+										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_banco_corretora.php") ?></td>
+										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_valor.php") ?></td>
+										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_classificacao.php") ?></td>
+										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_parcelas.php") ?></td>
+										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_data.php") ?></td>
+										<td><?php include_once(__DIR__ . "/./particoes/botoes/submit_filtros.php") ?></td>
 									</tr>
 								</form>
 
                                 <?php
 
                                 $execucao = new ExecucaoCodigoMySql();
-                                $execucao->setCodigoMySql("SELECT * FROM dbName.receitas WHERE email LIKE '" . $login->getSessao() . "' $codigoVariante;");
+                                $execucao->setCodigoMySql("SELECT * FROM dbName.receitas WHERE email LIKE '" . $login->getSessao() . "' ".$_SESSION['codigo_variante'].";");
                                 $resultadoExecucao = $execucao->ExecutarCodigoMySql();
                                 $saldoTotal = 0;
 
                                 while ($dados = mysqli_fetch_assoc($resultadoExecucao)) {
 
                                     $parcelasPassadas = $dados['parcelas'];
+                                    $dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao->ultimoDiaMes($_SESSION['mes_referencia'], $_SESSION['ano_referencia']);
 
-                                    if ($mesReferencia < 10)
-                                        $mesReferencia = '0' . str_replace('0', '', $mesReferencia);
-
-									$dataReferencia = $anoReferencia . "-" . $mesReferencia . "-" . $execucao->ultimoDiaMes($mesReferencia, $anoReferencia);
-
-                                    if ($mesReferencia != 'todos') {
+                                    if ($_SESSION['mes_referencia'] != 'todos') {
                                         $parcelasPassadas =
                                             $execucao->diferencaMesesData(
                                                 $dados['dataCompraPagamento'],
@@ -164,28 +157,30 @@ if ($login->VerificarLogin()) {
                                             );
                                     }
 
-									$parcelasPassadas++;
+                                    $parcelasPassadas++;
 
                                     if ($parcelasPassadas <= $dados['parcelas'] and $dados['dataCompraPagamento'] <= $dataReferencia) {
 
                                         $saldoTotal += $dados['valor'];
-										$dataPagamento = $anoReferencia . "-" . $mesReferencia . "-" . $execucao-> InformacoesData('d', $dados['dataCompraPagamento']);
+                                        $dataPagamento = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao->InformacoesData('d', $dados['dataCompraPagamento']);
 
                                         ?>
 
-										<form class="form-inline" action="../backEnd/InteracaoFront/editarReceita.php" method="POST">
+										<form class="form-inline" action="../backEnd/InteracaoFront/editarReceita.php"
+										      method="POST">
 
 											<tr>
-												<th scope="row"><?= $parcelasPassadas."/".$dados['parcelas'] ?></th
+												<th scope="row"><?= $parcelasPassadas . "/" . $dados['parcelas'] ?></th
 
 												<td></td>
 
 												<td>
-													<?php include(__DIR__."/./particoes/loops/nomes_bancos_corretoras_select.php") ?>
+                                                    <?php include(__DIR__ . "/./particoes/loops/nomes_bancos_corretoras_select.php") ?>
 												</td>
 
 												<td>
-													<input type="text" class="form-control input-group-text" name="valor"
+													<input type="text" class="form-control input-group-text"
+													       name="valor"
 													       placeholder="Valor:"
 													       value="R$ <?= $formatacao->formatarValor($dados['valor']) ?>">
 												</td>

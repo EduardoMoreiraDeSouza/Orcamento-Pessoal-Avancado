@@ -93,7 +93,7 @@ if ($login->VerificarLogin()) {
 				<div class="row">
 					<div class="row-md-12 text-center ">
 
-                        <?php include_once(__DIR__."/./particoes/formularios/form_data_referencia.php") ?>
+                        <?php include_once(__DIR__ . "/./particoes/formularios/form_data_referencia.php") ?>
 
 						<h2 class="pt-4">
 							Meus Gastos
@@ -102,8 +102,8 @@ if ($login->VerificarLogin()) {
 						<main class="container mb-5">
 							<div class="container row mt-5 text-start">
 
-                                <?php include_once(__DIR__."/./particoes/formularios/novo_debito.php") ?>
-                                <?php include_once(__DIR__."/./particoes/formularios/novo_gasto_credito.php") ?>
+                                <?php include_once(__DIR__ . "/./particoes/formularios/novo_debito.php") ?>
+                                <?php include_once(__DIR__ . "/./particoes/formularios/novo_gasto_credito.php") ?>
 
 							</div>
 
@@ -123,139 +123,141 @@ if ($login->VerificarLogin()) {
 								</thead>
 								<tbody>
 
+								<form class="form-inline" method="post">
+									<tr class="form-group">
+										<th>*</th>
+										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_banco_corretora.php") ?></td>
+										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_forma_pagamento.php") ?></td>
+										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_valor.php") ?></td>
+										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_parcelas.php") ?></td>
+										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_classificacao.php") ?></td>
+										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_data.php") ?></td>
+										<td><?php include_once(__DIR__ . "/./particoes/botoes/submit_filtros.php") ?></td>
+									</tr>
+								</form>
+
                                 <?php
 
                                 $execucao = new ExecucaoCodigoMySql();
-                                $execucao->setCodigoMySql("SELECT * FROM dbName.gastos WHERE email LIKE '" . $login->getSessao() . "';");
+                                $execucao->setCodigoMySql("SELECT * FROM dbName.gastos WHERE email LIKE '" . $login->getSessao() . "' ".$_SESSION['codigo_variante'].";");
                                 $resultadoExecucao = $execucao->ExecutarCodigoMySql();
-
-                                $quantidade = 0;
                                 $saldoTotal = 0;
 
-                                while ($dadosGastos = mysqli_fetch_assoc($resultadoExecucao)) {
+                                while ($dados = mysqli_fetch_assoc($resultadoExecucao)) {
 
-                                    $quantidade++;
+                                    $parcelasPassadas = $dados['parcelas'];
+                                    $dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao->ultimoDiaMes($_SESSION['mes_referencia'], $_SESSION['ano_referencia']);
 
-                                    $id = $dadosGastos['id'];
-                                    $bancoCorretora = $dadosGastos['bancoCorretora'];
-                                    $formaPagamento = $dadosGastos['formaPagamento'];
-                                    $valor = $dadosGastos['valor'];
-									$saldoTotal += $valor;
-                                    $parcelas = $dadosGastos['parcelas'];
-                                    $classificacao = $dadosGastos['classificacao'];
-                                    $dataCompraPagamento = $dadosGastos['dataCompraPagamento'];
+                                    if ($_SESSION['mes_referencia'] != 'todos') {
+                                        $parcelasPassadas =
+                                            $execucao->diferencaMesesData(
+                                                $dados['dataCompraPagamento'],
+                                                $dataReferencia
+                                            );
+                                    }
 
-                                    ?>
+                                    $parcelasPassadas++;
+                                    if ($parcelasPassadas <= $dados['parcelas'] and $dados['dataCompraPagamento'] <= $dataReferencia) {
 
-									<form action="../backEnd/InteracaoFront/editarGastos.php" method="POST">
-										<!-- Editar gastos -->
-										<tr>
-											<th scope="row"><?= $quantidade ?>º</th>
-											<td>
-												<select class="form-select" name="bancoCorretora" required>
+                                        $dataPagamento = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao->InformacoesData('d', $dados['dataCompraPagamento']);
+                                        $saldoTotal += $dados['valor'];
 
-                                                    <?php
+                                        ?>
 
-                                                    $execucao2 = new ExecucaoCodigoMySql();
-                                                    $execucao2->setCodigoMySql("SELECT * FROM dbName.bancosCorretoras WHERE email LIKE '" . $login->getSessao() . "';");
-                                                    $resultadoExecucao2 = $execucao2->ExecutarCodigoMySql();
+										<form action="../backEnd/InteracaoFront/editarGastos.php" method="POST">
+											<!-- Editar gastos -->
+											<tr>
 
-                                                    while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao2)) {
+												<th scope="row"><?= $parcelasPassadas . "/" . $dados['parcelas'] ?></th>
 
-                                                        $bancoCorretora = $dadosBancosCorretoras['bancoCorretora'];
+												<td>
+                                                    <?php include(__DIR__ . "/./particoes/loops/nomes_bancos_corretoras_select.php") ?>
+												</td>
 
-                                                        ?>
+												<td>
+													<select class="form-select" name="formaPagamento" required>
+														<option value="Débito" <?= $dados['formaPagamento'] == 'Débito' ? 'selected' : '' ?>>
+															Débito
+														</option>
+														<option value="Crédito" <?= $dados['formaPagamento'] == 'Crédito' ? 'selected' : '' ?>>
+															Crédito
+														</option>
+													</select>
+												</td>
+												<td>
+													<input type="text" class="container input-group-text" name="valor"
+													       placeholder="Saldo:"
+													       step="0.01"
+													       value="R$ <?= $formatacao->formatarValor($dados['valor']) ?>">
+												</td>
+												<td>
+													<input type="text" class="container input-group-text"
+													       name="parcelas"
+													       placeholder="Parcelas:"
+													       step="0.01" value="<?= $dados['parcelas'] ?>">
+												</td>
+												<td>
+													<select class="form-select" name="classificacao" required>
+														<option value="Pessoal" <?= $dados['classificacao'] == 'Pessoal' ? 'selected' : '' ?>>
+															Pessoal
+														</option>
+														<option value="Necessário" <?= $dados['classificacao'] == 'Necessário' ? 'selected' : '' ?>>
+															Necessário
+														</option>
+														<option value="Reserva" <?= $dados['classificacao'] == 'Reserva' ? 'selected' : '' ?>>
+															Reserva
+														</option>
+														<option value="Dívidas" <?= $dados['classificacao'] == 'Dívidas' ? 'selected' : '' ?>>
+															Dívidas
+														</option>
+														<option value="Investimentos" <?= $dados['classificacao'] == 'Investimentos' ? 'selected' : '' ?>>
+															Investimentos
+														</option>
+														<option value="Boas Ações" <?= $dados['classificacao'] == 'Boas Ações' ? 'selected' : '' ?>>
+															Boas
+															Ações
+														</option>
+													</select>
+												</td>
+												<td>
+													<input type="date" class="container input-group-text"
+													       name="dataCompraPagamento"
+													       value="<?= $dataPagamento ?>">
+												</td>
+												<td>
+													<button style="text-decoration: none; width: 4vh; height: 4vh;"
+													        class="text-primary bg-transparent rounded-circle border border-primary"
+													        name="bancoCorretoraId"
+													        value="<?= $dados['id'] ?>">
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+														     fill="currentColor"
+														     class="bi bi-pen" viewBox="0 0 16 16">
+															<path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+														</svg>
+													</button>
 
-														<option value="<?= $bancoCorretora ?>" <?= $bancoCorretora == $bancoCorretora ? 'selected' : '' ?>><?= $bancoCorretora ?></option>
+													<a href="?excluir=true&id=<?= $dados['id'] ?>"
+													   style="text-decoration: none; margin-left: 0.8vh; width: 4vh; height: 4vh;"
+													   class="text-danger rounded-circle border border-danger">
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+														     fill="currentColor" class="bi bi-trash"
+														     viewBox="0 0 16 16">
+															<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+															<path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+														</svg>
+													</a>
 
+												</td>
+											</tr>
+										</form>
 
-                                                        <?php
-                                                    } ?>
-
-												</select>
-											</td>
-											<td>
-												<select class="form-select" name="formaPagamento" required>
-													<option value="Débito" <?= $formaPagamento == 'Débito' ? 'selected' : '' ?>>
-														Débito
-													</option>
-													<option value="Crédito" <?= $formaPagamento == 'Crédito' ? 'selected' : '' ?>>
-														Crédito
-													</option>
-												</select>
-											</td>
-											<td>
-												<input type="text" class="container input-group-text" name="valor"
-												       placeholder="Saldo:"
-												       step="0.01" value="R$ <?= $formatacao->formatarValor($valor) ?>">
-											</td>
-											<td>
-												<input type="text" class="container input-group-text" name="parcelas"
-												       placeholder="Parcelas:"
-												       step="0.01" value="<?= $parcelas ?>">
-											</td>
-											<td>
-												<select class="form-select" name="classificacao" required>
-													<option value="Pessoal" <?= $classificacao == 'Pessoal' ? 'selected' : '' ?>>
-														Pessoal
-													</option>
-													<option value="Necessário" <?= $classificacao == 'Necessário' ? 'selected' : '' ?>>
-														Necessário
-													</option>
-													<option value="Reserva" <?= $classificacao == 'Reserva' ? 'selected' : '' ?>>
-														Reserva
-													</option>
-													<option value="Dívidas" <?= $classificacao == 'Dívidas' ? 'selected' : '' ?>>
-														Dívidas
-													</option>
-													<option value="Investimentos" <?= $classificacao == 'Investimentos' ? 'selected' : '' ?>>
-														Investimentos
-													</option>
-													<option value="Boas Ações" <?= $classificacao == 'Boas Ações' ? 'selected' : '' ?>>
-														Boas
-														Ações
-													</option>
-												</select>
-											</td>
-											<td>
-												<input type="date" class="container input-group-text"
-												       name="dataCompraPagamento"
-												       value="<?= $dataCompraPagamento ?>">
-											</td>
-											<td>
-												<button style="text-decoration: none; width: 4vh; height: 4vh;"
-												        class="text-primary bg-transparent rounded-circle border border-primary"
-												        name="bancoCorretoraId"
-												        value="<?= $id ?>">
-													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-													     fill="currentColor"
-													     class="bi bi-pen" viewBox="0 0 16 16">
-														<path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
-													</svg>
-												</button>
-
-												<a href="?excluir=true&id=<?= $id ?>"
-												   style="text-decoration: none; margin-left: 0.8vh; width: 4vh; height: 4vh;"
-												   class="text-danger rounded-circle border border-danger">
-													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-													     fill="currentColor" class="bi bi-trash"
-													     viewBox="0 0 16 16">
-														<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-														<path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-													</svg>
-												</a>
-
-											</td>
-										</tr>
-									</form>
-
-                                    <?php
+                                    <?php }
                                 } ?>
 
 								<th scope="row">#</th>
 								<td>Total</td>
 								<td></td>
-                                <td>R$ <?= $formatacao->formatarValor($saldoTotal) ?></td>
+								<td>R$ <?= $formatacao->formatarValor($saldoTotal) ?></td>
 								<td></td>
 								<td></td>
 								<td></td>
@@ -308,10 +310,12 @@ if ($login->VerificarLogin()) {
 	</footer>
 
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-	        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+	        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+	        crossorigin="anonymous">
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
-	        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+	        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+	        crossorigin="anonymous">
 	</script>
 	<script src="../js/javaScript.js"></script>
 	<script>
