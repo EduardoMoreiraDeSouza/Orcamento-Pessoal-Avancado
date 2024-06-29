@@ -20,7 +20,7 @@ class ValorFinal extends FormatacaoDados
                 foreach ($gastos as $ignored) {
                     if ($gastos[$gastoAtual]['bancoCorretora'] == $entidade)
                         if ($gastos[$gastoAtual]['formaPagamento'] == 'Crédito')
-                            $gastosCreditoTotal += $gastos[$gastoAtual]['valor'] * ($gastos[$gastoAtual]['parcelas'] - $this->parcelasPagasCredito($gastos[$gastoAtual]));
+                            $gastosCreditoTotal += $gastos[$gastoAtual]['valor'] * ($gastos[$gastoAtual]['parcelas'] - $this->parcelasPagasCredito($gastos[$gastoAtual], $dataReferencia));
                     $gastoAtual++;
                 }
 
@@ -115,7 +115,9 @@ class ValorFinal extends FormatacaoDados
         $primeiraDataPagamento = $anoPagamento . '-' . $mesPagamento . '-' . $dadosCartao['vencimento'];
         $diferencaMeses = $this->diferencaMesesData($primeiraDataPagamento, $dataReferencia);
 
-        if ($diferencaMeses > 0)
+        if ($diferencaMeses > $gasto['parcelas'])
+            return $gasto['parcelas'];
+        elseif ($diferencaMeses > 0)
             return $diferencaMeses;
         else
             return 0;

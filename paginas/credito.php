@@ -96,7 +96,7 @@ if ($login->VerificarLogin()) {
 				<div class="row">
 					<div class="row-md-12 text-center ">
 
-                        <?php include(__DIR__ . "/./filtros.php"); ?>
+                        <?php include(__DIR__ . "/./particoes/formularios/form_data_referencia.php") ?>
 
 						<h2 class="pt-4">
 							Cartões de Crédito
@@ -119,6 +119,7 @@ if ($login->VerificarLogin()) {
 									<th scope="col">Cartão</th>
 									<th scope="col">Limite</th>
 									<th scope="col">Limite Restante</th>
+									<th scope="col">Fatura</th>
 									<th scope="col">Fechamento</th>
 									<th scope="col">Vencimento</th>
 									<th scope="col">Ações</th>
@@ -131,6 +132,7 @@ if ($login->VerificarLogin()) {
 										<th>*</th>
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_banco_corretora.php") ?></td>
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_limite.php") ?></td>
+										<td>*</td>
 										<td>*</td>
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_fechamento.php") ?></td>
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_vencimento.php") ?></td>
@@ -147,12 +149,14 @@ if ($login->VerificarLogin()) {
                                 $quantidade = 0;
                                 $limiteTotal = 0;
 
+                                $dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao-> ultimoDiaMes($_SESSION['mes_referencia'], $_SESSION['ano_referencia']);
+
                                 while ($dadosCartoesCredito = mysqli_fetch_assoc($resultadoExecucao)) {
 
-                                    $valorFinal = new ValorFinal('cartaoCredito', $dadosCartoesCredito['bancoCorretora']);
+                                    $valorFinal = new ValorFinal('cartaoCredito', $dadosCartoesCredito['bancoCorretora'], $dataReferencia);
 
                                     $quantidade++;
-                                    $limite = floatval($valorFinal->ValorFinal('cartaoCredito', $dadosCartoesCredito['bancoCorretora']));
+                                    $limite = floatval($valorFinal->ValorFinal('cartaoCredito', $dadosCartoesCredito['bancoCorretora'], $dataReferencia));
                                     $limiteTotal += $limite;
 
 
@@ -173,16 +177,21 @@ if ($login->VerificarLogin()) {
 											</td>
 											<td>
 												<input type="text" class="container input-group-text" name=""
-												       placeholder="Limite:"
+												       placeholder=""
 												       value="R$ <?= $formatacao->formatarValor($limite) ?>" disabled>
 											</td>
 											<td>
+												<input type="text" class="container input-group-text" name=""
+												       placeholder=""
+												       value="R$ <?= $formatacao->formatarValor(0) ?>" disabled>
+											</td>
+											<td style="width: 8%;">
 												<input type="number" class="container input-group-text"
 												       name="fechamento"
 												       placeholder="Fechamento:" step="1" max="31" min="1"
 												       value="<?= $dadosCartoesCredito['fechamento'] ?>">
 											</td>
-											<td>
+											<td style="width: 8%;">
 												<input type="number" class="container input-group-text"
 												       name="vencimento"
 												       placeholder="Vencimento:" step="0.01" min="1"
