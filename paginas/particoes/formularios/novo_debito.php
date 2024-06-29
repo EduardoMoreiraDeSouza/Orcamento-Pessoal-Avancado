@@ -1,7 +1,7 @@
 <div class="col-auto">
 
     <p>
-        <button class="btn btn-dark" type="button" data-bs-toggle="collapse"
+        <button class="btn btn-danger" type="button" data-bs-toggle="collapse"
                 data-bs-target="#novoDebito"
                 aria-expanded="false" aria-controls="collapseWidthExample">
             Novo Débito

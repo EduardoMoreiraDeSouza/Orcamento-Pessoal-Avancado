@@ -119,6 +119,7 @@ if ($login->VerificarLogin()) {
 									<th scope="col">Parcelas</th>
 									<th scope="col">Classificacao</th>
 									<th scope="col">Compra/Pagamento</th>
+									<th scope="col">Vencimento</th>
 									<th scope="col">Ações</th>
 								</tr>
 								</thead>
@@ -126,13 +127,14 @@ if ($login->VerificarLogin()) {
 
 								<form class="form-inline" method="post">
 									<tr class="form-group">
-										<th>*</th>
+										<th>0</th>
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_banco_corretora.php") ?></td>
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_forma_pagamento.php") ?></td>
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_valor.php") ?></td>
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_parcelas.php") ?></td>
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_classificacao.php") ?></td>
 										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_data.php") ?></td>
+										<td>*</td>
 										<td><?php include_once(__DIR__ . "/./particoes/botoes/submit_filtros.php") ?></td>
 									</tr>
 								</form>
@@ -144,25 +146,37 @@ if ($login->VerificarLogin()) {
                                 $resultadoExecucao = $execucao->ExecutarCodigoMySql();
                                 $saldoTotal = 0;
 
+                                require_once __DIR__ . "/../backEnd/gerais/ValorFinal.php";
+                                $valorFinal = new ValorFinal();
+
                                 while ($dados = mysqli_fetch_assoc($resultadoExecucao)) {
 
-                                    $parcelasPassadas = $dados['parcelas'];
-                                    $dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao->ultimoDiaMes($_SESSION['mes_referencia'], $_SESSION['ano_referencia']);
+                                    $dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao-> ultimoDiaMes($_SESSION['mes_referencia'], $_SESSION['ano_referencia']);
 
-                                    if ($_SESSION['mes_referencia'] != 'todos') {
-                                        $parcelasPassadas =
-                                            $execucao->diferencaMesesData(
-                                                $dados['dataCompraPagamento'],
-                                                $dataReferencia
-                                            );
+	                                $parcelasPagas = '';
+
+
+
+									if ($dados['formaPagamento'] == "Crédito") {
+                                        $parcelasPagas = $valorFinal-> parcelasPagasCredito($dados, $dataReferencia);
                                     }
 
-                                    $parcelasPassadas++;
+									elseif ($dados['formaPagamento'] == "Débito") {
+										$parcelasPagas = $valorFinal-> parcelasDebitadas($dados, $dataReferencia);
+                                    }
 
-                                    if ($parcelasPassadas <= $dados['parcelas'] and $dados['dataCompraPagamento'] <= $dataReferencia) {
+
+
+                                    if ($parcelasPagas <= $dados['parcelas'] and $dados['dataCompraPagamento'] <= $dataReferencia and $parcelasPagas > 0) {
 
                                         $dataPagamento = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao->InformacoesData('d', $dados['dataCompraPagamento']);
                                         $saldoTotal += $dados['valor'];
+
+										if ($dados['formaPagamento'] == 'Crédito')
+                                            $vencimento = $valorFinal-> ObterDadosCartoesCredito($dados['bancoCorretora'], $valorFinal->getSessao())['vencimento'];
+
+                                        else
+                                            $vencimento = $valorFinal-> InformacoesData('d', $dados['dataCompraPagamento']);
 
                                         ?>
 
@@ -170,13 +184,13 @@ if ($login->VerificarLogin()) {
 											<!-- Editar gastos -->
 											<tr>
 
-												<th scope="row"><?= $parcelasPassadas . "/" . $dados['parcelas'] ?></th>
+												<th scope="row"><?=  $parcelasPagas . "/" . $dados['parcelas'] ?></th>
 
 												<td>
                                                     <?php include(__DIR__ . "/./particoes/loops/nomes_bancos_corretoras_select.php") ?>
 												</td>
 
-												<td>
+												<td style="width: 8%;">
 													<select class="form-select" name="formaPagamento" required>
 														<option value="Débito" <?= $dados['formaPagamento'] == 'Débito' ? 'selected' : '' ?>>
 															Débito
@@ -188,11 +202,11 @@ if ($login->VerificarLogin()) {
 												</td>
 												<td>
 													<input type="text" class="container input-group-text" name="valor"
-													       placeholder="Saldo:"
+													       placeholder="Valor:"
 													       step="0.01"
 													       value="R$ <?= $formatacao->formatarValor($dados['valor']) ?>">
 												</td>
-												<td>
+												<td style="width: 8%;">
 													<input type="text" class="container input-group-text"
 													       name="parcelas"
 													       placeholder="Parcelas:"
@@ -224,7 +238,11 @@ if ($login->VerificarLogin()) {
 												<td>
 													<input type="date" class="container input-group-text"
 													       name="dataCompraPagamento"
-													       value="<?= $dataPagamento ?>">
+													       value="<?= $dados['dataCompraPagamento'] ?>">
+												</td>
+												<td style="width: 8%;">
+													<input type="text" class="container input-group-text"
+													       value="<?= $vencimento ?>" disabled>
 												</td>
 												<td>
 													<button style="text-decoration: none; width: 4vh; height: 4vh;"
@@ -260,6 +278,7 @@ if ($login->VerificarLogin()) {
 								<td>Total</td>
 								<td></td>
 								<td>R$ <?= $formatacao->formatarValor($saldoTotal) ?></td>
+								<td></td>
 								<td></td>
 								<td></td>
 								<td></td>

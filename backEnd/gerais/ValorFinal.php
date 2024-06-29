@@ -7,55 +7,53 @@ class ValorFinal extends FormatacaoDados
     public function ValorFinal($tipo, $entidade)
     {
 
-        $this -> timezone();
+        $this->timezone();
 
         if ($tipo == 'cartaoCredito') {
 
-            $limiteTotal = $this -> ObterDadosCartoesCredito($entidade, $this -> getSessao())['limite'];
+            $limiteTotal = $this->ObterDadosCartoesCredito($entidade, $this->getSessao())['limite'];
             $gastosCreditoTotal = 0;
-            $gastos = $this -> ObterDadosGastos($this -> getSessao());
+            $gastos = $this->ObterDadosGastos($this->getSessao());
             $gastoAtual = 0;
 
             if ($gastos)
                 foreach ($gastos as $ignored) {
                     if ($gastos[$gastoAtual]['bancoCorretora'] == $entidade)
                         if ($gastos[$gastoAtual]['formaPagamento'] == 'Crédito')
-                            $gastosCreditoTotal += $gastos[$gastoAtual]['valor'] * $this -> parcelasRestantesCredito($gastos[$gastoAtual]);
+                            $gastosCreditoTotal += $gastos[$gastoAtual]['valor'] * ($gastos[$gastoAtual]['parcelas'] - $this->parcelasPagasCredito($gastos[$gastoAtual]));
                     $gastoAtual++;
                 }
 
             return $limiteTotal - $gastosCreditoTotal;
-        }
-
-        elseif ($tipo == 'bancoCorretora') {
+        } elseif ($tipo == 'bancoCorretora') {
 
             $gastosDebitoTotal = 0;
-            $gastos = $this -> ObterDadosGastos($this -> getSessao());
+            $gastos = $this->ObterDadosGastos($this->getSessao());
             $gastoAtual = 0;
 
             if ($gastos)
                 foreach ($gastos as $ignored) {
                     if ($gastos[$gastoAtual]['bancoCorretora'] == $entidade)
                         if ($gastos[$gastoAtual]['formaPagamento'] == 'Débito')
-                            $gastosDebitoTotal += $gastos[$gastoAtual]['valor'] * $this -> parcelasDebitadas($gastos[$gastoAtual]);
+                            $gastosDebitoTotal += $gastos[$gastoAtual]['valor'] * $this->parcelasDebitadas($gastos[$gastoAtual]);
                     $gastoAtual++;
                 }
 
             $receitaTotal = 0;
-            $receita = $this -> ObterDadosReceita($this -> getSessao());
+            $receita = $this->ObterDadosReceita($this->getSessao());
             $receitaAtual = 0;
 
             if ($receita)
                 foreach ($receita as $ignored) {
                     if ($receita[$receitaAtual]['bancoCorretora'] == $entidade)
-                        $receitaTotal += $receita[$receitaAtual]['valor'] * $this-> parcelasRecebidas($receita[$receitaAtual]);
+                        $receitaTotal += $receita[$receitaAtual]['valor'] * $this->parcelasRecebidas($receita[$receitaAtual]);
 
                     $receitaAtual++;
                 }
 
             $saldoFinal = $receitaTotal - $gastosDebitoTotal;
 
-            $this-> AlterarDadosBancosCorretoras(
+            $this->AlterarDadosBancosCorretoras(
                 $entidade,
                 $entidade,
                 $saldoFinal,
@@ -67,88 +65,71 @@ class ValorFinal extends FormatacaoDados
         return false;
     }
 
-    protected function parcelasRestantesCredito($gasto)
+    public function parcelasPagasCredito($gasto, $dataReferencia = null)
     {
-        $parcelasTotais = $gasto['parcelas'];
-        $primeiroMesPagamento = intval($this -> InformacoesData('m', $gasto['dataCompraPagamento']));
-        $dadosCartao = $this -> ObterDadosCartoesCredito($gasto['bancoCorretora'], $this -> getSessao());
-        $primeiroAnoPagamento = intval($this -> InformacoesData('y', $gasto['dataCompraPagamento']));
+        $dadosCartao = $this->ObterDadosCartoesCredito($gasto['bancoCorretora'], $this->getSessao());
 
-        if ($this -> InformacoesData('d', $gasto['dataCompraPagamento']) >= $dadosCartao['fechamento']) {
+        $mesPagamento = intval($this->InformacoesData('m', $gasto['dataCompraPagamento']));
+        $anoPagamento = intval($this->InformacoesData('y', $gasto['dataCompraPagamento']));
+        $diaPagamento = intval($this->InformacoesData('d', $gasto['dataCompraPagamento']));
+
+        if ($dataReferencia == null)
+            $dataReferencia = date("Y-m-d");
+
+        if ($diaPagamento >= $dadosCartao['fechamento']) {
             if ($dadosCartao['vencimento'] < $dadosCartao['fechamento'])
-                $primeiroMesPagamento += 2;
+                $mesPagamento += 2;
+            elseif ($dadosCartao['vencimento'] > $dadosCartao['fechamento'])
+                $mesPagamento += 0;
             else
-                $primeiroMesPagamento ++;
-
-            if ($primeiroMesPagamento > 12) {
-                $primeiroMesPagamento = $primeiroMesPagamento - 12;
-                $primeiroAnoPagamento ++;
-
-                if (gettype($primeiroAnoPagamento / 4) == "integer")
-                    $diasFevereiro = 29;
-                else
-                    $diasFevereiro = 28;
-
-                if ($primeiroMesPagamento == 2 and intval($this -> InformacoesData('y', $gasto['dataCompraPagamento'])) > $diasFevereiro)
-                    $primeiroMesPagamento++;
-            }
-
+                $mesPagamento += 1;
+        }
+        elseif ($diaPagamento == $dadosCartao['vencimento']) {
+              $mesPagamento += 1;
+        } else {
+            if ($dadosCartao['vencimento'] > $dadosCartao['fechamento'])
+                $mesPagamento -= 2;
+            else
+                $mesPagamento++;
         }
 
-        if ($primeiroMesPagamento < 10)
-            $primeiroMesPagamento = "0" . $primeiroMesPagamento;
+        if ($mesPagamento > 12) {
+            $mesPagamento = $mesPagamento - 12;
+            $anoPagamento++;
+
+            if (gettype($anoPagamento / 4) == "integer")
+                $diasFevereiro = 29;
+            else
+                $diasFevereiro = 28;
+
+            if ($mesPagamento == 2 and intval($this->InformacoesData('d', $gasto['dataCompraPagamento'])) > $diasFevereiro)
+                $mesPagamento++;
+        }
+
+        if ($mesPagamento < 10)
+            $mesPagamento = "0" . $mesPagamento;
 
         if ($dadosCartao['vencimento'] < 10)
             $dadosCartao['vencimento'] = "0" . $dadosCartao['vencimento'];
 
-        $primeiraDataPagamento = $primeiroAnoPagamento . '-' . $primeiroMesPagamento . '-' . $dadosCartao['vencimento'];
-        $diferencaMeses = $this -> diferencaMesesData($primeiraDataPagamento, date('Y-m-d'));
+        $primeiraDataPagamento = $anoPagamento . '-' . $mesPagamento . '-' . $dadosCartao['vencimento'];
+        $diferencaMeses = $this->diferencaMesesData($primeiraDataPagamento, $dataReferencia);
 
-        if ($diferencaMeses)
-            if ($parcelasTotais - $diferencaMeses > 0)
-                return $parcelasTotais - $diferencaMeses;
-            else
-                return 0;
-
-        return $parcelasTotais;
+        if ($diferencaMeses > 0)
+            return $diferencaMeses;
+        else
+            return 0;
     }
 
-    protected function parcelasDebitadas($gasto)
+    public function parcelasDebitadas($gasto, $dataReferencia = null)
     {
-        $primeiroMesPagamento = intval($this -> InformacoesData('m', $gasto['dataCompraPagamento']));
-        $primeiroAnoPagamento = intval($this -> InformacoesData('y', $gasto['dataCompraPagamento']));
+        $primeiroMesPagamento = intval($this->InformacoesData('m', $gasto['dataCompraPagamento']));
+        $primeiroAnoPagamento = intval($this->InformacoesData('y', $gasto['dataCompraPagamento']));
 
-        if (date('d') >= $this -> InformacoesData('d', $gasto['dataCompraPagamento'])) {
-            $primeiroMesPagamento -= 1;
+        if ($dataReferencia == null)
+            $dataReferencia = date("Y-m-d");
 
-            if ($primeiroMesPagamento <= 0) {
-                $primeiroMesPagamento = 12;
-                $primeiroAnoPagamento --;
-            }
-        }
-
-        if ($primeiroMesPagamento < 10)
-            $primeiroMesPagamento = "0" . $primeiroMesPagamento;
-
-        $primeiraDataPagamento = $primeiroAnoPagamento . '-' . $primeiroMesPagamento . '-' . $this -> InformacoesData('d', $gasto['dataCompraPagamento']);
-        $diferencaMeses = $this -> diferencaMesesData($primeiraDataPagamento, date('Y-m-d'));
-
-        if ($diferencaMeses) {
-            if ($diferencaMeses > 0)
-                return $diferencaMeses;
-            else
-                return 0;
-        }
-
-        return $diferencaMeses;
-    }
-
-    protected function parcelasRecebidas($receita)
-    {
-        $primeiroMesPagamento = intval($this -> InformacoesData('m', $receita['dataCompraPagamento']));
-        $primeiroAnoPagamento = intval($this -> InformacoesData('y', $receita['dataCompraPagamento']));
-
-        if (date('d') >= $this -> InformacoesData('d', $receita['dataCompraPagamento'])) {
+        if ($this->InformacoesData('d', $dataReferencia) >= $this->InformacoesData('d', $gasto['dataCompraPagamento'])) {
             $primeiroMesPagamento -= 1;
 
             if ($primeiroMesPagamento <= 0) {
@@ -160,8 +141,39 @@ class ValorFinal extends FormatacaoDados
         if ($primeiroMesPagamento < 10)
             $primeiroMesPagamento = "0" . $primeiroMesPagamento;
 
-        $primeiraDataPagamento = $primeiroAnoPagamento . '-' . $primeiroMesPagamento . '-' . $this -> InformacoesData('d', $receita['dataCompraPagamento']);
-        $diferencaMeses = $this -> diferencaMesesData($primeiraDataPagamento, date('Y-m-d'));
+        $primeiraDataPagamento = $primeiroAnoPagamento . '-' . $primeiroMesPagamento . '-' . $this->InformacoesData('d', $gasto['dataCompraPagamento']);
+        $diferencaMeses = $this->diferencaMesesData($primeiraDataPagamento, $dataReferencia);
+
+
+        if ($diferencaMeses > 0)
+            return $diferencaMeses;
+        else
+            return 0;
+
+    }
+
+    public function parcelasRecebidas($receita, $dataReferencia = null)
+    {
+        $primeiroMesPagamento = intval($this->InformacoesData('m', $receita['dataCompraPagamento']));
+        $primeiroAnoPagamento = intval($this->InformacoesData('y', $receita['dataCompraPagamento']));
+
+        if ($dataReferencia == null)
+            $dataReferencia = date("Y-m-d");
+
+        if ($this->InformacoesData('d', $dataReferencia) >= $this->InformacoesData('d', $receita['dataCompraPagamento'])) {
+            $primeiroMesPagamento -= 1;
+
+            if ($primeiroMesPagamento <= 0) {
+                $primeiroMesPagamento = 12;
+                $primeiroAnoPagamento--;
+            }
+        }
+
+        if ($primeiroMesPagamento < 10)
+            $primeiroMesPagamento = "0" . $primeiroMesPagamento;
+
+        $primeiraDataPagamento = $primeiroAnoPagamento . '-' . $primeiroMesPagamento . '-' . $this->InformacoesData('d', $receita['dataCompraPagamento']);
+        $diferencaMeses = $this->diferencaMesesData($primeiraDataPagamento, $dataReferencia);
 
         if ($diferencaMeses) {
             if ($diferencaMeses > 0)

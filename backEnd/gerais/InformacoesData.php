@@ -67,7 +67,7 @@ class InformacoesData extends RetornarErro
                 $mesIni++;
         }
 
-        return intval(($diasAnos + $diasMeses + $dias)/30);
+        return round(($diasAnos + $diasMeses + $dias)/30);
     }
 
     public function ultimoDiaMes($mes, $ano) {

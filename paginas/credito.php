@@ -120,7 +120,7 @@ if ($login->VerificarLogin()) {
 									<th scope="col">Limite</th>
 									<th scope="col">Limite Restante</th>
 									<th scope="col">Fechamento</th>
-									<th scope="col">vencimento</th>
+									<th scope="col">Vencimento</th>
 									<th scope="col">Ações</th>
 								</tr>
 								</thead>
