@@ -106,9 +106,9 @@ if ($login->VerificarLogin()) {
 						<main class="container mb-5">
 							<div class="container row text-start">
 
-                                <?php include_once(__DIR__ . "/./particoes/formularios/novo_banco_corretora.php") ?>
-                                <?php include_once(__DIR__ . "/./particoes/formularios/nova_receita.php") ?>
-                                <?php include_once(__DIR__ . "/./particoes/formularios/novo_debito.php") ?>
+                                <?php include(__DIR__ . "/./particoes/formularios/novo_banco_corretora.php") ?>
+                                <?php include(__DIR__ . "/./particoes/formularios/nova_receita.php") ?>
+                                <?php include(__DIR__ . "/./particoes/formularios/novo_debito.php") ?>
 
 							</div>
 
@@ -128,9 +128,9 @@ if ($login->VerificarLogin()) {
 								<form class="form-inline" method="post">
 									<tr class="form-group">
 										<th>*</th>
-										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_banco_corretora.php") ?></td>
-										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_saldo.php") ?></td>
-										<td><?php include_once(__DIR__ . "/./particoes/botoes/submit_filtros.php") ?></td>
+										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_banco_corretora.php") ?></td>
+										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_saldo.php") ?></td>
+										<td><?php include(__DIR__ . "/./particoes/botoes/submit_filtros.php") ?></td>
 									</tr>
 								</form>
 

@@ -13,7 +13,7 @@ class EditarGastos extends NovoCredito
         if (!$this->VerificarLogin()) return false;
 
         $this->setPaginaPai('gastos');
-        $this->setId($this->bancoCorretoraId());
+        $this->setId($this->id());
         $this->setBancoCorretora($this->bancoCorretora());
         $this->setFormaPagamento($this->formaPagamento());
         $this->setClassificacao($this->classificacao());
@@ -37,6 +37,12 @@ class EditarGastos extends NovoCredito
 
         if (!$this->ObterDadosBancosCorretoras($this->getBancoCorretora(), $this->getSessao()))
             return (bool)$this->RetornarErro('pai', 'naoBancoCorretora');
+
+        if ($this-> getFormaPagamento() == "Crédito") {
+            $valorAntigo = $this->ObterDadosGastos($this->getSessao(), $this->getId())[0]['valor'];
+            if (($this->ValorFinal('cartaoCredito', $this->getBancoCorretora()) + $valorAntigo) < $this->getValor() * $this->getParcelas())
+                return (bool)$this->RetornarErro('pai', 'limiteInsuficiente');
+        }
 
         if (!$this->AlterarDadosGastos(
             $this->getId(),

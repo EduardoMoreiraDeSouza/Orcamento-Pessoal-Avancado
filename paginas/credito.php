@@ -10,9 +10,6 @@ if ($login->VerificarLogin()) {
     require_once __DIR__ . "/../backEnd/gerais/ValorFinal.php";
 
     $formatacao = new FormatacaoDados();
-    $execucao = new ExecucaoCodigoMySql();
-
-    $execucao->timezone();
 
     if (isset($_GET['excluir']) and isset($_GET['bancoCorretora'])) {
         require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirCartaoCredito.php";
@@ -99,140 +96,18 @@ if ($login->VerificarLogin()) {
 				<div class="row">
 					<div class="row-md-12 text-center ">
 
+                        <?php include(__DIR__ . "/./filtros.php"); ?>
+
 						<h2 class="pt-4">
 							Cartões de Crédito
 						</h2>
 
 						<main class="container mb-5">
+
 							<div class="container row mt-5 text-start">
-								<div class="col-auto">
 
-									<p>
-										<button class="btn btn-dark" type="button" data-bs-toggle="collapse"
-										        data-bs-target="#novoCartaoCredito" aria-expanded="false"
-										        aria-controls="collapseWidthExample">
-											Novo Cartão de Crédito
-										</button>
-									</p>
-
-									<div style="min-height: auto;" class="mb-4">
-
-										<div class="collapse collapse-horizontal" id="novoCartaoCredito">
-
-											<div class="card card-body border border-dark bg-secondary"
-											     style="width: 100%;">
-
-												<form action="../backEnd/InteracaoFront/novoCartaoCredito.php"
-												      method="POST"
-												      class="form hstack gap-3">
-
-													<select class="form-select" name="bancoCorretora" required>
-														<option value="" selected> Banco | Corretora</option>
-
-                                                        <?php
-
-                                                        $execucao->setCodigoMySql("SELECT * FROM dbName.bancosCorretoras WHERE email LIKE '" . $login->getSessao() . "';");
-                                                        $resultadoExecucao = $execucao->ExecutarCodigoMySql();
-
-                                                        while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
-                                                            $bancoCorretora = $dadosBancosCorretoras['bancoCorretora'];
-
-                                                            ?>
-
-															<option value="<?= $bancoCorretora ?>"><?= $bancoCorretora ?></option>
-
-                                                            <?php
-                                                        } ?>
-
-													</select>
-
-													<input type="number" class="container input-group-text" name="valor"
-													       placeholder="Limite:" step="0.01" required>
-													<input type="number" class="container input-group-text"
-													       name="fechamento"
-													       placeholder="fechamento" max="31" min="1" step="1" required>
-													<input type="number" class="container input-group-text"
-													       name="vencimento"
-													       placeholder="vencimento" max="31" min="1" required>
-
-													<input type="submit" class="container btn btn-dark" value="Criar">
-
-												</form>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div class="col-auto">
-
-									<p>
-										<button class="btn btn-dark" type="button" data-bs-toggle="collapse"
-										        data-bs-target="#novoGastoCredito" aria-expanded="false"
-										        aria-controls="collapseWidthExample">
-											Novo Gasto no Crédito
-										</button>
-									</p>
-
-									<div style="min-height: auto;" class="mb-3">
-
-										<div class="collapse collapse-horizontal" id="novoGastoCredito">
-											<p style="font-size: medium; margin: 0;">Não sabe o valor das parcelas?
-												<br/>Coloque o valor total do gasto (Com juros, se tiver), e
-												no final coloque um * (Asterisco) para calcularmos para você!</p>
-											<div class="card card-body border border-dark bg-secondary"
-											     style="width: 100%;">
-												<form action="../backEnd/InteracaoFront/novoCredito.php" method="POST"
-												      class="form hstack gap-3">
-													<select class="form-select" name="cartaoCredito" required>
-														<option value="" selected>Cartão</option>
-
-                                                        <?php
-
-                                                        $execucao->setCodigoMySql("SELECT * FROM dbName.cartoesCredito WHERE email LIKE '" . $login->getSessao() . "';");
-                                                        $resultadoExecucao = $execucao->ExecutarCodigoMySql();
-                                                        while ($dadosCartoesCredito = mysqli_fetch_assoc($resultadoExecucao)) {
-
-                                                            $bancoCorretora = $dadosCartoesCredito['bancoCorretora'];
-
-                                                            ?>
-
-															<option value="<?= $bancoCorretora ?>"><?= $bancoCorretora ?></option>
-
-
-                                                            <?php
-                                                        } ?>
-													</select>
-
-													<select class="form-select" name="classificacao" required>
-														<option value="" selected>Classificação</option>
-														<option value="Pessoal">Pessoal</option>
-														<option value="Necessário">Necessário</option>
-														<option value="Reserva">Reserva</option>
-														<option value="Dívidas">Dívidas</option>
-														<option value="Investimentos">Investimentos</option>
-														<option value="Boas Ações">Boas Ações</option>
-													</select>
-
-													<input type="date" class="container input-group-text"
-													       name="dataCompraPagamento"
-													       value="<?= date('Y-m-d') ?>" required>
-													<input type="text" class="container input-group-text" name="valor"
-													       placeholder="Valor"
-													       step="0.01" value="" required>
-													<input type="number" class="container input-group-text"
-													       name="parcelas"
-													       title="Quantidade de Parcelas" step="1" min="1" value="1"
-													       required>
-
-													<input type="submit" class="container btn btn-dark"
-													       value="Creditar">
-
-												</form>
-											</div>
-										</div>
-									</div>
-								</div>
-
+								<?php include(__DIR__."/./particoes/formularios/novo_cartao_credito.php") ?>
+                                <?php include(__DIR__ . "/./particoes/formularios/novo_gasto_credito.php") ?>
 
 							</div>
 
@@ -251,9 +126,22 @@ if ($login->VerificarLogin()) {
 								</thead>
 								<tbody>
 
+								<form class="form-inline" method="post">
+									<tr class="form-group">
+										<th>*</th>
+										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_banco_corretora.php") ?></td>
+										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_limite.php") ?></td>
+										<td>*</td>
+										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_fechamento.php") ?></td>
+										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_vencimento.php") ?></td>
+										<td><?php include(__DIR__ . "/./particoes/botoes/submit_filtros.php") ?></td>
+									</tr>
+								</form>
+
                                 <?php
 
-                                $execucao->setCodigoMySql("SELECT * FROM dbName.cartoesCredito WHERE email LIKE '" . $login->getSessao() . "';");
+                                $execucao = new ExecucaoCodigoMySql();
+                                $execucao->setCodigoMySql("SELECT * FROM dbName.cartoesCredito WHERE email LIKE '" . $login->getSessao() . "' ".$_SESSION['codigo_variante'].";");
                                 $resultadoExecucao = $execucao->ExecutarCodigoMySql();
 
                                 $quantidade = 0;
@@ -264,9 +152,6 @@ if ($login->VerificarLogin()) {
                                     $valorFinal = new ValorFinal('cartaoCredito', $dadosCartoesCredito['bancoCorretora']);
 
                                     $quantidade++;
-                                    $bancoCorretora = $dadosCartoesCredito['bancoCorretora'];
-                                    $fechamento = $dadosCartoesCredito['fechamento'];
-                                    $vencimento = $dadosCartoesCredito['vencimento'];
                                     $limite = floatval($valorFinal->ValorFinal('cartaoCredito', $dadosCartoesCredito['bancoCorretora']));
                                     $limiteTotal += $limite;
 
@@ -279,7 +164,7 @@ if ($login->VerificarLogin()) {
 											<td>
 												<input type="text" class="container input-group-text" name="bancoCorretora"
 												       placeholder="Nome:"
-												       value="<?= $bancoCorretora ?>" required>
+												       value="<?= $dadosCartoesCredito['bancoCorretora'] ?>" required>
 											</td>
 											<td>
 												<input type="text" class="container input-group-text" name="valor"
@@ -295,19 +180,19 @@ if ($login->VerificarLogin()) {
 												<input type="number" class="container input-group-text"
 												       name="fechamento"
 												       placeholder="Fechamento:" step="1" max="31" min="1"
-												       value="<?= $fechamento ?>">
+												       value="<?= $dadosCartoesCredito['fechamento'] ?>">
 											</td>
 											<td>
 												<input type="number" class="container input-group-text"
 												       name="vencimento"
 												       placeholder="Vencimento:" step="0.01" min="1"
-												       value="<?= $vencimento ?>">
+												       value="<?= $dadosCartoesCredito['vencimento'] ?>">
 											</td>
 											<td>
 												<button style="text-decoration: none; width: 4vh; height: 4vh;"
 												        class="text-primary bg-transparent rounded-circle border border-primary"
 												        name="bancoCorretoraId"
-												        value="<?= $bancoCorretora ?>">
+												        value="<?= $dadosCartoesCredito['bancoCorretora'] ?>">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 													     fill="currentColor"
 													     class="bi bi-pen" viewBox="0 0 16 16">
@@ -315,7 +200,7 @@ if ($login->VerificarLogin()) {
 													</svg>
 												</button>
 
-												<a href="?excluir=true&bancoCorretora=<?= $bancoCorretora ?>"
+												<a href="?excluir=true&bancoCorretora=<?= $dadosCartoesCredito['bancoCorretora'] ?>"
 												   style="text-decoration: none; margin-left: 0.8vh; width: 4vh; height: 4vh;"
 												   class="text-danger rounded-circle border border-danger">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"

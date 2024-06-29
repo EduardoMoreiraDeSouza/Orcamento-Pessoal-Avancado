@@ -95,7 +95,7 @@ if ($login->VerificarLogin()) {
 				<div class="row">
 					<div class="row-md-12 text-center">
 
-                        <?php include_once(__DIR__ . "/./particoes/formularios/form_data_referencia.php") ?>
+                        <?php include(__DIR__ . "/./particoes/formularios/form_data_referencia.php") ?>
 
 						<h2 class="pt-4">
 							Minhas Receitas
@@ -105,9 +105,9 @@ if ($login->VerificarLogin()) {
 
 							<div class="container row mt-5 text-start">
 
-                                <?php include_once(__DIR__ . "/./particoes/formularios/novo_banco_corretora.php") ?>
-                                <?php include_once(__DIR__ . "/./particoes/formularios/nova_receita.php") ?>
-                                <?php include_once(__DIR__ . "/./particoes/formularios/novo_debito.php") ?>
+                                <?php include(__DIR__ . "/./particoes/formularios/novo_banco_corretora.php") ?>
+                                <?php include(__DIR__ . "/./particoes/formularios/nova_receita.php") ?>
+                                <?php include(__DIR__ . "/./particoes/formularios/novo_debito.php") ?>
 
 							</div>
 
@@ -129,12 +129,12 @@ if ($login->VerificarLogin()) {
 								<form class="form-inline" method="post">
 									<tr class="form-group">
 										<th>*</th>
-										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_banco_corretora.php") ?></td>
-										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_valor.php") ?></td>
-										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_classificacao.php") ?></td>
-										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_parcelas.php") ?></td>
-										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_data.php") ?></td>
-										<td><?php include_once(__DIR__ . "/./particoes/botoes/submit_filtros.php") ?></td>
+										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_banco_corretora.php") ?></td>
+										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_valor.php") ?></td>
+										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_classificacao.php") ?></td>
+										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_parcelas.php") ?></td>
+										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_data.php") ?></td>
+										<td><?php include(__DIR__ . "/./particoes/botoes/submit_filtros.php") ?></td>
 									</tr>
 								</form>
 

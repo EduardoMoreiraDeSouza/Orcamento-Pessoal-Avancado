@@ -54,6 +54,36 @@ elseif (isset($_POST['filtrar_valor']) and !empty($_POST['filtrar_valor'])) {
     $_SESSION['codigo_variante'] = " ORDER BY valor " . $filtro;
 }
 
+elseif (isset($_POST['filtrar_limite']) and !empty($_POST['filtrar_limite'])) {
+
+    if ($_POST['filtrar_limite'] == 'Maior')
+        $filtro = 'DESC';
+    else
+        $filtro = 'ASC';
+
+    $_SESSION['codigo_variante'] = " ORDER BY limite " . $filtro;
+}
+
+elseif (isset($_POST['filtrar_fechamento']) and !empty($_POST['filtrar_fechamento'])) {
+
+    if ($_POST['filtrar_fechamento'] == 'Maior')
+        $filtro = 'DESC';
+    else
+        $filtro = 'ASC';
+
+    $_SESSION['codigo_variante'] = " ORDER BY fechamento " . $filtro;
+}
+
+elseif (isset($_POST['filtrar_vencimento']) and !empty($_POST['filtrar_vencimento'])) {
+
+    if ($_POST['filtrar_vencimento'] == 'Maior')
+        $filtro = 'DESC';
+    else
+        $filtro = 'ASC';
+
+    $_SESSION['codigo_variante'] = " ORDER BY vencimento " . $filtro;
+}
+
 elseif (isset($_POST['filtrar_saldo']) and !empty($_POST['filtrar_saldo'])) {
 
     if ($_POST['filtrar_saldo'] == 'Maior')
