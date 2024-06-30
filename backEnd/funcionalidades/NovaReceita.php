@@ -32,7 +32,6 @@ class NovaReceita extends NovoDebito
 
         if (!$this -> EntradaDadosReceita(
             $this-> getId(),
-			$this-> ObterDadosBancosCorretoras($this-> getId(), $this-> getSessao())[0]['bancoCorretora'],
             $this -> getClassificacao(),
             $this -> getDataCompraPagamento(),
             $this -> getValor(),

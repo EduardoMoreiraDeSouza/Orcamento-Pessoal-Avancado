@@ -30,7 +30,6 @@ class EditarBancoCorretora extends Entrar
         if ($this-> getSaldo() > floatval($this-> ValorFinal('bancoCorretora', $this-> getId()))) {
             if (!$this -> EntradaDadosReceita(
 				$this-> getId(),
-                $this -> getBancoCorretora(),
                 'correcaoSaldo',
                 date('Y-m-d'),
                 $this -> getSaldo() - floatval($this-> ValorFinal('bancoCorretora', $this-> getId())),
