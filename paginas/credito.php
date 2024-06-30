@@ -3,23 +3,23 @@
 require_once __DIR__ . "/../backEnd/verificacoes/VerificarLogin.php";
 $login = new VerificarLogin();
 
-if ($login->VerificarLogin()) {
+if ($login -> VerificarLogin()) {
 
-    require_once __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
-    require_once __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
-    require_once __DIR__ . "/../backEnd/gerais/ValorFinal.php";
+	require_once __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
+	require_once __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
+	require_once __DIR__ . "/../backEnd/gerais/ValorFinal.php";
 
-    $formatacao = new FormatacaoDados();
+	$formatacao = new FormatacaoDados();
 
-    if (isset($_GET['excluir']) and isset($_GET['bancoCorretora'])) {
-        require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirCartaoCredito.php";
+	if (isset($_GET['excluir']) and isset($_GET['bancoCorretora'])) {
+		require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirCartaoCredito.php";
 
-        $exluir = new ExcluirCartaoCredito();
-        $exluir->ExcluirCartaoCredito($_GET['bancoCorretora'], $login->getSessao());
-        $exluir->Redirecionar('credito', true);
-    }
+		$exluir = new ExcluirCartaoCredito();
+		$exluir -> ExcluirCartaoCredito($_GET['bancoCorretora'], $login -> getSessao());
+		$exluir -> Redirecionar('credito', true);
+	}
 
-    ?>
+	?>
 
 
 	<!DOCTYPE html>
@@ -99,7 +99,7 @@ if ($login->VerificarLogin()) {
 				<div class="row">
 					<div class="row-md-12 text-center ">
 
-                        <?php include(__DIR__ . "/./particoes/formularios/form_data_referencia.php") ?>
+						<?php include(__DIR__ . "/./particoes/formularios/form_data_referencia.php") ?>
 
 						<h2 class="pt-4">
 							Cartões de Crédito
@@ -109,8 +109,9 @@ if ($login->VerificarLogin()) {
 
 							<div class="container row mt-5 text-start">
 
-								<?php include(__DIR__."/./particoes/formularios/novo_cartao_credito.php") ?>
-                                <?php include(__DIR__ . "/./particoes/formularios/novo_gasto_credito.php") ?>
+								<?php include(__DIR__ . "/./particoes/formularios/novo_cartao_credito.php") ?>
+								<?php include(__DIR__ . "/./particoes/formularios/novo_gasto_credito.php") ?>
+								<?php include(__DIR__ . "/./particoes/formularios/novo_banco_corretora.php") ?>
 
 							</div>
 
@@ -143,50 +144,51 @@ if ($login->VerificarLogin()) {
 									</tr>
 								</form>
 
-                                <?php
+								<?php
 
-                                $execucao = new ExecucaoCodigoMySql();
-                                $execucao->setCodigoMySql("SELECT * FROM dbName.cartoesCredito WHERE email LIKE '" . $login->getSessao() . "' ".$_SESSION['codigo_variante'].";");
-                                $resultadoExecucao = $execucao->ExecutarCodigoMySql();
+								$execucao = new ExecucaoCodigoMySql();
+								$execucao -> setCodigoMySql("SELECT * FROM dbName.cartoesCredito WHERE email LIKE '" . $login -> getSessao() . "' " . $_SESSION['codigo_variante'] . ";");
+								$resultadoExecucao = $execucao -> ExecutarCodigoMySql();
 
-                                $quantidade = 0;
-                                $limiteTotal = 0;
+								$quantidade = 0;
+								$limiteTotal = 0;
 
-                                $dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao-> ultimoDiaMes($_SESSION['mes_referencia'], $_SESSION['ano_referencia']);
+								$dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> ultimoDiaMes($_SESSION['mes_referencia'], $_SESSION['ano_referencia']);
 
-                                while ($dadosCartoesCredito = mysqli_fetch_assoc($resultadoExecucao)) {
+								while ($dadosCartoesCredito = mysqli_fetch_assoc($resultadoExecucao)) {
 
-                                    $valorFinal = new ValorFinal('cartaoCredito', $dadosCartoesCredito['bancoCorretora'], $dataReferencia);
+									$valorFinal = new ValorFinal('cartaoCredito', $dadosCartoesCredito['bancoCorretora'], $dataReferencia);
 
-                                    $quantidade++;
-                                    $limite = floatval($valorFinal->ValorFinal('cartaoCredito', $dadosCartoesCredito['bancoCorretora'], $dataReferencia));
-                                    $limiteTotal += $limite;
+									$quantidade++;
+									$limite = floatval($valorFinal -> ValorFinal('cartaoCredito', $dadosCartoesCredito['bancoCorretora'], $dataReferencia));
+									$limiteTotal += $limite;
 
-
-                                    ?>
+									$fatura =
+									?>
 
 									<form action="../backEnd/InteracaoFront/editarCartaoCredito.php" method="POST">
 										<tr>
 											<th scope="row"><?= $quantidade ?>º</th>
 											<td>
-												<input type="text" class="container input-group-text" name="bancoCorretora"
+												<input type="text" class="container input-group-text"
+												       name="bancoCorretora"
 												       placeholder="Nome:"
 												       value="<?= $dadosCartoesCredito['bancoCorretora'] ?>" required>
 											</td>
 											<td>
 												<input type="text" class="container input-group-text" name="valor"
 												       placeholder="Limite:"
-												       value="R$ <?= $formatacao->formatarValor($dadosCartoesCredito['limite']) ?>">
+												       value="R$ <?= $formatacao -> formatarValor($dadosCartoesCredito['limite']) ?>">
 											</td>
 											<td>
 												<input type="text" class="container input-group-text" name=""
 												       placeholder=""
-												       value="R$ <?= $formatacao->formatarValor($limite) ?>" disabled>
+												       value="R$ <?= $formatacao -> formatarValor($limite) ?>" disabled>
 											</td>
 											<td>
 												<input type="text" class="container input-group-text" name=""
 												       placeholder=""
-												       value="R$ <?= $formatacao->formatarValor(0) ?>" disabled>
+												       value="R$ <?= $formatacao -> formatarValor($fatura) ?>" disabled>
 											</td>
 											<td style="width: 8%;">
 												<input type="number" class="container input-group-text"
@@ -227,13 +229,13 @@ if ($login->VerificarLogin()) {
 										</tr>
 									</form>
 
-                                    <?php
-                                } ?>
+									<?php
+								} ?>
 
 								<th scope="row">#</th>
 								<td>Total</td>
 								<td></td>
-								<td>R$ <?= $formatacao->formatarValor($limiteTotal) ?></td>
+								<td>R$ <?= $formatacao -> formatarValor($limiteTotal) ?></td>
 								<td></td>
 								<td></td>
 								<td></td>

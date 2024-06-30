@@ -3,23 +3,23 @@
 require_once __DIR__ . "/../backEnd/verificacoes/VerificarLogin.php";
 $login = new VerificarLogin();
 
-if ($login->VerificarLogin()) {
+if ($login -> VerificarLogin()) {
 
-    require_once __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
-    require_once __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
+	require_once __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
+	require_once __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
 
-    $formatacao = new FormatacaoDados();
+	$formatacao = new FormatacaoDados();
 
-    if (isset($_GET['excluir']) and isset($_GET['id'])) {
-        require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirReceita.php";
+	if (isset($_GET['excluir']) and isset($_GET['id'])) {
+		require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirReceita.php";
 
-        $exluir = new ExcluirReceita(); // ATENÇÃO MUDAR
-        $exluir->ExcluirReceita($_GET['id'], $login->getSessao());
+		$exluir = new ExcluirReceita(); // ATENÇÃO MUDAR
+		$exluir -> ExcluirReceita($_GET['id'], $login -> getSessao());
 
-        $exluir->Redirecionar('receitas', true);
-    }
+		$exluir -> Redirecionar('receitas', true);
+	}
 
-    ?>
+	?>
 
 	<!DOCTYPE html>
 	<html lang="pt-br">
@@ -98,7 +98,7 @@ if ($login->VerificarLogin()) {
 				<div class="row">
 					<div class="row-md-12 text-center">
 
-                        <?php include(__DIR__ . "/./particoes/formularios/form_data_referencia.php") ?>
+						<?php include(__DIR__ . "/./particoes/formularios/form_data_referencia.php") ?>
 
 						<h2 class="pt-4">
 							Minhas Receitas
@@ -108,9 +108,9 @@ if ($login->VerificarLogin()) {
 
 							<div class="container row mt-5 text-start">
 
-                                <?php include(__DIR__ . "/./particoes/formularios/novo_banco_corretora.php") ?>
-                                <?php include(__DIR__ . "/./particoes/formularios/nova_receita.php") ?>
-                                <?php include(__DIR__ . "/./particoes/formularios/novo_debito.php") ?>
+								<?php include(__DIR__ . "/./particoes/formularios/novo_banco_corretora.php") ?>
+								<?php include(__DIR__ . "/./particoes/formularios/nova_receita.php") ?>
+								<?php include(__DIR__ . "/./particoes/formularios/novo_debito.php") ?>
 
 							</div>
 
@@ -141,54 +141,49 @@ if ($login->VerificarLogin()) {
 									</tr>
 								</form>
 
-                                <?php
+								<?php
 
-                                $execucao = new ExecucaoCodigoMySql();
-                                $execucao->setCodigoMySql("SELECT * FROM dbName.receitas WHERE email LIKE '" . $login->getSessao() . "' ".$_SESSION['codigo_variante'].";");
-                                $resultadoExecucao = $execucao->ExecutarCodigoMySql();
-                                $saldoTotal = 0;
+								$execucao = new ExecucaoCodigoMySql();
+								$execucao -> setCodigoMySql("SELECT * FROM dbName.receitas WHERE email LIKE '" . $login -> getSessao() . "' " . $_SESSION['codigo_variante'] . ";");
+								$resultadoExecucao = $execucao -> ExecutarCodigoMySql();
+								$saldoTotal = 0;
 
-                                while ($dados = mysqli_fetch_assoc($resultadoExecucao)) {
+								while ($dados = mysqli_fetch_assoc($resultadoExecucao)) {
 
-                                    $parcelasPassadas = $dados['parcelas'];
-                                    $dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao->ultimoDiaMes($_SESSION['mes_referencia'], $_SESSION['ano_referencia']);
+									$parcelasPassadas = $dados['parcelas'];
+									$dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> ultimoDiaMes($_SESSION['mes_referencia'], $_SESSION['ano_referencia']);
 
-                                    if ($_SESSION['mes_referencia'] != 'todos') {
-                                        $parcelasPassadas =
-                                            $execucao->diferencaMesesData(
-                                                $dados['dataCompraPagamento'],
-                                                $dataReferencia
-                                            );
-                                    }
+									if ($_SESSION['mes_referencia'] != 'todos') {
+										$parcelasPassadas =
+											$execucao -> diferencaMesesData(
+												$dados['dataCompraPagamento'],
+												$dataReferencia
+											);
+									}
 
-                                    $parcelasPassadas++;
+									$parcelasPassadas++;
 
-                                    if ($parcelasPassadas <= $dados['parcelas'] and $dados['dataCompraPagamento'] <= $dataReferencia) {
+									if ($parcelasPassadas <= $dados['parcelas'] and $dados['dataCompraPagamento'] <= $dataReferencia) {
 
-                                        $saldoTotal += $dados['valor'];
-                                        $dataPagamento = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao->InformacoesData('d', $dados['dataCompraPagamento']);
+										$saldoTotal += $dados['valor'];
+										$dataPagamento = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> InformacoesData('d', $dados['dataCompraPagamento']);
 
-                                        ?>
+										?>
 
 										<form class="form-inline" action="../backEnd/InteracaoFront/editarReceita.php"
 										      method="POST">
-
 											<tr>
 												<th scope="row"><?= $parcelasPassadas . "/" . $dados['parcelas'] ?></th
-
 												<td></td>
-
 												<td>
-                                                    <?php include(__DIR__ . "/./particoes/loops/nomes_bancos_corretoras_select.php") ?>
+													<?php include(__DIR__ . "/./particoes/loops/nomes_bancos_corretoras_select.php") ?>
 												</td>
-
 												<td>
 													<input type="text" class="form-control input-group-text"
 													       name="valor"
 													       placeholder="Valor:"
-													       value="R$ <?= $formatacao->formatarValor($dados['valor']) ?>">
+													       value="R$ <?= $formatacao -> formatarValor($dados['valor']) ?>">
 												</td>
-
 												<td>
 													<select class="form-select" name="classificacao" required>
 														<option value="Salário" <?= $dados['classificacao'] == 'Salário' ? 'selected' : '' ?>>
@@ -247,35 +242,32 @@ if ($login->VerificarLogin()) {
 															<path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
 														</svg>
 													</a>
-
 												</td>
 											</tr>
 										</form>
 
-                                        <?php
-                                    }
-                                } ?>
+										<?php
+									}
+								}
+								?>
 
 								<th scope="row">#</th>
 								<td>Total</td>
-								<td>R$ <?= $formatacao->formatarValor($saldoTotal) ?></td>
+								<td>R$ <?= $formatacao -> formatarValor($saldoTotal) ?></td>
 								<td></td>
 								<td></td>
 								<td></td>
 								<td></td>
-
 								</tbody>
 							</table>
-
 						</main>
-
 					</div>
 				</div>
 			</div>
 		</section>
 	</div>
 
-    <?php include(__DIR__ . "/./particoes/rodape/rodape_e_script_js.php") ?>
+	<?php include(__DIR__ . "/./particoes/rodape/rodape_e_script_js.php") ?>
 
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
 	        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
@@ -284,15 +276,7 @@ if ($login->VerificarLogin()) {
 	        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
 	</script>
 	<script src="../js/javaScript.js"></script>
-	<script>
-        window.addEventListener('DOMContentLoaded', (event) => {
-            setMinHeight()
-        });
 
-        window.addEventListener('resize', (event) => {
-            setMinHeight()
-        });
-	</script>
 	</body>
 	</html>
 

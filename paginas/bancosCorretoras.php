@@ -227,15 +227,7 @@ if ($login->VerificarLogin()) {
 	        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
 	</script>
 	<script src="../js/javaScript.js"></script>
-	<script>
-        window.addEventListener('DOMContentLoaded', (event) => {
-            setMinHeight()
-        });
 
-        window.addEventListener('resize', (event) => {
-            setMinHeight()
-        });
-	</script>
 	</body>
 	</html>
 

@@ -3,22 +3,22 @@
 require_once __DIR__ . "/../backEnd/verificacoes/VerificarLogin.php";
 $login = new VerificarLogin();
 
-if ($login->VerificarLogin()) {
+if ($login -> VerificarLogin()) {
 
-    require_once __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
-    require_once __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
+	require_once __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
+	require_once __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
 
-    $formatacao = new FormatacaoDados();
+	$formatacao = new FormatacaoDados();
 
-    if (isset($_GET['excluir']) and isset($_GET['id'])) {
-        require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirGasto.php";
+	if (isset($_GET['excluir']) and isset($_GET['id'])) {
+		require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirGasto.php";
 
-        $exluir = new ExcluirGasto(); // ATENÇÃO MUDAR
-        $exluir->ExcluirGasto($_GET['id'], $login->getSessao());
-        $exluir->Redirecionar('gastos', true);
-    }
+		$exluir = new ExcluirGasto(); // ATENÇÃO MUDAR
+		$exluir -> ExcluirGasto($_GET['id'], $login -> getSessao());
+		$exluir -> Redirecionar('gastos', true);
+	}
 
-    ?>
+	?>
 	<!DOCTYPE html>
 	<html lang="pt-br">
 	<head>
@@ -96,7 +96,7 @@ if ($login->VerificarLogin()) {
 				<div class="row">
 					<div class="row-md-12 text-center ">
 
-                        <?php include(__DIR__ . "/./particoes/formularios/form_data_referencia.php") ?>
+						<?php include(__DIR__ . "/./particoes/formularios/form_data_referencia.php") ?>
 
 						<h2 class="pt-4">
 							Meus Gastos
@@ -105,9 +105,10 @@ if ($login->VerificarLogin()) {
 						<main class="container mb-5">
 							<div class="container row mt-5 text-start">
 
-                                <?php include(__DIR__ . "/./particoes/formularios/novo_debito.php") ?>
-                                <?php include(__DIR__ . "/./particoes/formularios/novo_gasto_credito.php") ?>
-                                <?php include(__DIR__."/./particoes/formularios/novo_cartao_credito.php") ?>
+								<?php include(__DIR__ . "/./particoes/formularios/novo_debito.php") ?>
+								<?php include(__DIR__ . "/./particoes/formularios/novo_gasto_credito.php") ?>
+								<?php include(__DIR__ . "/./particoes/formularios/novo_banco_corretora.php") ?>
+								<?php include(__DIR__ . "/./particoes/formularios/novo_cartao_credito.php") ?>
 
 							</div>
 
@@ -142,50 +143,42 @@ if ($login->VerificarLogin()) {
 									</tr>
 								</form>
 
-                                <?php
+								<?php
 
-                                $execucao = new ExecucaoCodigoMySql();
-                                $execucao->setCodigoMySql("SELECT * FROM dbName.gastos WHERE email LIKE '" . $login->getSessao() . "' ".$_SESSION['codigo_variante'].";");
-                                $resultadoExecucao = $execucao->ExecutarCodigoMySql();
-                                $saldoTotal = 0;
+								$execucao = new ExecucaoCodigoMySql();
+								$execucao -> setCodigoMySql("SELECT * FROM dbName.gastos WHERE email LIKE '" . $login -> getSessao() . "' " . $_SESSION['codigo_variante'] . ";");
+								$resultadoExecucao = $execucao -> ExecutarCodigoMySql();
+								$saldoTotal = 0;
 
-                                require_once __DIR__ . "/../backEnd/gerais/ValorFinal.php";
-                                $valorFinal = new ValorFinal();
+								require_once __DIR__ . "/../backEnd/gerais/ValorFinal.php";
+								$valorFinal = new ValorFinal();
 
-                                while ($dados = mysqli_fetch_assoc($resultadoExecucao)) {
+								while ($dados = mysqli_fetch_assoc($resultadoExecucao)) {
 
-                                    $dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao-> ultimoDiaMes($_SESSION['mes_referencia'], $_SESSION['ano_referencia']);
+									$dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> ultimoDiaMes($_SESSION['mes_referencia'], $_SESSION['ano_referencia']);
 
-	                                $parcelasPagas = '';
+									if ($dados['formaPagamento'] == 'Crédito'){
+										$parcelasPagas = $valorFinal -> parcelasPagasCredito($dados, $dataReferencia);
+										$vencimento = $valorFinal -> ObterDadosCartoesCredito($dados['bancoCorretora'], $valorFinal -> getSessao())['vencimento'] . "/" . $_SESSION['mes_referencia'];
 
-									if ($dados['formaPagamento'] == "Crédito") {
-                                        $parcelasPagas = $valorFinal-> parcelasPagasCredito($dados, $dataReferencia);
-                                    }
+									} else {
+										$parcelasPagas = $valorFinal -> parcelasDebitadas($dados, $dataReferencia);
+										$vencimento = $valorFinal -> InformacoesData('d', $dados['dataCompraPagamento']) . "/" . $_SESSION['mes_referencia'];
+									}
 
-									elseif ($dados['formaPagamento'] == "Débito") {
-										$parcelasPagas = $valorFinal-> parcelasDebitadas($dados, $dataReferencia);
-                                    }
+									if ($parcelasPagas <= $dados['parcelas'] and $dados['dataCompraPagamento'] <= $dataReferencia and $parcelasPagas > 0) {
+										$saldoTotal += $dados['valor'];
 
-                                    if ($parcelasPagas <= $dados['parcelas'] and $dados['dataCompraPagamento'] <= $dataReferencia and $parcelasPagas > 0) {
-
-                                        $saldoTotal += $dados['valor'];
-
-										if ($dados['formaPagamento'] == 'Crédito')
-                                            $vencimento = $valorFinal-> ObterDadosCartoesCredito($dados['bancoCorretora'], $valorFinal->getSessao())['vencimento'];
-
-                                        else
-                                            $vencimento = $valorFinal-> InformacoesData('d', $dados['dataCompraPagamento']);
-
-                                        ?>
+										?>
 
 										<form action="../backEnd/InteracaoFront/editarGastos.php" method="POST">
 											<!-- Editar gastos -->
 											<tr>
 
-												<th scope="row"><?=  $parcelasPagas . "/" . $dados['parcelas'] ?></th>
+												<th scope="row"><?= $parcelasPagas . "/" . $dados['parcelas'] ?></th>
 
 												<td>
-                                                    <?php include(__DIR__ . "/./particoes/loops/nomes_bancos_corretoras_select.php") ?>
+													<?php include(__DIR__ . "/./particoes/loops/nomes_bancos_corretoras_select.php") ?>
 												</td>
 
 												<td style="width: 8%;">
@@ -202,7 +195,7 @@ if ($login->VerificarLogin()) {
 													<input type="text" class="container input-group-text" name="valor"
 													       placeholder="Valor:"
 													       step="0.01"
-													       value="R$ <?= $formatacao->formatarValor($dados['valor']) ?>">
+													       value="R$ <?= $formatacao -> formatarValor($dados['valor']) ?>">
 												</td>
 												<td style="width: 8%;">
 													<input type="text" class="container input-group-text"
@@ -269,13 +262,13 @@ if ($login->VerificarLogin()) {
 											</tr>
 										</form>
 
-                                    <?php }
-                                } ?>
+									<?php }
+								} ?>
 
 								<th scope="row">#</th>
 								<td>Total</td>
 								<td></td>
-								<td>R$ <?= $formatacao->formatarValor($saldoTotal) ?></td>
+								<td>R$ <?= $formatacao -> formatarValor($saldoTotal) ?></td>
 								<td></td>
 								<td></td>
 								<td></td>
@@ -293,7 +286,7 @@ if ($login->VerificarLogin()) {
 		</section>
 	</div>
 
-    <?php include(__DIR__ . "/./particoes/rodape/rodape_e_script_js.php") ?>
+	<?php include(__DIR__ . "/./particoes/rodape/rodape_e_script_js.php") ?>
 
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
 	        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
@@ -304,15 +297,7 @@ if ($login->VerificarLogin()) {
 	        crossorigin="anonymous">
 	</script>
 	<script src="../js/javaScript.js"></script>
-	<script>
-        window.addEventListener('DOMContentLoaded', (event) => {
-            setMinHeight()
-        });
 
-        window.addEventListener('resize', (event) => {
-            setMinHeight()
-        });
-	</script>
 	</body>
 	</html>
 
