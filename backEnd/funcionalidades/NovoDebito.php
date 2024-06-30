@@ -40,7 +40,7 @@ class NovoDebito extends EditarBancoCorretora
 
         if (!$this -> EntradaDadosGastos(
 			$this -> getId(),
-	        $this-> ObterDadosBancosCorretoras($this-> getId(), $this-> getSessao())['bancoCorretora'],
+	        $this-> ObterDadosBancosCorretoras($this-> getId(), $this-> getSessao())[0]['bancoCorretora'],
             'Débito',
             $this -> getClassificacao(),
             $this -> getDataCompraPagamento(),

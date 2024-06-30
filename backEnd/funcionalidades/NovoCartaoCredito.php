@@ -37,7 +37,7 @@ class NovoCartaoCredito extends NovoBancoCorretora
 
         elseif (!$this-> EntradaDadosCartoesCredito(
 			$this-> getId(),
-	        $this-> ObterDadosBancosCorretoras($this-> getId(), $this-> getSessao())['bancoCorretora'],
+	        $this-> ObterDadosBancosCorretoras($this-> getId(), $this-> getSessao())[0]['bancoCorretora'],
             $this-> getSessao(),
             $this-> getLimite(),
             $this-> getFechamento(),

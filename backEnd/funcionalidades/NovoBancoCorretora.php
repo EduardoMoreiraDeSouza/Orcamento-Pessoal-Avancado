@@ -30,10 +30,21 @@ class NovoBancoCorretora extends Formulario
             return (bool)$this-> RetornarErro('pai', null);
 
         $this-> timezone();
+		$id = 0;
+
+	    $bancos = $this-> ObterDadosBancosCorretoras(null, $this -> getSessao());
+		if ($this-> getSaldo() != 0 and $bancos) {
+			$contador = 0;
+			foreach ($bancos as $ignored) {
+				if ($bancos[$contador]['bancoCorretora'] == $this -> getBancoCorretora())
+					$id = $bancos[$contador]['id'];
+				$contador++;
+			}
+		}
 
         if ($this-> getSaldo() > 0) {
             if (!$this -> EntradaDadosReceita(
-				'',
+				$id,
                 $this -> getBancoCorretora(),
                 'correcaoSaldo',
                 date('Y-m-d'),
@@ -45,6 +56,7 @@ class NovoBancoCorretora extends Formulario
 
         elseif ($this-> getSaldo() < 0) {
             if (!$this -> EntradaDadosGastos(
+				$id,
                 $this -> getBancoCorretora(),
                 'Débito',
                 'correcaoSaldo',

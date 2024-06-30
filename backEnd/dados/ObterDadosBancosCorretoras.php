@@ -13,7 +13,7 @@ abstract class ObterDadosBancosCorretoras extends EntradaDadosUsuarios
             return false;
 
         $this -> gerarCodigoMySql($id, $email);
-        $this -> setDados($this -> CarregarResultadosMySql());
+        $this -> setDados($this -> CarregarResultadosMySql(true));
 
         return !empty($this -> getDados()) ? $this -> getDados() : false;
     }
