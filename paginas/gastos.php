@@ -243,7 +243,7 @@ if ($login -> VerificarLogin()) {
 													<button style="text-decoration: none; width: 4vh; height: 4vh;"
 													        class="text-primary bg-transparent rounded-circle border border-primary"
 													        name="id"
-													        value="<?= $dados['id'] ?>">
+													        value="<?= $dados['id_gasto'] ?>">
 														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 														     fill="currentColor"
 														     class="bi bi-pen" viewBox="0 0 16 16">
@@ -251,7 +251,7 @@ if ($login -> VerificarLogin()) {
 														</svg>
 													</button>
 
-													<a href="?excluir=true&id=<?= $dados['id'] ?>"
+													<a href="?excluir=true&id=<?= $dados['id_gasto'] ?>"
 													   style="text-decoration: none; margin-left: 0.8vh; width: 4vh; height: 4vh;"
 													   class="text-danger rounded-circle border border-danger">
 														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"

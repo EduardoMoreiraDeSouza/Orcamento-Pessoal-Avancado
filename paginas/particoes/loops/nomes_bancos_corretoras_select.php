@@ -12,7 +12,7 @@
 
         ?>
 
-		<option value="<?= $bancoCorretora ?>" <?= $bancoCorretora == $dados['bancoCorretora'] ? 'selected' : '' ?>><?= $bancoCorretora ?></option>
+		<option value="<?= $dados_bancos_corretoras_select['id'] ?>" <?= $dados_bancos_corretoras_select['id'] == $dados['id_bancoCorretora'] ? 'selected' : '' ?>><?= $bancoCorretora ?></option>
 
 
     <?php } ?>

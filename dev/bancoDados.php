@@ -82,7 +82,7 @@ function criarBancoDados()
 
     $codigoMySql = "CREATE TABLE receitas(
     
-    	id_receitas INT AUTO_INCREMENT NOT NULL,    
+    	id_receita INT AUTO_INCREMENT NOT NULL,    
     	id_bancoCorretora INT NOT NULL,
         email VARCHAR(60) NOT NULL,
         classificacao VARCHAR(15) NOT NULL,
@@ -90,7 +90,7 @@ function criarBancoDados()
         parcelas INT(4),
         dataCompraPagamento DATE,
         
-        CONSTRAINT PK_id_receitas_cartoesCredito PRIMARY KEY (id_receitas),
+        CONSTRAINT PK_id_receita_cartoesCredito PRIMARY KEY (id_receita),
         
         CONSTRAINT FK_email_receitas FOREIGN KEY (email)
         REFERENCES usuarios(email) ON DELETE CASCADE ON UPDATE CASCADE,

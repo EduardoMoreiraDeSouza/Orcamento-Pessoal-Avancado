@@ -22,7 +22,7 @@ class ValorFinal extends FormatacaoDados
 
 			if ($gastos)
 				foreach ($gastos as $ignored) {
-					if ($gastos[$gastoAtual]['id'] == $id)
+					if ($gastos[$gastoAtual]['id_bancoCorretora'] == $id)
 						if ($gastos[$gastoAtual]['formaPagamento'] == 'Crédito') {
 
 							$parcelasRestantes = $this -> parcelasPagasCredito($gastos[$gastoAtual], $dataReferencia);
@@ -49,7 +49,7 @@ class ValorFinal extends FormatacaoDados
 
 			if ($gastos)
 				foreach ($gastos as $ignored) {
-					if ($gastos[$gastoAtual]['id'] == $id)
+					if ($gastos[$gastoAtual]['id_bancoCorretora'] == $id)
 						if ($gastos[$gastoAtual]['formaPagamento'] == 'Débito')
 							$gastosDebitoTotal += $gastos[$gastoAtual]['valor'] * $this -> parcelasDebitadas($gastos[$gastoAtual], $dataReferencia);
 					$gastoAtual++;
@@ -61,15 +61,11 @@ class ValorFinal extends FormatacaoDados
 
 			if ($receita)
 				foreach ($receita as $ignored) {
-					if ($receita[$receitaAtual]['id'] == $id)
+					if ($receita[$receitaAtual]['id_bancoCorretora'] == $id)
 						$receitaTotal += $receita[$receitaAtual]['valor'] * $this -> parcelasRecebidas($receita[$receitaAtual], $dataReferencia);
 
 					$receitaAtual++;
 				}
-
-			print "<script>alert('" . $receitaTotal . "')</script>";
-			print "<script>alert('" . $gastosDebitoTotal . "')</script>";
-
 
 			$saldoFinal = $receitaTotal - $gastosDebitoTotal;
 
@@ -87,7 +83,7 @@ class ValorFinal extends FormatacaoDados
 
 	public function parcelasPagasCredito($gasto, $dataReferencia = null)
 	{
-		$dadosCartao = $this -> ObterDadosCartoesCredito($gasto['id'], $this -> getSessao());
+		$dadosCartao = $this -> ObterDadosCartoesCredito($gasto['id_bancoCorretora'], $this -> getSessao());
 
 		if (!$dadosCartao)
 			return false;

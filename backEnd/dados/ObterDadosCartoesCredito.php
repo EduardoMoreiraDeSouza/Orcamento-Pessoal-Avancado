@@ -22,9 +22,9 @@ abstract class ObterDadosCartoesCredito extends AlterarDadosBancosCorretoras
         $codigo = "SELECT * FROM dbName.cartoesCredito WHERE ";
 
         if ($id != null and $email != null)
-            $codigoVariante = "id LIKE '$id' AND email LIKE '$email';";
+            $codigoVariante = "id_bancoCorretora LIKE '$id' AND email LIKE '$email';";
         elseif ($id != null and $email == null)
-            $codigoVariante = "id LIKE '$id';";
+            $codigoVariante = "id_bancoCorretora LIKE '$id';";
         elseif ($id == null and $email != null)
             $codigoVariante = "email LIKE '$email';";
 
