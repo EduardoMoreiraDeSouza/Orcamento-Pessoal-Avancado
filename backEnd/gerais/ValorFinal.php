@@ -4,14 +4,14 @@ require_once __DIR__ . "/./FormatacaoDados.php";
 
 class ValorFinal extends FormatacaoDados
 {
-    public function ValorFinal($tipo, $entidade, $dataReferencia = null)
+    public function ValorFinal($tipo, $id, $dataReferencia = null)
     {
 
         $this->timezone();
 
         if ($tipo == 'cartaoCredito') {
 
-	        $dadosCartao = $this->ObterDadosCartoesCredito($entidade, $this->getSessao());
+	        $dadosCartao = $this->ObterDadosCartoesCredito($id, $this->getSessao());
 	        if (!$dadosCartao)
 		        return false;
 
@@ -22,7 +22,7 @@ class ValorFinal extends FormatacaoDados
 
             if ($gastos)
                 foreach ($gastos as $ignored) {
-                    if ($gastos[$gastoAtual]['bancoCorretora'] == $entidade)
+                    if ($gastos[$gastoAtual]['id'] == $id)
                         if ($gastos[$gastoAtual]['formaPagamento'] == 'Crédito') {
 							$parcelasRestantes = $this -> parcelasPagasCredito($gastos[$gastoAtual], $dataReferencia);
 							$parcelasGasto = $gastos[$gastoAtual]['parcelas'] - $parcelasRestantes;
@@ -41,7 +41,7 @@ class ValorFinal extends FormatacaoDados
 
             if ($gastos)
                 foreach ($gastos as $ignored) {
-                    if ($gastos[$gastoAtual]['bancoCorretora'] == $entidade)
+                    if ($gastos[$gastoAtual]['id'] == $id)
                         if ($gastos[$gastoAtual]['formaPagamento'] == 'Débito')
                             $gastosDebitoTotal += $gastos[$gastoAtual]['valor'] * $this->parcelasDebitadas($gastos[$gastoAtual], $dataReferencia);
                     $gastoAtual++;
@@ -53,7 +53,7 @@ class ValorFinal extends FormatacaoDados
 
             if ($receita)
                 foreach ($receita as $ignored) {
-                    if ($receita[$receitaAtual]['bancoCorretora'] == $entidade)
+                    if ($receita[$receitaAtual]['id'] == $id)
                         $receitaTotal += $receita[$receitaAtual]['valor'] * $this->parcelasRecebidas($receita[$receitaAtual], $dataReferencia);
 
                     $receitaAtual++;
@@ -62,8 +62,8 @@ class ValorFinal extends FormatacaoDados
             $saldoFinal = $receitaTotal - $gastosDebitoTotal;
 
             $this->AlterarDadosBancosCorretoras(
-                $entidade,
-                $entidade,
+                $id,
+                $id,
                 $saldoFinal,
             );
 

@@ -166,13 +166,16 @@ if ($login -> VerificarLogin()) {
 									if ($gastos)
 										foreach ($gastos as $ignored) {
 											$parcelasPagas = $valorFinal -> parcelasPagasCredito($gastos[$contador], $dataReferencia);
-
-											if ($parcelasPagas <= $gastos[$contador]['parcelas'] and $parcelasPagas > 0)
+											if (
+													$parcelasPagas <= $gastos[$contador]['parcelas'] and
+													$parcelasPagas > 0 and
+													$gastos[$contador]['formaPagamento'] == 'Crédito'
+											)
 												$fatura += $gastos[$contador]['valor'];
 											$contador++;
 										}
 
-									$limite = floatval($valorFinal -> ValorFinal('cartaoCredito', $dadosCartoesCredito['bancoCorretora'], $dataReferencia)) - $fatura;
+									$limite = floatval($valorFinal -> ValorFinal('cartaoCredito', $dadosCartoesCredito['id'], $dataReferencia)) - $fatura;
 									$limiteTotal += $limite;
 									$faturaTotal += $fatura;
 

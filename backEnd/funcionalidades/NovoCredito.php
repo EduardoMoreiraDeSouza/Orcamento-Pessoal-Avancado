@@ -16,7 +16,7 @@ class NovoCredito extends NovoDebito
         $this -> setParcelas($this -> parcelas());
 
         if (
-            !$this -> getBancoCorretora() or
+            !$this -> getId() or
             !$this -> getClassificacao() or
             !$this -> getDataCompraPagamento() or
             !$this -> getValor() or

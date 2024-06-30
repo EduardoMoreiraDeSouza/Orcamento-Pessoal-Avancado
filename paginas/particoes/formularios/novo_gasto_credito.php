@@ -19,7 +19,7 @@
                  style="width: 100%;">
                 <form action="../backEnd/InteracaoFront/novoCredito.php" method="POST"
                       class="form hstack gap-3">
-                    <select class="form-select" name="bancoCorretora" required>
+                    <select class="form-select" name="id" required>
 
 	                    <option value="" selected>Cartão</option>
                         <?php include(__DIR__ . '/../loops/nomes_cartoes_credito.php') ?>

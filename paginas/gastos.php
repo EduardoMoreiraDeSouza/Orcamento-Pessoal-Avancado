@@ -162,7 +162,7 @@ if ($login -> VerificarLogin()) {
 
 									if ($dados['formaPagamento'] == 'Crédito'){
 										$parcelasPagas = $valorFinal -> parcelasPagasCredito($dados, $dataReferencia);
-										if ($cartao = $valorFinal -> ObterDadosCartoesCredito($dados['bancoCorretora'], $valorFinal -> getSessao()))
+										if ($cartao = $valorFinal -> ObterDadosCartoesCredito($dados['id'], $valorFinal -> getSessao()))
 											$vencimento = $cartao['vencimento'] . "/" . $_SESSION['mes_referencia'];
 
 									} else {

@@ -9,7 +9,7 @@ while ($dados_nomes_bancos_corretoras = mysqli_fetch_assoc($resultadoExecucao)) 
 
     ?>
 
-	<option value="<?= $nomeCartaoCredito ?>"><?= $nomeCartaoCredito ?></option>
+	<option value="<?= $dados_nomes_bancos_corretoras['id'] ?>"><?= $nomeCartaoCredito ?></option>
 
 
 <?php } ?>
