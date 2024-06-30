@@ -1,20 +1,20 @@
 <?php
 
-require_once __DIR__ . "/../backEnd/verificacoes/VerificarLogin.php";
+require __DIR__ . "/../backEnd/verificacoes/VerificarLogin.php";
 $login = new VerificarLogin();
 
 if ($login -> VerificarLogin()) {
 
-	require_once __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
-	require_once __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
+	require __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
+	require __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
 
 	$formatacao = new FormatacaoDados();
 
 	if (isset($_GET['excluir']) and isset($_GET['id'])) {
-		require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirReceita.php";
+		require __DIR__ . "/../backEnd/funcionalidades/ExcluirReceita.php";
 
-		$exluir = new ExcluirReceita(); // ATENÇÃO MUDAR
-		$exluir -> ExcluirReceita($_GET['id'], $login -> getSessao());
+		$exluir = new ExcluirReceita();
+		$exluir -> ExcluirReceita($_GET['id']);
 
 		$exluir -> Redirecionar('receitas', true);
 	}

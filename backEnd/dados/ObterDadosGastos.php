@@ -20,11 +20,11 @@ class ObterDadosGastos extends AlterarDadosCartoesCredito
 		$codigo = "SELECT * FROM dbName.gastos WHERE ";
 
 		if ($id != null and $email == null)
-			$codigoVariante = "id LIKE '$id';";
+			$codigoVariante = "id_gasto LIKE '$id';";
 		elseif ($id == null and $email != null)
 			$codigoVariante = "email LIKE '$email';";
 		elseif ($id != null and $email != null)
-			$codigoVariante = "id LIKE '$id' AND email LIKE '$email';";
+			$codigoVariante = "id_gasto LIKE '$id' AND email LIKE '$email';";
 
 		$this -> setCodigoMySql($codigo . $codigoVariante);
 	}

@@ -1,20 +1,20 @@
 <?php
 
-require_once __DIR__ . "/../backEnd/verificacoes/VerificarLogin.php";
+require __DIR__ . "/../backEnd/verificacoes/VerificarLogin.php";
 $login = new VerificarLogin();
 
 if ($login -> VerificarLogin()) {
 
-	require_once __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
-	require_once __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
+	require __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
+	require __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
 
 	$formatacao = new FormatacaoDados();
 
 	if (isset($_GET['excluir']) and isset($_GET['id'])) {
-		require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirGasto.php";
+		require __DIR__ . "/../backEnd/funcionalidades/ExcluirGasto.php";
 
-		$exluir = new ExcluirGasto(); // ATENÇÃO MUDAR
-		$exluir -> ExcluirGasto($_GET['id'], $login -> getSessao());
+		$exluir = new ExcluirGasto();
+		$exluir -> ExcluirGasto($_GET['id']);
 		$exluir -> Redirecionar('gastos', true);
 	}
 
@@ -137,9 +137,9 @@ if ($login -> VerificarLogin()) {
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_valor.php") ?></td>
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_parcelas.php") ?></td>
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_classificacao.php") ?></td>
-										<td><?php include_once(__DIR__ . "/./particoes/filtros/select_filtrar_data.php") ?></td>
+										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_data.php") ?></td>
 										<td>*</td>
-										<td><?php include_once(__DIR__ . "/./particoes/botoes/submit_filtros.php") ?></td>
+										<td><?php include(__DIR__ . "/./particoes/botoes/submit_filtros.php") ?></td>
 									</tr>
 								</form>
 
@@ -153,7 +153,7 @@ if ($login -> VerificarLogin()) {
 								$resultadoExecucao = $execucao -> ExecutarCodigoMySql();
 								$saldoTotal = 0;
 
-								require_once __DIR__ . "/../backEnd/gerais/ValorFinal.php";
+								require __DIR__ . "/../backEnd/gerais/ValorFinal.php";
 								$valorFinal = new ValorFinal();
 
 								while ($dados = mysqli_fetch_assoc($resultadoExecucao)) {

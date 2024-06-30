@@ -1,21 +1,21 @@
 <?php
 
-require_once __DIR__ . "/../backEnd/verificacoes/VerificarLogin.php";
+require __DIR__ . "/../backEnd/verificacoes/VerificarLogin.php";
 $login = new VerificarLogin();
 
 if ($login -> VerificarLogin()) {
 
-	require_once __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
-	require_once __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
-	require_once __DIR__ . "/../backEnd/gerais/ValorFinal.php";
+	require __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
+	require __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
+	require __DIR__ . "/../backEnd/gerais/ValorFinal.php";
 
 	$formatacao = new FormatacaoDados();
 
 	if (isset($_GET['excluir']) and isset($_GET['id'])) {
-		require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirCartaoCredito.php";
+		require __DIR__ . "/../backEnd/funcionalidades/ExcluirCartaoCredito.php";
 
 		$exluir = new ExcluirCartaoCredito();
-		$exluir -> ExcluirCartaoCredito($_GET['id'], $login -> getSessao());
+		$exluir -> ExcluirCartaoCredito($_GET['id']);
 		$exluir -> Redirecionar('credito', true);
 	}
 
@@ -147,34 +147,50 @@ if ($login -> VerificarLogin()) {
 								<?php
 
 								$execucao = new ExecucaoCodigoMySql();
-								$execucao -> setCodigoMySql("SELECT * FROM dbName.cartoesCredito WHERE email LIKE '" . $login -> getSessao() . "' " . $_SESSION['codigo_variante'] . ";");
+								$execucao -> setCodigoMySql(
+									"SELECT * FROM dbName.cartoesCredito WHERE email LIKE '" . $login -> getSessao(
+									) . "' " . $_SESSION['codigo_variante'] . ";"
+								);
 								$resultadoExecucao = $execucao -> ExecutarCodigoMySql();
-								$dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> ultimoDiaMes($_SESSION['mes_referencia'], $_SESSION['ano_referencia']);
+								$dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> ultimoDiaMes(
+										$_SESSION['mes_referencia'], $_SESSION['ano_referencia']
+									);
 								$quantidade = 0;
 								$limiteTotal = 0;
 								$faturaTotal = 0;
 
 								while ($dadosCartoesCredito = mysqli_fetch_assoc($resultadoExecucao)) {
 
-									$valorFinal = new ValorFinal('cartaoCredito', $dadosCartoesCredito['id'], $dataReferencia);
+									$valorFinal = new ValorFinal(
+										'cartaoCredito', $dadosCartoesCredito['id_bancoCorretora'], $dataReferencia
+									);
 
 									$quantidade++;
 									$fatura = 0;
-									$gastos = $valorFinal-> ObterDadosGastos($valorFinal-> getSessao(), $dadosCartoesCredito['id']);
+									$gastos = $valorFinal -> ObterDadosGastos(
+										$valorFinal -> getSessao(), $dadosCartoesCredito['id_bancoCorretora']
+									);
 									$contador = 0;
 									if ($gastos)
 										foreach ($gastos as $ignored) {
-											$parcelasPagas = $valorFinal -> parcelasPagasCredito($gastos[$contador], $dataReferencia);
+											$parcelasPagas = $valorFinal -> parcelasPagasCredito(
+												$gastos[$contador], $dataReferencia
+											);
 											if (
-													$parcelasPagas <= $gastos[$contador]['parcelas'] and
-													$parcelasPagas > 0 and
-													$gastos[$contador]['formaPagamento'] == 'Crédito'
+												$parcelasPagas <= $gastos[$contador]['parcelas'] and
+												$parcelasPagas > 0 and
+												$gastos[$contador]['formaPagamento'] == 'Crédito'
 											)
 												$fatura += $gastos[$contador]['valor'];
 											$contador++;
 										}
 
-									$limite = floatval($valorFinal -> ValorFinal('cartaoCredito', $dadosCartoesCredito['id'], $dataReferencia)) - $fatura;
+									$limite = floatval(
+											$valorFinal -> ValorFinal(
+												'cartaoCredito', $dadosCartoesCredito['id_bancoCorretora'],
+												$dataReferencia
+											)
+										) - $fatura;
 									$limiteTotal += $limite;
 									$faturaTotal += $fatura;
 
@@ -187,12 +203,16 @@ if ($login -> VerificarLogin()) {
 												<input type="text" class="container input-group-text"
 												       name="bancoCorretora"
 												       placeholder="Nome:"
-												       value="<?= $dadosCartoesCredito['bancoCorretora'] ?>" required>
+												       value="<?= $valorFinal -> ObterDadosBancosCorretoras(
+													       $dadosCartoesCredito['id_bancoCorretora'], null
+												       )[0]['bancoCorretora'] ?>" required disabled>
 											</td>
 											<td>
 												<input type="text" class="container input-group-text" name="valor"
 												       placeholder="Limite:"
-												       value="R$ <?= $formatacao -> formatarValor($dadosCartoesCredito['limite']) ?>">
+												       value="R$ <?= $formatacao -> formatarValor(
+													       $dadosCartoesCredito['limite']
+												       ) ?>">
 											</td>
 											<td>
 												<input type="text" class="container input-group-text" name=""
@@ -220,7 +240,7 @@ if ($login -> VerificarLogin()) {
 												<button style="text-decoration: none; width: 4vh; height: 4vh;"
 												        class="text-primary bg-transparent rounded-circle border border-primary"
 												        name="id"
-												        value="<?= $dadosCartoesCredito['id'] ?>">
+												        value="<?= $dadosCartoesCredito['id_bancoCorretora'] ?>">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 													     fill="currentColor"
 													     class="bi bi-pen" viewBox="0 0 16 16">
@@ -228,7 +248,7 @@ if ($login -> VerificarLogin()) {
 													</svg>
 												</button>
 
-												<a href="?excluir=true&id=<?= $dadosCartoesCredito['id'] ?>"
+												<a href="?excluir=true&id=<?= $dadosCartoesCredito['id_bancoCorretora'] ?>"
 												   style="text-decoration: none; margin-left: 0.8vh; width: 4vh; height: 4vh;"
 												   class="text-danger rounded-circle border border-danger">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"

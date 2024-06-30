@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../backEnd/site/Globais.php";
+require __DIR__ . "/../backEnd/site/Globais.php";
 $globais = new Globais;
 
 ?>
