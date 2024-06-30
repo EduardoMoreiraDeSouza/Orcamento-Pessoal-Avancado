@@ -28,8 +28,8 @@ class EditarCartaoCredito extends EditarBancoCorretora
 
         elseif (
             !$this-> AlterarDadosCartoesCredito(
+	            $this-> getId(),
                 $this-> getBancoCorretora(),
-                $this-> getId(),
                 $this-> getSessao(),
                 $this-> getLimite(),
                 $this-> getFechamento(),
