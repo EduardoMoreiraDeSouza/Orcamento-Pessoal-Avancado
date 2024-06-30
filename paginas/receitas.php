@@ -144,14 +144,19 @@ if ($login -> VerificarLogin()) {
 								<?php
 
 								$execucao = new ExecucaoCodigoMySql();
-								$execucao -> setCodigoMySql("SELECT * FROM dbName.receitas WHERE email LIKE '" . $login -> getSessao() . "' " . $_SESSION['codigo_variante'] . ";");
+								$execucao -> setCodigoMySql(
+									"SELECT * FROM dbName.receitas WHERE email LIKE '" . $login -> getSessao(
+									) . "' " . $_SESSION['codigo_variante'] . ";"
+								);
 								$resultadoExecucao = $execucao -> ExecutarCodigoMySql();
 								$saldoTotal = 0;
 
 								while ($dados = mysqli_fetch_assoc($resultadoExecucao)) {
 
 									$parcelasPassadas = $dados['parcelas'];
-									$dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> ultimoDiaMes($_SESSION['mes_referencia'], $_SESSION['ano_referencia']);
+									$dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> ultimoDiaMes(
+											$_SESSION['mes_referencia'], $_SESSION['ano_referencia']
+										);
 
 									if ($_SESSION['mes_referencia'] != 'todos') {
 										$parcelasPassadas =
@@ -166,7 +171,9 @@ if ($login -> VerificarLogin()) {
 									if ($parcelasPassadas <= $dados['parcelas'] and $dados['dataCompraPagamento'] <= $dataReferencia) {
 
 										$saldoTotal += $dados['valor'];
-										$dataPagamento = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> InformacoesData('d', $dados['dataCompraPagamento']);
+										$dataPagamento = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> InformacoesData(
+												'd', $dados['dataCompraPagamento']
+											);
 
 										?>
 
@@ -182,7 +189,9 @@ if ($login -> VerificarLogin()) {
 													<input type="text" class="form-control input-group-text"
 													       name="valor"
 													       placeholder="Valor:"
-													       value="R$ <?= $formatacao -> formatarValor($dados['valor']) ?>">
+													       value="R$ <?= $formatacao -> formatarValor(
+														       $dados['valor']
+													       ) ?>">
 												</td>
 												<td>
 													<select class="form-select" name="classificacao" required>
@@ -224,7 +233,7 @@ if ($login -> VerificarLogin()) {
 													<button style="text-decoration: none; width: 4vh; height: 4vh;"
 													        class="text-primary bg-transparent rounded-circle border border-primary"
 													        name="id"
-													        value="<?= $dados['id'] ?>">
+													        value="<?= $dados['id_receita'] ?>">
 														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 														     fill="currentColor"
 														     class="bi bi-pen" viewBox="0 0 16 16">
@@ -232,7 +241,7 @@ if ($login -> VerificarLogin()) {
 														</svg>
 													</button>
 
-													<a href="?excluir=true&id=<?= $dados['id'] ?>"
+													<a href="?excluir=true&id=<?= $dados['id_receita'] ?>"
 													   style="text-decoration: none; margin-left: 0.8vh; width: 4vh; height: 4vh;"
 													   class="text-danger rounded-circle border border-danger">
 														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"

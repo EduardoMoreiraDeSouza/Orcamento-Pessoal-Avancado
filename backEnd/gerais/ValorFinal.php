@@ -32,11 +32,10 @@ class ValorFinal extends FormatacaoDados
 									$parcelasGasto = 1;
 								else
 									$parcelasGasto = $gastos[$gastoAtual]['parcelas'] - $parcelasRestantes;
+							else if ($parcelasRestantes > $gastos[$gastoAtual]['parcelas'])
+								$parcelasGasto = 0;
 							else
-								if ($parcelasRestantes > $gastos[$gastoAtual]['parcelas'])
-									$parcelasGasto = 0;
-								else
-									$parcelasGasto = $gastos[$gastoAtual]['parcelas'];
+								$parcelasGasto = $gastos[$gastoAtual]['parcelas'];
 
 
 							$valorTotalGasto = $gastos[$gastoAtual]['valor'] * ($parcelasGasto);
@@ -108,10 +107,13 @@ class ValorFinal extends FormatacaoDados
 			$dataReferencia = date("Y-m-d");
 
 		if ($diaPagamento >= $dadosCartao['fechamento']) {
-			if ($dadosCartao['vencimento'] < $dadosCartao['fechamento'])
+			if ($dadosCartao['vencimento'] < $dadosCartao['fechamento']) {
 				$mesPagamento += 2;
+			}
+			elseif ($diaPagamento > $dadosCartao['vencimento'])
+				$mesPagamento += 1;
 			elseif ($dadosCartao['vencimento'] > $dadosCartao['fechamento'])
-				$mesPagamento += 0;
+				$mesPagamento += 1;
 			else
 				$mesPagamento += 1;
 		}
@@ -187,10 +189,7 @@ class ValorFinal extends FormatacaoDados
 			);
 		$diferencaMeses = $this -> diferencaMesesData($primeiraDataPagamento, $dataReferencia);
 
-
-		if ($diferencaMeses > $gasto['parcelas'])
-			return $gasto['parcelas'];
-		elseif ($diferencaMeses > 0)
+		if ($diferencaMeses > 0)
 			return $diferencaMeses;
 		else
 			return 0;
