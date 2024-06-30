@@ -1,4 +1,4 @@
-<select class="form-select" name="bancoCorretora" required>
+<select class="form-select" name="bancoCorretoraId" required>
 
     <?php
 
