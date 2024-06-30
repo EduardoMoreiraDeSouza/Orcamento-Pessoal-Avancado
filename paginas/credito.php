@@ -233,7 +233,7 @@ if ($login -> VerificarLogin()) {
 											<td style="width: 8%;">
 												<input type="number" class="container input-group-text"
 												       name="vencimento"
-												       placeholder="Vencimento:" step="0.01" min="1"
+												       placeholder="Vencimento:" step="1" min="1" max="31"
 												       value="<?= $dadosCartoesCredito['vencimento'] ?>">
 											</td>
 											<td>

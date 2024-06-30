@@ -5,6 +5,7 @@ require_once __DIR__ . "/./NovoCredito.php";
 class EditarGastos extends NovoCredito
 {
 
+	protected $bancoCorretoraId;
 	protected $formaPagamento;
 	protected $id;
 
@@ -14,7 +15,7 @@ class EditarGastos extends NovoCredito
 
 		$this -> setPaginaPai('gastos');
 		$this -> setId($this -> id());
-		$this -> setBancoCorretora($this -> bancoCorretoraId());
+		$this -> setBancoCorretoraId($this -> bancoCorretoraId());
 		$this -> setFormaPagamento($this -> formaPagamento());
 		$this -> setClassificacao($this -> classificacao());
 		$this -> setDataCompraPagamento($this -> dataCompraPagamento());
@@ -23,7 +24,7 @@ class EditarGastos extends NovoCredito
 
 		if (
 			!$this -> getId() or
-			!$this -> getBancoCorretora() or
+			!$this -> getBancoCorretoraId() or
 			!$this -> getFormaPagamento() or
 			!$this -> getClassificacao() or
 			!$this -> getDataCompraPagamento() or
@@ -35,20 +36,22 @@ class EditarGastos extends NovoCredito
 		if ($this -> getValor() <= 0)
 			$this -> setValor($this -> getValor() * -1);
 
-		if (!$this -> ObterDadosBancosCorretoras($this -> getId(), $this -> getSessao()))
+		if (!$this -> ObterDadosBancosCorretoras($this -> getBancoCorretoraId(), $this -> getSessao()))
 			return (bool) $this -> RetornarErro('pai', 'naoBancoCorretora');
 
 		if ($this -> getFormaPagamento() == "Crédito") {
-			if (!$this -> ObterDadosCartoesCredito($this -> getId(), $this -> getSessao()))
+
+			if (!$this -> ObterDadosCartoesCredito($this -> getBancoCorretoraId(), $this -> getSessao()))
 				return (bool) $this -> RetornarErro('pai', 'cartaoNaoExite');
+
 			$valorAntigo = $this -> ObterDadosGastos($this -> getSessao(), $this -> getId())[0]['valor'];
-			if (($this -> ValorFinal('cartaoCredito', $this -> getBancoCorretora()) + $valorAntigo) < $this -> getValor() * $this -> getParcelas())
+			if (($this -> ValorFinal('cartaoCredito', $this -> getBancoCorretoraId()) + $valorAntigo) < $this -> getValor() * $this -> getParcelas())
 				return (bool) $this -> RetornarErro('pai', 'limiteInsuficiente');
 		}
 
 		if (!$this -> AlterarDadosGastos(
 			$this -> getId(),
-			$this -> getBancoCorretora(),
+			$this -> getBancoCorretoraId(),
 			$this -> getFormaPagamento(),
 			$this -> getClassificacao(),
 			$this -> getValor(),
@@ -78,5 +81,15 @@ class EditarGastos extends NovoCredito
 	protected function setId($id): void
 	{
 		$this -> id = $id;
+	}
+
+	protected function getBancoCorretoraId()
+	{
+		return $this -> bancoCorretoraId;
+	}
+
+	protected function setBancoCorretoraId($bancoCorretoraId): void
+	{
+		$this -> bancoCorretoraId = $bancoCorretoraId;
 	}
 }
