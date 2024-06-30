@@ -39,7 +39,7 @@ abstract class Servidor extends VerificarLogin
             case 'senhaServidorServidor':
                 return $this -> getSenhaServidor();
 
-            case 'DBname':
+            case 'dbName':
                 return $this -> getDBname();
 
             default:

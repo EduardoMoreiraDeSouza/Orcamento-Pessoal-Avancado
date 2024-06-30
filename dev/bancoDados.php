@@ -129,7 +129,7 @@ if (isset($_POST['excluirBancoDados'])) {
 
     echo "<script>
 
-            alert('Banco de Dados Criado com Sucesso!')
+            alert('Banco de Dados Excluído com Sucesso!')
             window.location.href = 'index.php'
 
         </script>";
