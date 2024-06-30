@@ -4,38 +4,33 @@ require_once __DIR__ . "/../funcionalidades/Entrar.php";
 
 class EditarBancoCorretora extends Entrar
 {
-
     public function __construct()
     {
         if (!$this -> VerificarLogin()) return false;
 
         $this -> setPaginaPai('bancosCorretoras');
         $this -> setId($this -> id());
-        $this -> setBancoCorretoraId($this -> bancoCorretora());
+        $this -> setBancoCorretora($this -> bancoCorretora());
         $this -> setSaldo($this -> saldo());
 
         if (
-            !$this -> getBancoCorretoraId() or
+            !$this -> getBancoCorretora() or
             !$this -> getId() or
             !$this -> getSaldo()
         )
             return (bool)$this-> RetornarErro('pai', null);
 
-        if (
-            !$this -> AlterarDadosBancosCorretoras(
+        if (!$this -> AlterarDadosBancosCorretoras(
 	            $this -> getId(),
-                $this -> getBancoCorretoraId(),
+                $this -> getBancoCorretora(),
                 0
-            )
-        )   
+        ))
             return (bool)$this-> RetornarErro('pai', null);
-
-	    print "<script>alert('". $this-> getSaldo() > floatval($this-> ValorFinal('bancoCorretora', $this-> getId())) ."')</script>";
 
         if ($this-> getSaldo() > floatval($this-> ValorFinal('bancoCorretora', $this-> getId()))) {
             if (!$this -> EntradaDadosReceita(
 				$this-> getId(),
-                $this -> getBancoCorretoraId(),
+                $this -> getBancoCorretora(),
                 'correcaoSaldo',
                 date('Y-m-d'),
                 $this -> getSaldo() - floatval($this-> ValorFinal('bancoCorretora', $this-> getId())),
@@ -47,7 +42,6 @@ class EditarBancoCorretora extends Entrar
         elseif ($this-> getSaldo() < floatval($this-> ValorFinal('bancoCorretora', $this-> getId()))) {
             if (!$this -> EntradaDadosGastos(
 				$this-> getId(),
-                $this -> getBancoCorretoraId(),
                 'Débito',
                 'correcaoSaldo',
                 date('Y-m-d'),

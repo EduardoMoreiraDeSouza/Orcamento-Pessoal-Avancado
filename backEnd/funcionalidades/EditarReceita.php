@@ -10,7 +10,7 @@ class EditarReceita extends EditarGastos
 
         $this -> setPaginaPai('receitas');
         $this -> setId($this-> id());
-        $this -> setBancoCorretoraId($this -> bancoCorretoraId());
+        $this -> setBancoCorretora($this -> bancoCorretoraId());
         $this -> setClassificacao($this -> classificacao());
         $this -> setDataCompraPagamento($this -> dataCompraPagamento());
         $this -> setValor($this -> valor());
@@ -18,7 +18,7 @@ class EditarReceita extends EditarGastos
 
         if (
             !$this -> getId() or
-            !$this -> getBancoCorretoraId() or
+            !$this -> getBancoCorretora() or
             !$this -> getClassificacao() or
             !$this -> getDataCompraPagamento() or
             !$this -> getValor() or
@@ -34,7 +34,7 @@ class EditarReceita extends EditarGastos
 
         if (!$this -> AlterarDadosReceita(
            $this -> getId(),
-           $this -> getBancoCorretoraId(),
+           $this -> getBancoCorretora(),
            $this -> getClassificacao(),
            $this -> getValor(),
            $this-> getParcelas(),
