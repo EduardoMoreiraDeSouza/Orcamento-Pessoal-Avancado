@@ -9,7 +9,7 @@ class NovoCredito extends NovoDebito
         if (!$this -> VerificarLogin()) return false;
 
         $this -> setPaginaPai('gastos');
-        $this -> setBancoCorretora($this -> bancoCorretora());
+        $this -> setId($this -> id());
         $this -> setClassificacao($this -> classificacao());
         $this -> setDataCompraPagamento($this -> dataCompraPagamento());
         $this -> setValor($this -> valor());
@@ -24,7 +24,7 @@ class NovoCredito extends NovoDebito
         )
             return (bool)$this -> RetornarErro('pai', null);
 
-        if (!$this -> ObterDadosCartoesCredito($this -> getBancoCorretora(), $this -> getSessao()))
+        if (!$this -> ObterDadosCartoesCredito($this -> getId(), $this -> getSessao()))
             return (bool)$this -> RetornarErro('pai', 'naoBancoCorretora');
 
         if ($this-> getValor() < 0)
@@ -32,11 +32,12 @@ class NovoCredito extends NovoDebito
 
         $this -> timezone();
 
-        if ($this -> ValorFinal('cartaoCredito', $this -> getBancoCorretora()) < $this-> getValor() * $this-> getParcelas())
+        if ($this -> ValorFinal('cartaoCredito', $this -> getId()) < $this-> getValor() * $this-> getParcelas())
             return (bool)$this -> RetornarErro('pai', 'limiteInsuficiente');
 
         if (!$this -> EntradaDadosGastos(
-            $this -> getBancoCorretora(),
+			$this-> getId(),
+	        $this-> ObterDadosBancosCorretoras($this-> getId(), $this-> getSessao())[0]['bancoCorretora'],
             'Crédito',
             $this -> getClassificacao(),
             $this -> getDataCompraPagamento(),
