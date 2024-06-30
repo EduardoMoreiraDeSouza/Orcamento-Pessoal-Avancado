@@ -24,10 +24,18 @@ class ValorFinal extends FormatacaoDados
                 foreach ($gastos as $ignored) {
                     if ($gastos[$gastoAtual]['id'] == $id)
                         if ($gastos[$gastoAtual]['formaPagamento'] == 'Crédito') {
+
 							$parcelasRestantes = $this -> parcelasPagasCredito($gastos[$gastoAtual], $dataReferencia);
 							$parcelasGasto = $gastos[$gastoAtual]['parcelas'] - $parcelasRestantes;
 							$parcelasGasto = $parcelasRestantes > 0 ? $parcelasGasto  : 0;
-	                        $gastosCreditoTotal += $gastos[$gastoAtual]['valor'] * ($parcelasGasto);
+							$valorTotalGasto = $gastos[$gastoAtual]['valor'] * ($parcelasGasto);
+	                        $gastosCreditoTotal += $valorTotalGasto;
+
+							if ($valorTotalGasto == 0) {
+								if ($gastos[$gastoAtual]['dataCompraPagamento'] >= $dataReferencia)
+									$gastosCreditoTotal += $gastos[$gastoAtual]['valor'] * $gastos[$gastoAtual]['parcelas'];
+							}
+
                         }
                     $gastoAtual++;
                 }

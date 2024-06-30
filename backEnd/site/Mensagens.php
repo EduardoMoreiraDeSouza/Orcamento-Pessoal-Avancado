@@ -33,6 +33,7 @@ abstract class Mensagens extends ScriptJS
             'naoBancoCorretora' => 'O banco/corretora selecionado não existe!',
             'saldoInsuficiente' => 'O saldo disponível não é suficiente para debitar o valor!',
             'limiteInsuficiente' => 'O limite disponível não é suficiente para esse crédito!',
+			'novoLimiteMenor' => 'Seu novo limite é menor que seus gastos!',
 
             'sucesso' => 'Comando executado com sucesso!',
 

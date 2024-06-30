@@ -161,7 +161,6 @@ if ($login -> VerificarLogin()) {
 									$quantidade++;
 									$fatura = 0;
 									$gastos = $valorFinal-> ObterDadosGastos($valorFinal-> getSessao(), $dadosCartoesCredito['id']);
-
 									$contador = 0;
 									if ($gastos)
 										foreach ($gastos as $ignored) {
@@ -220,7 +219,7 @@ if ($login -> VerificarLogin()) {
 											<td>
 												<button style="text-decoration: none; width: 4vh; height: 4vh;"
 												        class="text-primary bg-transparent rounded-circle border border-primary"
-												        name="bancoCorretoraId"
+												        name="id"
 												        value="<?= $dadosCartoesCredito['id'] ?>">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 													     fill="currentColor"
