@@ -11,7 +11,7 @@ if ($login -> VerificarLogin()) {
 
 	$formatacao = new FormatacaoDados();
 
-	if (isset($_GET['excluir']) and isset($_GET['bancoCorretora'])) {
+	if (isset($_GET['excluir']) and isset($_GET['id'])) {
 		require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirCartaoCredito.php";
 
 		$exluir = new ExcluirCartaoCredito();

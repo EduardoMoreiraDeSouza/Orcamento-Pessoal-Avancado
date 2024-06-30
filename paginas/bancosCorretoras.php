@@ -18,7 +18,7 @@ if ($login->VerificarLogin()) {
         require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirBancoCorretora.php";
 
         $exluir = new ExcluirBancoCorretora();
-        $exluir->ExcluirBancoCorretora($_GET['bancoCorretora'], $login->getSessao());
+        $exluir->ExcluirBancoCorretora($_GET['id'], $login->getSessao());
         $exluir->Redirecionar('bancosCorretoras', true);
     }
     ?>
@@ -150,9 +150,9 @@ if ($login->VerificarLogin()) {
                                 while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
 
                                     $quantidade++;
-                                    $valorFinal = new ValorFinal('bancoCorretora', $dadosBancosCorretoras['bancoCorretora'], $dataReferencia);
-                                    $saldo = $valorFinal->ValorFinal('bancoCorretora', $dadosBancosCorretoras['bancoCorretora'], $dataReferencia);
-                                    $saldoTotal += floatval($saldo);
+                                    $valorFinal = new ValorFinal('bancoCorretora', $dadosBancosCorretoras['id'], $dataReferencia);
+                                    $saldo = $valorFinal->ValorFinal('bancoCorretora', $dadosBancosCorretoras['id'], $dataReferencia);
+	                                $saldoTotal += floatval($saldo);
 
                                     ?>
 
@@ -173,7 +173,7 @@ if ($login->VerificarLogin()) {
 											<td>
 												<button style="text-decoration: none; width: 4vh; height: 4vh;"
 												        class="text-primary bg-transparent rounded-circle border border-primary"
-												        name="bancoCorretoraId"
+												        name="id"
 												        value="<?= $dadosBancosCorretoras['id'] ?>">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 													     fill="currentColor"

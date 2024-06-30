@@ -23,34 +23,35 @@ class EditarBancoCorretora extends Entrar
 
         if (
             !$this -> AlterarDadosBancosCorretoras(
+	            $this -> getId(),
                 $this -> getBancoCorretora(),
-                $this -> getId(),
                 0
             )
         )   
             return (bool)$this-> RetornarErro('pai', null);
 
-        if ($this-> getSaldo() > floatval($this-> ValorFinal('bancoCorretora', $this-> getBancoCorretora()))) {
+	    print "<script>alert('". $this-> getSaldo() > floatval($this-> ValorFinal('bancoCorretora', $this-> getId())) ."')</script>";
 
+        if ($this-> getSaldo() > floatval($this-> ValorFinal('bancoCorretora', $this-> getId()))) {
             if (!$this -> EntradaDadosReceita(
 				$this-> getId(),
                 $this -> getBancoCorretora(),
                 'correcaoSaldo',
                 date('Y-m-d'),
-                $this -> getSaldo() - floatval($this-> ValorFinal('bancoCorretora', $this-> getBancoCorretora())),
+                $this -> getSaldo() - floatval($this-> ValorFinal('bancoCorretora', $this-> getId())),
                 1
             ))
                 return (bool)$this -> RetornarErro('pai', null);
         }
 
-        elseif ($this-> getSaldo() < floatval($this-> ValorFinal('bancoCorretora', $this-> getBancoCorretora()))) {
+        elseif ($this-> getSaldo() < floatval($this-> ValorFinal('bancoCorretora', $this-> getId()))) {
             if (!$this -> EntradaDadosGastos(
 				$this-> getId(),
                 $this -> getBancoCorretora(),
                 'Débito',
                 'correcaoSaldo',
                 date('Y-m-d'),
-                floatval($this-> ValorFinal('bancoCorretora', $this-> getBancoCorretora())) - $this -> getSaldo(),
+                floatval($this-> ValorFinal('bancoCorretora', $this-> getId())) - $this -> getSaldo(),
                 1
             ))
                 return (bool)$this-> RetornarErro('pai', null);

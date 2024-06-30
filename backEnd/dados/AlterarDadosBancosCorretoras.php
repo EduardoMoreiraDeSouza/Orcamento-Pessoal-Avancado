@@ -4,7 +4,7 @@ require_once __DIR__ . "/./EntradaDadosBancosCorretoras.php";
 
 abstract class AlterarDadosBancosCorretoras extends EntradaDadosBancosCorretoras
 {
-    public function AlterarDadosBancosCorretoras($bancoCorretora, $id, $saldo)
+    public function AlterarDadosBancosCorretoras($id, $bancoCorretora, $saldo)
     {
         $this -> setCodigoMySql(
             "UPDATE dbName.bancosCorretoras SET

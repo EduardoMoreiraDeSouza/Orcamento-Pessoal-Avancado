@@ -29,7 +29,7 @@ class EditarReceita extends EditarGastos
         if ($this-> getValor() <= 0)
             return (bool)$this-> RetornarErro('pai', 'valorAbaixoZero');
 
-        if (!$this -> ObterDadosBancosCorretoras($this -> getBancoCorretora(), $this -> getSessao()))
+        if (!$this -> ObterDadosBancosCorretoras($this -> getId(), $this -> getSessao()))
             return (bool)$this-> RetornarErro('pai', 'naoBancoCorretora');
 
         if (!$this -> AlterarDadosReceita(
