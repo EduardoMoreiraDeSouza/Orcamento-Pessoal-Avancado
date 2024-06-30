@@ -5,7 +5,10 @@ $nomes_bancos_corretoras->setCodigoMySql("SELECT * FROM dbName.cartoesCredito WH
 $resultadoExecucao = $nomes_bancos_corretoras->ExecutarCodigoMySql();
 
 while ($dados_nomes_bancos_corretoras = mysqli_fetch_assoc($resultadoExecucao)) {
-    $nomeCartaoCredito = $dados_nomes_bancos_corretoras['bancoCorretora'];
+
+	require __DIR__ . "/../../../backEnd/dados/ObterDadosBancosCorretoras.php";
+	$bancoCorretora = new ObterDadosBancosCorretoras();
+	$nomeCartaoCredito = $bancoCorretora-> ObterDadosBancosCorretoras($dados_nomes_bancos_corretoras['id'])[0]['bancoCorretora'];
 
     ?>
 

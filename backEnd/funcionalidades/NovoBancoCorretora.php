@@ -12,19 +12,19 @@ class NovoBancoCorretora extends Formulario
         if (!$this-> VerificarLogin()) return false;
 
         $this -> setPaginaPai('bancosCorretoras');
-        $this -> setBancoCorretora($this -> bancoCorretora());
+        $this -> setBancoCorretoraId($this -> bancoCorretora());
         $this -> setSaldo($this -> saldo());
 
         if (
-            !$this-> getBancoCorretora()
+            !$this-> getBancoCorretoraId()
         )
             return (bool)$this-> RetornarErro('pai', null);
 
-        if ($this -> ObterDadosBancosCorretoras($this -> getBancoCorretora(), $this -> getSessao()))
+        if ($this -> ObterDadosBancosCorretoras($this -> getBancoCorretoraId(), $this -> getSessao()))
             return (bool)$this-> RetornarErro('pai', 'x2bancosCorretoras');
 
         if (!$this -> EntradaDadosBancosCorretoras(
-            $this -> getBancoCorretora(),
+            $this -> getBancoCorretoraId(),
             $this -> getSessao()
         ))
             return (bool)$this-> RetornarErro('pai', null);
@@ -36,7 +36,7 @@ class NovoBancoCorretora extends Formulario
 		if ($this-> getSaldo() != 0 and $bancos) {
 			$contador = 0;
 			foreach ($bancos as $ignored) {
-				if ($bancos[$contador]['bancoCorretora'] == $this -> getBancoCorretora())
+				if ($bancos[$contador]['bancoCorretora'] == $this -> getBancoCorretoraId())
 					$id = $bancos[$contador]['id'];
 				$contador++;
 			}
@@ -45,7 +45,7 @@ class NovoBancoCorretora extends Formulario
         if ($this-> getSaldo() > 0) {
             if (!$this -> EntradaDadosReceita(
 				$id,
-                $this -> getBancoCorretora(),
+                $this -> getBancoCorretoraId(),
                 'correcaoSaldo',
                 date('Y-m-d'),
                 $this -> getSaldo(),
@@ -57,7 +57,7 @@ class NovoBancoCorretora extends Formulario
         elseif ($this-> getSaldo() < 0) {
             if (!$this -> EntradaDadosGastos(
 				$id,
-                $this -> getBancoCorretora(),
+                $this -> getBancoCorretoraId(),
                 'Débito',
                 'correcaoSaldo',
                 date('Y-m-d'),
@@ -71,12 +71,12 @@ class NovoBancoCorretora extends Formulario
     }
 
 
-    protected function getBancoCorretora()
+    protected function getBancoCorretoraId()
     {
         return $this->bancoCorretora;
     }
 
-    protected function setBancoCorretora($bancoCorretora)
+    protected function setBancoCorretoraId($bancoCorretora)
     {
         $this->bancoCorretora = $bancoCorretora;
     }

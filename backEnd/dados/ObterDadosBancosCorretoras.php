@@ -2,7 +2,7 @@
 
 require_once __DIR__ . "/./EntradaDadosUsuarios.php";
 
-abstract class ObterDadosBancosCorretoras extends EntradaDadosUsuarios
+class ObterDadosBancosCorretoras extends EntradaDadosUsuarios
 {
 
     private $dados;

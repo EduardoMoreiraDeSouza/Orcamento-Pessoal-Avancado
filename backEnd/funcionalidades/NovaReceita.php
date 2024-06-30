@@ -27,7 +27,7 @@ class NovaReceita extends NovoDebito
         if ($this-> getValor() < 0)
             return (bool)$this-> RetornarErro('pai', 'valorAbaixoZero');
 
-        if (!$this -> ObterDadosBancosCorretoras($this -> getBancoCorretora(), $this -> getSessao()))
+        if (!$this -> ObterDadosBancosCorretoras($this -> getBancoCorretoraId(), $this -> getSessao()))
             return (bool)$this-> RetornarErro('pai', 'naoBancoCorretora');
 
         if (!$this -> EntradaDadosReceita(

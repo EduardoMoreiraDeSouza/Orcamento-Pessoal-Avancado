@@ -14,7 +14,7 @@ class EditarGastos extends NovoCredito
 
         $this->setPaginaPai('gastos');
         $this->setId($this->id());
-        $this->setBancoCorretora($this->bancoCorretora());
+        $this->setBancoCorretoraId($this->bancoCorretora());
         $this->setFormaPagamento($this->formaPagamento());
         $this->setClassificacao($this->classificacao());
         $this->setDataCompraPagamento($this->dataCompraPagamento());
@@ -23,7 +23,7 @@ class EditarGastos extends NovoCredito
 
         if (
             !$this->getId() or
-            !$this->getBancoCorretora() or
+            !$this->getBancoCorretoraId() or
             !$this->getFormaPagamento() or
             !$this->getClassificacao() or
             !$this->getDataCompraPagamento() or
@@ -42,14 +42,14 @@ class EditarGastos extends NovoCredito
 			if (!$this-> ObterDadosCartoesCredito($this-> getId(), $this-> getSessao()))
 				return (bool)$this->RetornarErro('pai', 'cartaoNaoExite');
             $valorAntigo = $this->ObterDadosGastos($this->getSessao(), $this->getId())[0]['valor'];
-            if (($this->ValorFinal('cartaoCredito', $this->getBancoCorretora()) + $valorAntigo) < $this->getValor() * $this->getParcelas())
+            if (($this->ValorFinal('cartaoCredito', $this->getBancoCorretoraId()) + $valorAntigo) < $this->getValor() * $this->getParcelas())
                 return (bool)$this->RetornarErro('pai', 'limiteInsuficiente');
         }
 
         if (!$this->AlterarDadosGastos(
             $this->getId(),
             $this->getFormaPagamento(),
-            $this->getBancoCorretora(),
+            $this->getBancoCorretoraId(),
             $this->getClassificacao(),
             $this->getValor(),
             $this->getDataCompraPagamento(),

@@ -76,6 +76,16 @@ abstract class Formulario extends ValorFinal
         return false;
     }
 
+	protected function bancoCorretoraId()
+	{
+		$this->setDados($this->fraseMaiuscula($this->fraseMinuscula(addslashes($_POST['bancoCorretoraId']))));
+
+		if ($this->dadosDefinidos())
+			return $this->getDados();
+
+		return false;
+	}
+
     protected function valor()
     {
         $this->setDados(addslashes($_POST['valor']));

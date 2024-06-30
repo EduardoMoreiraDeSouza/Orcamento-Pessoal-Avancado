@@ -41,19 +41,18 @@ function criarBancoDados()
 
     $codigoMySql = "CREATE TABLE cartoesCredito(
        
-    	id INT AUTO_INCREMENT,    
-    	bancoCorretora VARCHAR(60),
+    	id_bancoCorretora INT NOT NULL,    
         email VARCHAR(60) NOT NULL,
         limite DECIMAL(12, 2) NULL,
         fechamento INT(2),
         vencimento INT(2),
         
-        CONSTRAINT PK_id_cartoesCredito PRIMARY KEY (id),
+        CONSTRAINT PK_id_cartoesCredito PRIMARY KEY (id_bancoCorretora),
         
         CONSTRAINT FK_email_cartoesCredito FOREIGN KEY (email)
         REFERENCES usuarios(email) ON DELETE CASCADE ON UPDATE CASCADE,
         
-        CONSTRAINT FK_id_cartoesCredito FOREIGN KEY (id)
+        CONSTRAINT FK_id_cartoesCredito FOREIGN KEY (id_bancoCorretora)
         REFERENCES bancosCorretoras(id) ON DELETE CASCADE ON UPDATE CASCADE
     
     ) DEFAULT CHARSET = utf8;";
@@ -61,19 +60,21 @@ function criarBancoDados()
 
     $codigoMySql = "CREATE TABLE gastos(
     
-        id INT AUTO_INCREMENT,
+    	id_gasto INT AUTO_INCREMENT NOT NULL,
+        id_bancoCorretora INT NOT NULL,
         email VARCHAR(60) NOT NULL,
         formaPagamento VARCHAR(7) NOT NULL,
-        bancoCorretora VARCHAR(60) NOT NULL,
         classificacao VARCHAR(13) NOT NULL,
         valor DECIMAL(12, 2) NULL,
         parcelas INT(4),
         dataCompraPagamento DATE,
     
+    	CONSTRAINT PK_id_gastos PRIMARY KEY (id_gasto), 
+    
         CONSTRAINT FK_email_gastos FOREIGN KEY (email)
         REFERENCES usuarios(email) ON DELETE CASCADE ON UPDATE CASCADE,
         
-        CONSTRAINT FK_id_gastos FOREIGN KEY (id)
+        CONSTRAINT FK_id_gastos FOREIGN KEY (id_bancoCorretora)
         REFERENCES bancosCorretoras(id) ON DELETE CASCADE ON UPDATE CASCADE 
     
     ) DEFAULT CHARSET = utf8;";
@@ -81,18 +82,20 @@ function criarBancoDados()
 
     $codigoMySql = "CREATE TABLE receitas(
     
-        id INT AUTO_INCREMENT,
+    	id_receitas INT AUTO_INCREMENT NOT NULL,    
+    	id_bancoCorretora INT NOT NULL,
         email VARCHAR(60) NOT NULL,
-        bancoCorretora VARCHAR(60) NOT NULL,
         classificacao VARCHAR(15) NOT NULL,
         valor DECIMAL(12, 2) NULL,
         parcelas INT(4),
         dataCompraPagamento DATE,
         
+        CONSTRAINT PK_id_receitas_cartoesCredito PRIMARY KEY (id_receitas),
+        
         CONSTRAINT FK_email_receitas FOREIGN KEY (email)
         REFERENCES usuarios(email) ON DELETE CASCADE ON UPDATE CASCADE,
         
-        CONSTRAINT FK_bancoCorretora_receitas FOREIGN KEY (id)
+        CONSTRAINT FK_bancoCorretora_receitas FOREIGN KEY (id_bancoCorretora)
         REFERENCES bancosCorretoras(id) ON DELETE CASCADE ON UPDATE CASCADE 
                      
     ) DEFAULT CHARSET = utf8;";

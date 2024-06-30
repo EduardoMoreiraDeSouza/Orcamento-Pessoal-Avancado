@@ -4,16 +4,16 @@ require_once __DIR__ . "/./EntradaDadosReceita.php";
 
 class AlterarDadosReceita extends EntradaDadosReceita
 {
-    public function AlterarDadosReceita($id, $bancoCorretora, $classificacao, $valor, $parcelas, $dataCompraPagamento)
+    public function AlterarDadosReceita($id_receita, $id_bancoCorretora, $classificacao, $valor, $parcelas, $dataCompraPagamento)
     {
         $this->setCodigoMySql(
             "UPDATE dbName.receitas SET
-                bancoCorretora = '$bancoCorretora',
+                id_bancoCorretora = '$id_bancoCorretora',
                 classificacao = '$classificacao',
                 valor = '$valor',
                 parcelas = '$parcelas',
                 dataCompraPagamento = '$dataCompraPagamento'
-            WHERE id LIKE '$id' AND email LIKE '".$this-> getSessao()."';"
+            WHERE id_receita LIKE '$id_receita' AND email LIKE '".$this-> getSessao()."';"
         );
 
         return (bool)$this-> ExecutarCodigoMySql();

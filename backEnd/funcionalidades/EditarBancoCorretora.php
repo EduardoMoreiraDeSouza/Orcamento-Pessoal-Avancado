@@ -11,11 +11,11 @@ class EditarBancoCorretora extends Entrar
 
         $this -> setPaginaPai('bancosCorretoras');
         $this -> setId($this -> id());
-        $this -> setBancoCorretora($this -> bancoCorretora());
+        $this -> setBancoCorretoraId($this -> bancoCorretora());
         $this -> setSaldo($this -> saldo());
 
         if (
-            !$this -> getBancoCorretora() or
+            !$this -> getBancoCorretoraId() or
             !$this -> getId() or
             !$this -> getSaldo()
         )
@@ -24,7 +24,7 @@ class EditarBancoCorretora extends Entrar
         if (
             !$this -> AlterarDadosBancosCorretoras(
 	            $this -> getId(),
-                $this -> getBancoCorretora(),
+                $this -> getBancoCorretoraId(),
                 0
             )
         )   
@@ -35,7 +35,7 @@ class EditarBancoCorretora extends Entrar
         if ($this-> getSaldo() > floatval($this-> ValorFinal('bancoCorretora', $this-> getId()))) {
             if (!$this -> EntradaDadosReceita(
 				$this-> getId(),
-                $this -> getBancoCorretora(),
+                $this -> getBancoCorretoraId(),
                 'correcaoSaldo',
                 date('Y-m-d'),
                 $this -> getSaldo() - floatval($this-> ValorFinal('bancoCorretora', $this-> getId())),
@@ -47,7 +47,7 @@ class EditarBancoCorretora extends Entrar
         elseif ($this-> getSaldo() < floatval($this-> ValorFinal('bancoCorretora', $this-> getId()))) {
             if (!$this -> EntradaDadosGastos(
 				$this-> getId(),
-                $this -> getBancoCorretora(),
+                $this -> getBancoCorretoraId(),
                 'Débito',
                 'correcaoSaldo',
                 date('Y-m-d'),

@@ -10,13 +10,12 @@ class EditarCartaoCredito extends EditarBancoCorretora
 
 		$this -> setPaginaPai('credito');
 		$this -> setId($this -> id());
-		$this -> setBancoCorretora($this -> bancoCorretora());
 		$this -> setLimite($this -> valor());
 		$this -> setFechamento($this -> fechamento());
 		$this -> setVencimento($this -> vencimento());
 
 		if (
-			!$this -> getBancoCorretora() or
+			!$this -> getId() or
 			!$this -> getLimite() or
 			!$this -> getFechamento() or
 			!$this -> getVencimento()
@@ -32,8 +31,6 @@ class EditarCartaoCredito extends EditarBancoCorretora
 		elseif (
 			!$this -> AlterarDadosCartoesCredito(
 				$this -> getId(),
-				$this -> getBancoCorretora(),
-				$this -> getSessao(),
 				$this -> getLimite(),
 				$this -> getFechamento(),
 				$this -> getVencimento()
