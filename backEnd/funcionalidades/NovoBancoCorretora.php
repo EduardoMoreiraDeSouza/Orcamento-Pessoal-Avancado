@@ -21,8 +21,15 @@ class NovoBancoCorretora extends Formulario
 		)
 			return (bool) $this -> RetornarErro('pai', null);
 
-		if ($this -> ObterDadosBancosCorretoras($this -> getBancoCorretora(), $this -> getSessao()))
-			return (bool) $this -> RetornarErro('pai', 'x2bancosCorretoras');
+		$id_bancoCorretora = 0;
+
+		if ($bancos = $this -> ObterDadosBancosCorretoras(null, $this -> getSessao())) {
+			$contador = 0;
+			foreach ($bancos as $ignored) {
+				if ($bancos[$contador]['bancoCorretora'] == $this -> getBancoCorretora())
+					return (bool) $this -> RetornarErro('pai', 'x2bancosCorretoras');
+			}
+		}
 
 		if (
 			!$this -> EntradaDadosBancosCorretoras(
@@ -31,11 +38,7 @@ class NovoBancoCorretora extends Formulario
 		)
 			return (bool) $this -> RetornarErro('pai', null);
 
-		$this -> timezone();
-		$id_bancoCorretora = 0;
-
-		$bancos = $this -> ObterDadosBancosCorretoras(null, $this -> getSessao());
-		if ($this -> getSaldo() != 0 and $bancos) {
+		if ($this -> getSaldo() != 0 and $bancos = $this -> ObterDadosBancosCorretoras(null, $this -> getSessao())) {
 			$contador = 0;
 			foreach ($bancos as $ignored) {
 				if ($bancos[$contador]['bancoCorretora'] == $this -> getBancoCorretora())
@@ -43,6 +46,8 @@ class NovoBancoCorretora extends Formulario
 				$contador++;
 			}
 		}
+
+		$this -> timezone();
 
 		if ($this -> getSaldo() > 0) {
 			if (
