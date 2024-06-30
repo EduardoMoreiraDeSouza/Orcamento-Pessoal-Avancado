@@ -149,21 +149,33 @@ if ($login -> VerificarLogin()) {
 								$execucao = new ExecucaoCodigoMySql();
 								$execucao -> setCodigoMySql("SELECT * FROM dbName.cartoesCredito WHERE email LIKE '" . $login -> getSessao() . "' " . $_SESSION['codigo_variante'] . ";");
 								$resultadoExecucao = $execucao -> ExecutarCodigoMySql();
-
+								$dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> ultimoDiaMes($_SESSION['mes_referencia'], $_SESSION['ano_referencia']);
 								$quantidade = 0;
 								$limiteTotal = 0;
-
-								$dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> ultimoDiaMes($_SESSION['mes_referencia'], $_SESSION['ano_referencia']);
+								$faturaTotal = 0;
 
 								while ($dadosCartoesCredito = mysqli_fetch_assoc($resultadoExecucao)) {
 
 									$valorFinal = new ValorFinal('cartaoCredito', $dadosCartoesCredito['bancoCorretora'], $dataReferencia);
 
 									$quantidade++;
-									$limite = floatval($valorFinal -> ValorFinal('cartaoCredito', $dadosCartoesCredito['bancoCorretora'], $dataReferencia));
-									$limiteTotal += $limite;
+									$fatura = 0;
+									$gastos = $valorFinal-> ObterDadosGastos($valorFinal-> getSessao(), null, $dadosCartoesCredito['bancoCorretora']);
 
-									$fatura =
+									$contador = 0;
+									if ($gastos)
+										foreach ($gastos as $ignored) {
+											$parcelasPagas = $valorFinal -> parcelasPagasCredito($gastos[$contador], $dataReferencia);
+
+											if ($parcelasPagas <= $gastos[$contador]['parcelas'] and $parcelasPagas > 0)
+												$fatura += $gastos[$contador]['valor'];
+											$contador++;
+										}
+
+									$limite = floatval($valorFinal -> ValorFinal('cartaoCredito', $dadosCartoesCredito['bancoCorretora'], $dataReferencia)) - $fatura;
+									$limiteTotal += $limite;
+									$faturaTotal += $fatura;
+
 									?>
 
 									<form action="../backEnd/InteracaoFront/editarCartaoCredito.php" method="POST">
@@ -236,6 +248,7 @@ if ($login -> VerificarLogin()) {
 								<td>Total</td>
 								<td></td>
 								<td>R$ <?= $formatacao -> formatarValor($limiteTotal) ?></td>
+								<td>R$ <?= $formatacao -> formatarValor($faturaTotal) ?></td>
 								<td></td>
 								<td></td>
 								<td></td>

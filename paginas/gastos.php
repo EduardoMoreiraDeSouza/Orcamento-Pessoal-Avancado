@@ -143,6 +143,9 @@ if ($login -> VerificarLogin()) {
 									</tr>
 								</form>
 
+								<h5 class="text-center text-sm-center">Gastos no crédito serão colocados no mês referente à fatura!</h5>
+
+
 								<?php
 
 								$execucao = new ExecucaoCodigoMySql();
