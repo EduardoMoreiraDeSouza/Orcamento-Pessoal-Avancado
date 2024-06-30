@@ -167,9 +167,11 @@ if ($login -> VerificarLogin()) {
 
 									$quantidade++;
 									$fatura = 0;
+
 									$gastos = $valorFinal -> ObterDadosGastos(
-										$valorFinal -> getSessao(), $dadosCartoesCredito['id_bancoCorretora']
+										$valorFinal -> getSessao(), null, $dadosCartoesCredito['id_bancoCorretora']
 									);
+
 									$contador = 0;
 									if ($gastos)
 										foreach ($gastos as $ignored) {
@@ -190,7 +192,8 @@ if ($login -> VerificarLogin()) {
 												'cartaoCredito', $dadosCartoesCredito['id_bancoCorretora'],
 												$dataReferencia
 											)
-										) - $fatura;
+										) ;
+
 									$limiteTotal += $limite;
 									$faturaTotal += $fatura;
 
