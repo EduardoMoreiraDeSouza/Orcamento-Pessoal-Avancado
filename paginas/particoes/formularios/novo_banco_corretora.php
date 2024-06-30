@@ -18,7 +18,7 @@
                     <input type="text" class="container input-group-text" name="bancoCorretora"
                            placeholder="Nome:"
                            required>
-                    <input type="number" class="container input-group-text" name="saldo"
+                    <input type="text" class="container input-group-text" name="saldo"
                            placeholder="Saldo:" step="0.01">
 
                     <input type="submit" class="container btn btn-dark" value="Criar">

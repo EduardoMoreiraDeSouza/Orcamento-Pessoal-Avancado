@@ -9,14 +9,14 @@ class NovaReceita extends NovoDebito
         if (!$this-> VerificarLogin()) return false;
 
         $this -> setPaginaPai('receitas');
-        $this -> setBancoCorretora($this -> bancoCorretora());
+        $this -> setId($this -> id());
         $this -> setClassificacao($this -> classificacao());
         $this -> setDataCompraPagamento($this -> dataCompraPagamento());
         $this -> setValor($this -> valor());
         $this -> setParcelas($this -> parcelas());
 
         if (
-            !$this -> getBancoCorretora() or
+            !$this -> getId() or
             !$this -> getClassificacao() or
             !$this -> getDataCompraPagamento() or
             !$this -> getValor() or
@@ -31,7 +31,8 @@ class NovaReceita extends NovoDebito
             return (bool)$this-> RetornarErro('pai', 'naoBancoCorretora');
 
         if (!$this -> EntradaDadosReceita(
-            $this -> getBancoCorretora(),
+            $this-> getId(),
+			$this-> ObterDadosBancosCorretoras($this-> getId(), $this-> getSessao())['bancoCorretora'],
             $this -> getClassificacao(),
             $this -> getDataCompraPagamento(),
             $this -> getValor(),

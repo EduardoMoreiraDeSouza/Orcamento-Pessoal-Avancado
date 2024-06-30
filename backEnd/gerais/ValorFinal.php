@@ -11,7 +11,11 @@ class ValorFinal extends FormatacaoDados
 
         if ($tipo == 'cartaoCredito') {
 
-            $limiteTotal = $this->ObterDadosCartoesCredito($entidade, $this->getSessao())['limite'];
+	        $dadosCartao = $this->ObterDadosCartoesCredito($entidade, $this->getSessao());
+	        if (!$dadosCartao)
+		        return false;
+
+            $limiteTotal = $dadosCartao['limite'];
             $gastosCreditoTotal = 0;
             $gastos = $this->ObterDadosGastos($this->getSessao());
             $gastoAtual = 0;
@@ -71,7 +75,10 @@ class ValorFinal extends FormatacaoDados
 
     public function parcelasPagasCredito($gasto, $dataReferencia = null)
     {
-        $dadosCartao = $this->ObterDadosCartoesCredito($gasto['bancoCorretora'], $this->getSessao());
+        $dadosCartao = $this->ObterDadosCartoesCredito($gasto['id'], $this->getSessao());
+
+		if (!$dadosCartao)
+			return false;
 
         $mesPagamento = intval($this->InformacoesData('m', $gasto['dataCompraPagamento']));
         $anoPagamento = intval($this->InformacoesData('y', $gasto['dataCompraPagamento']));

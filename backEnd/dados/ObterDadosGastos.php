@@ -6,33 +6,25 @@ class ObterDadosGastos extends AlterarDadosCartoesCredito
 {
     private $dados;
 
-    public function ObterDadosGastos($email, $id = null, $bancoCorretora = null)
+    public function ObterDadosGastos($email, $id = null)
     {
-	    $this -> gerarCodigoMySql($email, $id, $bancoCorretora);
+	    $this -> gerarCodigoMySql($email, $id);
 
         $this -> setDados($this -> CarregarResultadosMySql(true));
 
         return !empty($this -> getDados()) ? $this -> getDados() : false;
     }
 
-	private function gerarCodigoMySql($email, $id, $bancoCorretora): void
+	private function gerarCodigoMySql($email, $id): void
 	{
 		$codigo = "SELECT * FROM dbName.gastos WHERE ";
 
-		if ($id != null and $bancoCorretora != null and $email != null)
-			$codigoVariante = "id LIKE '$id' AND bancoCorretora LIKE '$bancoCorretora' AND email LIKE '$email';";
-		elseif ($id != null and $bancoCorretora == null and $email == null)
+		if ($id != null and $email == null)
 			$codigoVariante = "id LIKE '$id';";
-		elseif ($id == null and $bancoCorretora != null and $email == null)
-			$codigoVariante = "bancoCorretora LIKE '$bancoCorretora';";
-		elseif ($id == null and $bancoCorretora == null and $email != null)
+		elseif ($id == null and $email != null)
 			$codigoVariante = "email LIKE '$email';";
-		elseif ($id != null and $bancoCorretora != null and $email == null)
-			$codigoVariante = "id LIKE '$id' AND bancoCorretora LIKE '$bancoCorretora';";
-		elseif ($id != null and $bancoCorretora == null and $email != null)
+		elseif ($id != null and $email != null)
 			$codigoVariante = "id LIKE '$id' AND email LIKE '$email';";
-		elseif ($id == null and $bancoCorretora != null and $email != null)
-			$codigoVariante = "bancoCorretora LIKE '$bancoCorretora' AND email LIKE '$email';";
 
 		$this -> setCodigoMySql($codigo . $codigoVariante);
 	}

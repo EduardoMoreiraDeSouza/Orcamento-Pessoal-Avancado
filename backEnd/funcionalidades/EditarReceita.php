@@ -9,7 +9,7 @@ class EditarReceita extends EditarGastos
         if (!$this-> VerificarLogin()) return false;
 
         $this -> setPaginaPai('receitas');
-        $this -> setId($this-> bancoCorretoraId());
+        $this -> setId($this-> id());
         $this -> setBancoCorretora($this -> bancoCorretora());
         $this -> setClassificacao($this -> classificacao());
         $this -> setDataCompraPagamento($this -> dataCompraPagamento());

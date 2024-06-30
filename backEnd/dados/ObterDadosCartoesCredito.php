@@ -6,26 +6,26 @@ abstract class ObterDadosCartoesCredito extends AlterarDadosBancosCorretoras
 {
     private $dados;
 
-    public function ObterDadosCartoesCredito($bancoCorretora, $email)
+    public function ObterDadosCartoesCredito($id, $email)
     {
-        if ($bancoCorretora == null and $email == null)
+        if ($id == null and $email == null)
             return false;
 
-        $this -> gerarCodigoMySql($bancoCorretora, $email);
+        $this -> gerarCodigoMySql($id, $email);
         $this -> setDados($this -> CarregarResultadosMySql());
 
         return !empty($this -> getDados()) ? $this -> getDados() : false;
     }
 
-    private function gerarCodigoMySql($bancoCorretora, $email): void
+    private function gerarCodigoMySql($id, $email): void
     {
         $codigo = "SELECT * FROM dbName.cartoesCredito WHERE ";
 
-        if ($bancoCorretora != null and $email != null)
-            $codigoVariante = "bancoCorretora LIKE '$bancoCorretora' AND email LIKE '$email';";
-        elseif ($bancoCorretora != null and $email == null)
-            $codigoVariante = "bancoCorretora LIKE '$bancoCorretora';";
-        elseif ($bancoCorretora == null and $email != null)
+        if ($id != null and $email != null)
+            $codigoVariante = "id LIKE '$id' AND email LIKE '$email';";
+        elseif ($id != null and $email == null)
+            $codigoVariante = "id LIKE '$id';";
+        elseif ($id == null and $email != null)
             $codigoVariante = "email LIKE '$email';";
 
         $this -> setCodigoMySql($codigo . $codigoVariante);

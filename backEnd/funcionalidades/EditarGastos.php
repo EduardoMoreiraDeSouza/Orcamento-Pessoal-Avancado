@@ -35,10 +35,12 @@ class EditarGastos extends NovoCredito
         if ($this->getValor() <= 0)
             $this->setValor($this->getValor() * -1);
 
-        if (!$this->ObterDadosBancosCorretoras($this->getBancoCorretora(), $this->getSessao()))
+        if (!$this->ObterDadosBancosCorretoras($this->getId(), $this->getSessao()))
             return (bool)$this->RetornarErro('pai', 'naoBancoCorretora');
 
         if ($this-> getFormaPagamento() == "Crédito") {
+			if (!$this-> ObterDadosCartoesCredito($this-> getId(), $this-> getSessao()))
+				return (bool)$this->RetornarErro('pai', 'cartaoNaoExite');
             $valorAntigo = $this->ObterDadosGastos($this->getSessao(), $this->getId())[0]['valor'];
             if (($this->ValorFinal('cartaoCredito', $this->getBancoCorretora()) + $valorAntigo) < $this->getValor() * $this->getParcelas())
                 return (bool)$this->RetornarErro('pai', 'limiteInsuficiente');

@@ -15,7 +15,7 @@ if ($login -> VerificarLogin()) {
 		require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirCartaoCredito.php";
 
 		$exluir = new ExcluirCartaoCredito();
-		$exluir -> ExcluirCartaoCredito($_GET['bancoCorretora'], $login -> getSessao());
+		$exluir -> ExcluirCartaoCredito($_GET['id'], $login -> getSessao());
 		$exluir -> Redirecionar('credito', true);
 	}
 
@@ -156,11 +156,11 @@ if ($login -> VerificarLogin()) {
 
 								while ($dadosCartoesCredito = mysqli_fetch_assoc($resultadoExecucao)) {
 
-									$valorFinal = new ValorFinal('cartaoCredito', $dadosCartoesCredito['bancoCorretora'], $dataReferencia);
+									$valorFinal = new ValorFinal('cartaoCredito', $dadosCartoesCredito['id'], $dataReferencia);
 
 									$quantidade++;
 									$fatura = 0;
-									$gastos = $valorFinal-> ObterDadosGastos($valorFinal-> getSessao(), null, $dadosCartoesCredito['bancoCorretora']);
+									$gastos = $valorFinal-> ObterDadosGastos($valorFinal-> getSessao(), $dadosCartoesCredito['id']);
 
 									$contador = 0;
 									if ($gastos)
@@ -218,7 +218,7 @@ if ($login -> VerificarLogin()) {
 												<button style="text-decoration: none; width: 4vh; height: 4vh;"
 												        class="text-primary bg-transparent rounded-circle border border-primary"
 												        name="bancoCorretoraId"
-												        value="<?= $dadosCartoesCredito['bancoCorretora'] ?>">
+												        value="<?= $dadosCartoesCredito['id'] ?>">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 													     fill="currentColor"
 													     class="bi bi-pen" viewBox="0 0 16 16">
@@ -226,7 +226,7 @@ if ($login -> VerificarLogin()) {
 													</svg>
 												</button>
 
-												<a href="?excluir=true&bancoCorretora=<?= $dadosCartoesCredito['bancoCorretora'] ?>"
+												<a href="?excluir=true&id=<?= $dadosCartoesCredito['id'] ?>"
 												   style="text-decoration: none; margin-left: 0.8vh; width: 4vh; height: 4vh;"
 												   class="text-danger rounded-circle border border-danger">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"

@@ -14,7 +14,7 @@ if ($login->VerificarLogin()) {
 
     $execucao->timezone();
 
-    if (isset($_GET['excluir']) and isset($_GET['bancoCorretora'])) {
+    if (isset($_GET['excluir']) and isset($_GET['id'])) {
         require_once __DIR__ . "/../backEnd/funcionalidades/ExcluirBancoCorretora.php";
 
         $exluir = new ExcluirBancoCorretora();
@@ -150,8 +150,6 @@ if ($login->VerificarLogin()) {
                                 while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
 
                                     $quantidade++;
-                                    $bancoCorretora = $dadosBancosCorretoras['bancoCorretora'];
-
                                     $valorFinal = new ValorFinal('bancoCorretora', $dadosBancosCorretoras['bancoCorretora'], $dataReferencia);
                                     $saldo = $valorFinal->ValorFinal('bancoCorretora', $dadosBancosCorretoras['bancoCorretora'], $dataReferencia);
                                     $saldoTotal += floatval($saldo);
@@ -165,7 +163,7 @@ if ($login->VerificarLogin()) {
 												<input type="text" class="container input-group-text"
 												       name="bancoCorretora"
 												       placeholder="Nome:"
-												       value="<?= $bancoCorretora ?>" required>
+												       value="<?= $dadosBancosCorretoras['bancoCorretora'] ?>" required>
 											</td>
 											<td>
 												<input type="text" class="container input-group-text" name="saldo"
@@ -176,7 +174,7 @@ if ($login->VerificarLogin()) {
 												<button style="text-decoration: none; width: 4vh; height: 4vh;"
 												        class="text-primary bg-transparent rounded-circle border border-primary"
 												        name="bancoCorretoraId"
-												        value="<?= $bancoCorretora ?>">
+												        value="<?= $dadosBancosCorretoras['id'] ?>">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 													     fill="currentColor"
 													     class="bi bi-pen" viewBox="0 0 16 16">
@@ -184,7 +182,7 @@ if ($login->VerificarLogin()) {
 													</svg>
 												</button>
 
-												<a href="?excluir=true&bancoCorretora=<?= $bancoCorretora ?>"
+												<a href="?excluir=true&id=<?= $dadosBancosCorretoras['id'] ?>"
 												   style="text-decoration: none; margin-left: 0.8vh; width: 4vh; height: 4vh;"
 												   class="text-danger rounded-circle border border-danger">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"

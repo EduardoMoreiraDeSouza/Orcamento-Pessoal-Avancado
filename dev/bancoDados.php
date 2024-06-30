@@ -26,11 +26,12 @@ function criarBancoDados()
 
     $codigoMySql = "CREATE TABLE bancosCorretoras(
        
+    	id INT AUTO_INCREMENT,
         bancoCorretora VARCHAR(60),
         email VARCHAR(60) NOT NULL,
         saldo DECIMAL(12, 2) NULL,
         
-        CONSTRAINT PK_bancoCorretora_bancoCorretoras PRIMARY KEY (bancoCorretora),
+        CONSTRAINT PK_id_bancoCorretoras PRIMARY KEY (id),
         
         CONSTRAINT FK_email_bancoCorretoras FOREIGN KEY (email)
         REFERENCES usuarios(email) on DELETE CASCADE ON UPDATE CASCADE
@@ -40,27 +41,28 @@ function criarBancoDados()
 
     $codigoMySql = "CREATE TABLE cartoesCredito(
        
-        bancoCorretora VARCHAR(60),
+    	id INT AUTO_INCREMENT,    
+    	bancoCorretora VARCHAR(60),
         email VARCHAR(60) NOT NULL,
         limite DECIMAL(12, 2) NULL,
         fechamento INT(2),
         vencimento INT(2),
         
-        CONSTRAINT PK_bancoCorretora_cartoesCredito PRIMARY KEY (bancoCorretora),
+        CONSTRAINT PK_id_cartoesCredito PRIMARY KEY (id),
         
         CONSTRAINT FK_email_cartoesCredito FOREIGN KEY (email)
         REFERENCES usuarios(email) ON DELETE CASCADE ON UPDATE CASCADE,
         
-        CONSTRAINT FK_bancoCorretora_cartoesCredito FOREIGN KEY (bancoCorretora)
-        REFERENCES bancosCorretoras(bancoCorretora) ON DELETE CASCADE ON UPDATE CASCADE
+        CONSTRAINT FK_id_cartoesCredito FOREIGN KEY (id)
+        REFERENCES bancosCorretoras(id) ON DELETE CASCADE ON UPDATE CASCADE
     
     ) DEFAULT CHARSET = utf8;";
     mysqli_query($conexaoDB, $codigoMySql);
 
     $codigoMySql = "CREATE TABLE gastos(
     
-        email VARCHAR(60) NOT NULL,
         id INT AUTO_INCREMENT,
+        email VARCHAR(60) NOT NULL,
         formaPagamento VARCHAR(7) NOT NULL,
         bancoCorretora VARCHAR(60) NOT NULL,
         classificacao VARCHAR(13) NOT NULL,
@@ -68,33 +70,30 @@ function criarBancoDados()
         parcelas INT(4),
         dataCompraPagamento DATE,
     
-        CONSTRAINT PK_id_gastos PRIMARY KEY (id),
         CONSTRAINT FK_email_gastos FOREIGN KEY (email)
         REFERENCES usuarios(email) ON DELETE CASCADE ON UPDATE CASCADE,
         
-        CONSTRAINT FK_bancoCorretora_gastos FOREIGN KEY (bancoCorretora)
-        REFERENCES bancosCorretoras(bancoCorretora) ON DELETE CASCADE ON UPDATE CASCADE 
+        CONSTRAINT FK_id_gastos FOREIGN KEY (id)
+        REFERENCES bancosCorretoras(id) ON DELETE CASCADE ON UPDATE CASCADE 
     
     ) DEFAULT CHARSET = utf8;";
     mysqli_query($conexaoDB, $codigoMySql);
 
     $codigoMySql = "CREATE TABLE receitas(
     
-        email VARCHAR(60) NOT NULL,
         id INT AUTO_INCREMENT,
+        email VARCHAR(60) NOT NULL,
         bancoCorretora VARCHAR(60) NOT NULL,
         classificacao VARCHAR(15) NOT NULL,
         valor DECIMAL(12, 2) NULL,
         parcelas INT(4),
         dataCompraPagamento DATE,
         
-        CONSTRAINT PK_id_receitas PRIMARY KEY (id),
-        
         CONSTRAINT FK_email_receitas FOREIGN KEY (email)
         REFERENCES usuarios(email) ON DELETE CASCADE ON UPDATE CASCADE,
         
-        CONSTRAINT FK_bancoCorretora_receitas FOREIGN KEY (bancoCorretora)
-        REFERENCES bancosCorretoras(bancoCorretora) ON DELETE CASCADE ON UPDATE CASCADE 
+        CONSTRAINT FK_bancoCorretora_receitas FOREIGN KEY (id)
+        REFERENCES bancosCorretoras(id) ON DELETE CASCADE ON UPDATE CASCADE 
                      
     ) DEFAULT CHARSET = utf8;";
     mysqli_query($conexaoDB, $codigoMySql);

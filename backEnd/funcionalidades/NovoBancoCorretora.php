@@ -33,6 +33,7 @@ class NovoBancoCorretora extends Formulario
 
         if ($this-> getSaldo() > 0) {
             if (!$this -> EntradaDadosReceita(
+				'',
                 $this -> getBancoCorretora(),
                 'correcaoSaldo',
                 date('Y-m-d'),

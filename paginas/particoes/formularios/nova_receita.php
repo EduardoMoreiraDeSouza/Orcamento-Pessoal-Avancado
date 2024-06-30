@@ -21,7 +21,7 @@
                 <form action="../backEnd/InteracaoFront/novaReceita.php" method="POST"
                       class="form hstack gap-3">
 
-	                <select class="form-select" name="bancoCorretora" required>
+	                <select class="form-select" name="id" required>
 		                <option value="" selected>Banco | Corretora</option>
                         <?php include(__DIR__ . '/../loops/nomes_bancos_corretoras.php') ?>
 	                </select>

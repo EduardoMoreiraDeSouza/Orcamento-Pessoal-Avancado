@@ -23,11 +23,12 @@ abstract class Mensagens extends ScriptJS
             'entrar' => 'Para continuar é nescessário entrar com seu Email!',
 
             'cadastrar' => 'Você não está cadastrado em nosso sistema!',
-            'cadastro' => 'Agora você está cadastrado em nosso sitema!',
+            'cadastro' => 'Agora você está cadastrado em nosso sistema!',
 
             'x2bancosCorretoras' => 'Este Banco/Corretora já está cadastrado!',
             'x2cartoesCredito' => 'Já existe um cartão de crédito com esse bancoCorretora!',
             'x2email' => 'Este Email já está cadastrado!',
+	        'cartaoNaoExite' => 'Não exite cartão de crédito para esse banco/corretora!',
 
             'naoBancoCorretora' => 'O banco/corretora selecionado não existe!',
             'saldoInsuficiente' => 'O saldo disponível não é suficiente para debitar o valor!',
