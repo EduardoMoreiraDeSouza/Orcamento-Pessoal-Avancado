@@ -51,31 +51,37 @@ class ValorFinal extends FormatacaoDados
 			$gastos = $this -> ObterDadosGastos($this -> getSessao());
 			$gastoAtual = 0;
 
-			if ($gastos)
+			if ($gastos) {
 				foreach ($gastos as $ignored) {
-					if ($gastos[$gastoAtual]['id_bancoCorretora'] == $id)
+					if ($gastos[$gastoAtual]['id_bancoCorretora'] == $id) {
 						if ($gastos[$gastoAtual]['formaPagamento'] == 'Débito') {
 							$parcelasDebitadas = $this -> parcelasDebitadas($gastos[$gastoAtual], $dataReferencia);
 							if ($parcelasDebitadas > $gastos[$gastoAtual]['parcelas'])
 								$parcelasDebitadas = $gastos[$gastoAtual]['parcelas'];
+
 							$gastosDebitoTotal += $gastos[$gastoAtual]['valor'] * $parcelasDebitadas;
 						}
+					}
 					$gastoAtual++;
 				}
+			}
 
 			$receitaTotal = 0;
 			$receita = $this -> ObterDadosReceita($this -> getSessao());
 			$receitaAtual = 0;
 
-			if ($receita)
+			if ($receita) {
 				foreach ($receita as $ignored) {
-					if ($receita[$receitaAtual]['id_bancoCorretora'] == $id)
-						$receitaTotal += $receita[$receitaAtual]['valor'] * $this -> parcelasRecebidas(
-								$receita[$receitaAtual], $dataReferencia
-							);
+					if ($receita[$receitaAtual]['id_bancoCorretora'] == $id) {
+						$parcelasRecebidas = $this -> parcelasRecebidas($receita[$receitaAtual], $dataReferencia);
+						if ($parcelasRecebidas > $receita[$receitaAtual]['parcelas'])
+							$parcelasRecebidas = $receita[$receitaAtual]['parcelas'];
 
+						$receitaTotal += $receita[$receitaAtual]['valor'] * $parcelasRecebidas;
+					}
 					$receitaAtual++;
 				}
+			}
 
 			$saldoFinal = $receitaTotal - $gastosDebitoTotal;
 
@@ -103,7 +109,7 @@ class ValorFinal extends FormatacaoDados
 		$diaPagamento = intval($this -> InformacoesData('d', $gasto['dataCompraPagamento']));
 
 		if ($dataReferencia == null)
-			$dataReferencia = date("Y-m-d");
+			$dataReferencia = date("Y-m") . "-" . $this -> ultimoDiaMes(date('m'), date('d'));
 
 		if ($diaPagamento >= $dadosCartao['fechamento']) {
 			if ($dadosCartao['vencimento'] < $dadosCartao['fechamento']) {
@@ -165,7 +171,7 @@ class ValorFinal extends FormatacaoDados
 		$primeiroAnoPagamento = intval($this -> InformacoesData('y', $gasto['dataCompraPagamento']));
 
 		if ($dataReferencia == null)
-			$dataReferencia = date("Y-m-d");
+			$dataReferencia = date("Y-m") . "-" . $this -> ultimoDiaMes(date('m'), date('d'));
 
 		if ($primeiroMesPagamento < 10)
 			$primeiroMesPagamento = "0" . $primeiroMesPagamento;
@@ -187,7 +193,7 @@ class ValorFinal extends FormatacaoDados
 		$primeiroAnoPagamento = intval($this -> InformacoesData('y', $receita['dataCompraPagamento']));
 
 		if ($dataReferencia == null)
-			$dataReferencia = date("Y-m-d");
+			$dataReferencia = date("Y-m") . "-" . $this -> ultimoDiaMes(date('m'), date('d'));
 
 		if ($primeiroMesPagamento < 10)
 			$primeiroMesPagamento = "0" . $primeiroMesPagamento;
