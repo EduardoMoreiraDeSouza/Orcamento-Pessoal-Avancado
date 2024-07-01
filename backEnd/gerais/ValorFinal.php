@@ -54,10 +54,12 @@ class ValorFinal extends FormatacaoDados
 			if ($gastos)
 				foreach ($gastos as $ignored) {
 					if ($gastos[$gastoAtual]['id_bancoCorretora'] == $id)
-						if ($gastos[$gastoAtual]['formaPagamento'] == 'Débito')
-							$gastosDebitoTotal += $gastos[$gastoAtual]['valor'] * $this -> parcelasDebitadas(
-									$gastos[$gastoAtual], $dataReferencia
-								);
+						if ($gastos[$gastoAtual]['formaPagamento'] == 'Débito') {
+							$parcelasDebitadas = $this -> parcelasDebitadas($gastos[$gastoAtual], $dataReferencia);
+							if ($parcelasDebitadas > $gastos[$gastoAtual]['parcelas'])
+								$parcelasDebitadas = 0;
+							$gastosDebitoTotal += $gastos[$gastoAtual]['valor'] * $parcelasDebitadas;
+						}
 					$gastoAtual++;
 				}
 
