@@ -5,7 +5,8 @@ $login = new VerificarLogin();
 
 if ($login -> VerificarLogin()) {
 	require __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
-	$_SESSION['pagina_pai'] = 'receitas';
+	require __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
+	$_SESSION['pagina_pai'] = 'credito';
 
 	?>
 
@@ -22,7 +23,7 @@ if ($login -> VerificarLogin()) {
 
 		<link href="../css/style.css" rel="stylesheet">
 
-		<title>Orçamento Pessoal - Nova Receita</title>
+		<title>Orçamento Pessoal - Novo Gasto No Crédito</title>
 
 	</head>
 
@@ -85,16 +86,16 @@ if ($login -> VerificarLogin()) {
 					<div class="row-md-12 text-center">
 
 						<h2 class="pt-4">
-							Nova Receita
+							Nova Gasto no Crédito
 						</h2>
 
-						<form class="form-inline w-75 container" action="../backEnd/InteracaoFront/novaReceita.php" method="post">
+						<form class="form-inline w-75 container" action="../backEnd/InteracaoFront/novoCredito.php" method="post">
 
 							<div class="form-group">
 								<label for="">Banco / Corretora:</label>
 								<select class="form-select" name="id" required>
-									<option value="" selected>Banco | Corretora</option>
-									<?php include(__DIR__ . '/./particoes/loops/nomes_bancos_corretoras.php') ?>
+									<option value="" selected>Cartão</option>
+									<?php include(__DIR__ . '/./particoes/loops/nomes_cartoes_credito.php') ?>
 								</select>
 							</div>
 
@@ -112,29 +113,7 @@ if ($login -> VerificarLogin()) {
 
 							<div class="form-group">
 								<label>Classificação:</label>
-								<select class="form-select text-center" name="classificacao" required>
-									<option value="Salário">
-										Salário
-									</option>
-									<option value="Rendimentos">
-										Rendimentos
-									</option>
-									<option value="Empreendimentos">
-										Empreendimentos
-									</option>
-									<option value="Emprestimos">
-										Emprestimos
-									</option>
-									<option value="Reserva">
-										Reserva
-									</option>
-									<option value="Outros">
-										Outros
-									</option>
-									<option value="Correção do Saldo">
-										Correção do Saldo
-									</option>
-								</select>
+								<?php include(__DIR__ . '/./particoes/classificacao/tipos_gastos.php') ?>
 							</div>
 
 							<div class="form-group">
@@ -149,7 +128,7 @@ if ($login -> VerificarLogin()) {
 							</div>
 
 							<button type="submit" class="btn btn-primary">
-								Nova Receita
+								Creditar
 							</button>
 						</form>
 					</div>

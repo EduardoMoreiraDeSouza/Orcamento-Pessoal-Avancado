@@ -118,13 +118,10 @@ if ($login -> VerificarLogin()) {
 								<thead>
 								<tr>
 									<th scope="col">#</th>
+									<th scope="col">Nome</th>
 									<th scope="col">Fiador</th>
 									<th scope="col">FormaPagamento</th>
 									<th scope="col">Valor</th>
-									<th scope="col">Parcelas</th>
-									<th scope="col">Classificacao</th>
-									<th scope="col">Compra/Pagamento</th>
-									<th scope="col">Vencimento</th>
 									<th scope="col">Ações</th>
 								</tr>
 								</thead>
@@ -133,20 +130,16 @@ if ($login -> VerificarLogin()) {
 								<form class="form-inline" method="post">
 									<tr class="form-group">
 										<th>0</th>
+										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_nome.php") ?></td>
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_banco_corretora.php") ?></td>
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_forma_pagamento.php") ?></td>
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_valor.php") ?></td>
-										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_parcelas.php") ?></td>
-										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_classificacao.php") ?></td>
-										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_data.php") ?></td>
-										<td>*</td>
 										<td><?php include(__DIR__ . "/./particoes/botoes/submit_filtros.php") ?></td>
 									</tr>
 								</form>
 
 								<h5 class="text-center text-sm-center">Gastos no crédito serão colocados no mês
 									referente à fatura!</h5>
-
 
 								<?php
 
@@ -244,23 +237,19 @@ if ($login -> VerificarLogin()) {
 
 												<th scope="row"><?= $parcelasPagas . "/" . $dados['parcelas'] ?></th>
 
-												<input type="text" class="container input-group-text" name="nome"
-												       placeholder="Nome:"
-												       value="R$ <?= $formatacao -> formatarValor(
-													       $dados['nome']
-												       ) ?>">
-
+												<th>
+													<input type="text" class="container input-group-text" name="nome"
+													       placeholder="Nome:"
+													       value="<?= $dados['nome'] ?>" disabled>
+												</th>
 												<td>
 													<?php include(__DIR__ . "/./particoes/loops/nomes_bancos_corretoras_select.php") ?>
 												</td>
 
 												<td style="width: 8%;">
-													<select class="form-select" name="formaPagamento" required>
-														<option value="Débito" <?= $dados['formaPagamento'] == 'Débito' ? 'selected' : '' ?>>
-															Débito
-														</option>
-														<option value="Crédito" <?= $dados['formaPagamento'] == 'Crédito' ? 'selected' : '' ?>>
-															Crédito
+													<select class="form-select" name="formaPagamento" required disabled>
+														<option value="<?= $dados['formaPagamento'] ?>" selected>
+															<?= $dados['formaPagamento'] ?>
 														</option>
 													</select>
 												</td>
@@ -271,47 +260,8 @@ if ($login -> VerificarLogin()) {
 														       $dados['valor']
 													       ) ?>">
 												</td>
-												<td style="width: 8%;">
-													<input type="text" class="container input-group-text"
-													       name="parcelas"
-													       placeholder="Parcelas:"
-													       value="<?= $dados['parcelas'] ?>">
-												</td>
-												<td>
-													<select class="form-select" name="classificacao" required>
-														<option value="Pessoal" <?= $dados['classificacao'] == 'Pessoal' ? 'selected' : '' ?>>
-															Pessoal
-														</option>
-														<option value="Necessário" <?= $dados['classificacao'] == 'Necessário' ? 'selected' : '' ?>>
-															Necessário
-														</option>
-														<option value="Reserva" <?= $dados['classificacao'] == 'Reserva' ? 'selected' : '' ?>>
-															Reserva
-														</option>
-														<option value="Dívidas" <?= $dados['classificacao'] == 'Dívidas' ? 'selected' : '' ?>>
-															Dívidas
-														</option>
-														<option value="Investimentos" <?= $dados['classificacao'] == 'Investimentos' ? 'selected' : '' ?>>
-															Investimentos
-														</option>
-														<option value="Boas Ações" <?= $dados['classificacao'] == 'Boas Ações' ? 'selected' : '' ?>>
-															Boas
-															Ações
-														</option>
-														<option value="Boas Ações" <?= $dados['classificacao'] == 'Correção do Saldo' ? 'selected' : '' ?>>
-															Correção do Saldo
-														</option>
-													</select>
-												</td>
-												<td>
-													<input type="date" class="container input-group-text"
-													       name="dataCompraPagamento"
-													       value="<?= $dados['dataCompraPagamento'] ?>">
-												</td>
-												<td style="width: 8%;">
-													<input type="text" class="container input-group-text"
-													       value="<?= $vencimento ?>" disabled>
-												</td>
+
+
 												<td>
 													<button style="text-decoration: none; width: 4vh; height: 4vh;"
 													        class="text-primary bg-transparent rounded-circle border border-primary"
@@ -346,9 +296,6 @@ if ($login -> VerificarLogin()) {
 								<td>Total</td>
 								<td></td>
 								<td>R$ <?= $formatacao -> formatarValor($saldoTotal) ?></td>
-								<td></td>
-								<td></td>
-								<td></td>
 								<td></td>
 								<td></td>
 
