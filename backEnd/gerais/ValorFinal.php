@@ -83,6 +83,8 @@ class ValorFinal extends FormatacaoDados
 				$saldoFinal,
 			);
 
+			print "<script>alert('". $receitaTotal . "/" . $gastosDebitoTotal . "')</script>";
+
 			return $saldoFinal;
 		}
 

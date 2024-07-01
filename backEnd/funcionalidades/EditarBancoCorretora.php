@@ -30,8 +30,6 @@ class EditarBancoCorretora extends Entrar
 		)
 			return (bool) $this -> RetornarErro('pai', null);
 
-		print "<script>alert('". floatval($this -> ValorFinal('bancoCorretora', $this -> getId())) ."')</script>";
-
 		if ($this -> getSaldo() > floatval($this -> ValorFinal('bancoCorretora', $this -> getId()))) {
 			if (
 				!$this -> EntradaDadosReceita(
