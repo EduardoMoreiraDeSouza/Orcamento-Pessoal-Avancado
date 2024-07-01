@@ -42,7 +42,7 @@ class FormatacaoDados extends VerificarSenha
 
         $negativo = false;
 
-        if ($valor < 0)
+        if ($valor < 0 or str_contains($valor, '-'))
             $negativo = true;
 
         $valor = str_replace('.', '', $valor);
