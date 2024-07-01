@@ -9,7 +9,7 @@ class ExcluirGasto extends ExecucaoCodigoMySql
 
 		if (!$this -> VerificarLogin()) return false;
 
-		$this -> setPaginaPai('gastos');
+		$this -> setPaginaPai($_SESSION['pagina_pai']);
 		$this -> setCodigoMySql("DELETE FROM dbName.gastos WHERE id_gasto LIKE '$id_gasto' AND email LIKE '" . $this -> getSessao() . "';");
 
 		return (bool) $this -> ExecutarCodigoMySql();

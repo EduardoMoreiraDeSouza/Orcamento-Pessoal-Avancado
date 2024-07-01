@@ -8,8 +8,8 @@ section.banner {
     width: 100%;
     height: 100vh;
     padding: 20vh 0;
-    color: white;
-    background: url('../imagens/bg3.jpg') no-repeat scroll 30% 45%;
+    color: #190a12;
+    background: url('../imagens/bg2.jpg') no-repeat scroll 30% 45%;
     background-size: cover;
 }
 
@@ -25,23 +25,23 @@ section.banner > .container {
     left: 0;
     top: 0;
     position: absolute;
-    background: rgba(15, 15, 15, .5);
+    background: rgba(238, 233, 199, 0.1);
 }
 
 div.introducao {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(206, 199, 182, .4);
     text-shadow: 1px 1px 0 black;
     width: 90%;
     border-radius: 1vh;
 }
 
-.chamada-banner h2 {
-    color: #26A599;
-    font-size: 4vh;
+.chamada-banner h1 {
+    color: #190a12;
+    font-size: 5vh;
 }
 
 .chamada-banner p {
-    color: white;
+    color: #5a5239;
     font-size: 2.5vh;
     padding: 2vh 0;
 }

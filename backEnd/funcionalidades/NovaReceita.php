@@ -8,7 +8,7 @@ class NovaReceita extends NovoDebito
     {
         if (!$this-> VerificarLogin()) return false;
 
-        $this -> setPaginaPai('receitas');
+        $this -> setPaginaPai($_SESSION['pagina_pai']);
         $this -> setId($this -> id());
         $this -> setClassificacao($this -> classificacao());
         $this -> setDataCompraPagamento($this -> dataCompraPagamento());

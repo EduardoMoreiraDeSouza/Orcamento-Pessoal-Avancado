@@ -9,7 +9,7 @@ class ExcluirCartaoCredito extends ExecucaoCodigoMySql
 
         if (!$this-> VerificarLogin()) return false;
 
-        $this -> setPaginaPai('credito');
+        $this -> setPaginaPai($_SESSION['pagina_pai']);
         $this -> setCodigoMySql("DELETE FROM dbName.cartoesCredito WHERE id_bancoCorretora LIKE '$id_bancoCorretora' AND email LIKE '".$this-> getSessao()."';");
 
         return (bool)$this-> ExecutarCodigoMySql();

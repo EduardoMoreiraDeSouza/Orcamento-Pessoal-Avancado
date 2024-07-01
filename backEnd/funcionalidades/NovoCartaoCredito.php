@@ -14,7 +14,7 @@ class NovoCartaoCredito extends NovoBancoCorretora
     {
         if (!$this-> VerificarLogin()) return false;
 
-        $this -> setPaginaPai('credito');
+        $this -> setPaginaPai($_SESSION['pagina_pai']);
 
         $this-> setId($this-> id());
         $this-> setLimite($this-> valor());

@@ -92,9 +92,9 @@ $globais = new Globais;
 		<div class="container chamada-banner introducao">
 			<div class="row">
 				<div class="row-md-12 text-center ">
-					<h2 class="pt-4">
+					<h1 class="pt-4">
 						Orçamento Pessoal
-					</h2>
+					</h1>
 
 					<main class="container mt-5 w-50 p-3 text-start">
 

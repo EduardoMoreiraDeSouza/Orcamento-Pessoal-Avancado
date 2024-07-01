@@ -8,7 +8,7 @@ class EditarReceita extends EditarGastos
     {
         if (!$this-> VerificarLogin()) return false;
 
-        $this -> setPaginaPai('receitas');
+        $this -> setPaginaPai($_SESSION['pagina_pai']);
         $this -> setId($this-> id());
         $this -> setBancoCorretora($this -> bancoCorretoraId());
         $this -> setClassificacao($this -> classificacao());
@@ -29,7 +29,7 @@ class EditarReceita extends EditarGastos
         if ($this-> getValor() <= 0)
             return (bool)$this-> RetornarErro('pai', 'valorAbaixoZero');
 
-        if (!$this -> ObterDadosBancosCorretoras($this -> getId(), $this -> getSessao()))
+        if (!$this -> ObterDadosBancosCorretoras($this -> getBancoCorretora(), $this -> getSessao()))
             return (bool)$this-> RetornarErro('pai', 'naoBancoCorretora');
 
         if (!$this -> AlterarDadosReceita(

@@ -8,7 +8,7 @@ final class ExcluirBancoCorretora extends ExecucaoCodigoMySql
 	{
 		if (!$this -> VerificarLogin()) return false;
 
-		$this -> setPaginaPai('bancosCorretoras');
+		$this -> setPaginaPai($_SESSION['pagina_pai']);
 		$this -> setCodigoMySql("DELETE FROM dbName.bancosCorretoras WHERE id LIKE '$id_bancoCorretora' AND email LIKE '" . $this -> getSessao() . "';");
 
 

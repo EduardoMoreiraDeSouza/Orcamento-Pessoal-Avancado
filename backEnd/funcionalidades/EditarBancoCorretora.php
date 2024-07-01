@@ -9,7 +9,7 @@ class EditarBancoCorretora extends Entrar
 		if (!$this -> VerificarLogin())
 			return false;
 
-		$this -> setPaginaPai('bancosCorretoras');
+		$this -> setPaginaPai($_SESSION['pagina_pai']);
 		$this -> setId($this -> id());
 		$this -> setBancoCorretora($this -> bancoCorretora());
 		$this -> setSaldo($this -> saldo());

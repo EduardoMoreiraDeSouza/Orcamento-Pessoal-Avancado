@@ -6,7 +6,7 @@ class ExcluirReceita extends ExecucaoCodigoMySql
     {
         if (!$this-> VerificarLogin()) return false;
 
-        $this -> setPaginaPai('receitas');
+        $this -> setPaginaPai($_SESSION['pagina_pai']);
         $this -> setCodigoMySql("DELETE FROM dbName.receitas WHERE id_receita LIKE '$id_receita' AND email LIKE '".$this-> getSessao()."';");
 
         return (bool)$this-> ExecutarCodigoMySql();
