@@ -17,6 +17,8 @@ class Globais{
 
         if (!isset($_SESSION['usuario']))
             return null;
+	    if (!isset($_SESSION['pagina_pai']))
+			$_SESSION['pagina_pai'] = null;
 
         return $_SESSION['usuario'];
     }

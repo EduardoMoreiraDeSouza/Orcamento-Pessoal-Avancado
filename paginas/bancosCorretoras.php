@@ -4,9 +4,6 @@ require __DIR__ . "/../backEnd/verificacoes/VerificarLogin.php";
 $login = new VerificarLogin();
 
 if ($login->VerificarLogin()) {
-	if (!isset($_SESSION['pagina_pai']))
-		$_SESSION['pagina_pai'] = 'bancosCorretoras';
-	else
 		$_SESSION['pagina_pai'] = 'bancosCorretoras';
 
     require __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
