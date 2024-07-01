@@ -25,7 +25,7 @@ class EditarBancoCorretora extends Entrar
 			!$this -> AlterarDadosBancosCorretoras(
 				$this -> getId(),
 				$this -> getBancoCorretora(),
-				0
+				'0'
 			)
 		)
 			return (bool) $this -> RetornarErro('pai', null);
