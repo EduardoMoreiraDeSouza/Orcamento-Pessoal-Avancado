@@ -167,19 +167,6 @@ class ValorFinal extends FormatacaoDados
 		if ($dataReferencia == null)
 			$dataReferencia = date("Y-m-d");
 
-		if (
-			$this -> InformacoesData('d', $dataReferencia) >= $this -> InformacoesData(
-				'd', $gasto['dataCompraPagamento']
-			)
-		) {
-			$primeiroMesPagamento -= 1;
-
-			if ($primeiroMesPagamento <= 0) {
-				$primeiroMesPagamento = 12;
-				$primeiroAnoPagamento--;
-			}
-		}
-
 		if ($primeiroMesPagamento < 10)
 			$primeiroMesPagamento = "0" . $primeiroMesPagamento;
 
@@ -202,19 +189,6 @@ class ValorFinal extends FormatacaoDados
 		if ($dataReferencia == null)
 			$dataReferencia = date("Y-m-d");
 
-		if (
-			$this -> InformacoesData('d', $dataReferencia) >= $this -> InformacoesData(
-				'd', $receita['dataCompraPagamento']
-			)
-		) {
-			$primeiroMesPagamento -= 1;
-
-			if ($primeiroMesPagamento <= 0) {
-				$primeiroMesPagamento = 12;
-				$primeiroAnoPagamento--;
-			}
-		}
-
 		if ($primeiroMesPagamento < 10)
 			$primeiroMesPagamento = "0" . $primeiroMesPagamento;
 
@@ -223,9 +197,7 @@ class ValorFinal extends FormatacaoDados
 			);
 		$diferencaMeses = $this -> diferencaMesesData($primeiraDataPagamento, $dataReferencia);
 
-		if ($diferencaMeses > $receita['parcelas'])
-			return $receita['parcelas'];
-		elseif ($diferencaMeses > 0)
+		if ($diferencaMeses > 0)
 			return $diferencaMeses;
 		else
 			return 1;

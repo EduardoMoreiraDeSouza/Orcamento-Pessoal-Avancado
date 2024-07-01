@@ -144,35 +144,92 @@ if ($login -> VerificarLogin()) {
 									</tr>
 								</form>
 
-								<h5 class="text-center text-sm-center">Gastos no crédito serão colocados no mês referente à fatura!</h5>
+								<h5 class="text-center text-sm-center">Gastos no crédito serão colocados no mês
+									referente à fatura!</h5>
 
 
 								<?php
 
+								require __DIR__ . "/../backEnd/gerais/ValorFinal.php";
+								$valorFinal = new ValorFinal();
 								$execucao = new ExecucaoCodigoMySql();
-								$execucao -> setCodigoMySql("SELECT * FROM dbName.gastos WHERE email LIKE '" . $login -> getSessao() . "' " . $_SESSION['codigo_variante'] . ";");
+								$execucao -> setCodigoMySql(
+									"SELECT * FROM dbName.gastos WHERE email LIKE '" . $login -> getSessao(
+									) . "' " . $_SESSION['codigo_variante'] . ";"
+								);
 								$resultadoExecucao = $execucao -> ExecutarCodigoMySql();
 								$saldoTotal = 0;
 
-								require __DIR__ . "/../backEnd/gerais/ValorFinal.php";
-								$valorFinal = new ValorFinal();
-
 								while ($dados = mysqli_fetch_assoc($resultadoExecucao)) {
 
-									$dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> ultimoDiaMes($_SESSION['mes_referencia'], $_SESSION['ano_referencia']);
+									$mostrarGastos = false;
 
-									if ($dados['formaPagamento'] == 'Crédito'){
-										$parcelasPagas = $valorFinal -> parcelasPagasCredito($dados, $dataReferencia);
-										if ($cartao = $valorFinal -> ObterDadosCartoesCredito($dados['id_bancoCorretora'], $valorFinal -> getSessao()))
-											$vencimento = $cartao['vencimento'] . "/" . $_SESSION['mes_referencia'];
-
-									} else {
-										$parcelasPagas = $valorFinal -> parcelasDebitadas($dados, $dataReferencia);
-										$vencimento = $valorFinal -> InformacoesData('d', $dados['dataCompraPagamento']) . "/" . $_SESSION['mes_referencia'];
+									if ($_SESSION['mes_referencia'] == 'todos' and $_SESSION['ano_referencia'] != 'todos') {
+										// Mostra todos daquele ano
+										if (
+											$valorFinal -> InformacoesData(
+												'y', $dados['dataCompraPagamento']
+											) == $_SESSION['ano_referencia']
+										) {
+											$mostrarGastos = true;
+											$parcelasPagas = $dados['parcelas'];
+											$vencimento = '*';
+										}
 									}
 
-									if ($parcelasPagas <= $dados['parcelas'] and $dados['dataCompraPagamento'] <= $dataReferencia and $parcelasPagas > 0) {
-										$saldoTotal += $dados['valor'];
+									elseif ($_SESSION['mes_referencia'] != 'todos' and $_SESSION['ano_referencia'] == 'todos') {
+										// Mostra todos daquele mês
+										if (
+											$valorFinal -> InformacoesData(
+												'm', $dados['dataCompraPagamento']
+											) == $_SESSION['mes_referencia']
+										) {
+											$mostrarGastos = true;
+											$parcelasPagas = $dados['parcelas'];
+											$vencimento = '*';
+										}
+									}
+
+									elseif ($_SESSION['mes_referencia'] == 'todos' and $_SESSION['ano_referencia'] == 'todos') {
+										// Mostra todos os gastos
+										$mostrarGastos = true;
+										$parcelasPagas = $dados['parcelas'];
+										$vencimento = '*';
+									}
+
+									else {
+
+										$dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> ultimoDiaMes(
+												$_SESSION['mes_referencia'], $_SESSION['ano_referencia']
+											);
+
+										if ($dados['formaPagamento'] == 'Crédito') {
+											$parcelasPagas = $valorFinal -> parcelasPagasCredito(
+												$dados, $dataReferencia
+											);
+											if (
+												$cartao = $valorFinal -> ObterDadosCartoesCredito(
+													$dados['id_bancoCorretora'], $valorFinal -> getSessao()
+												)
+											)
+												$vencimento = $cartao['vencimento'] . "/" . $_SESSION['mes_referencia'];
+
+										}
+										else {
+											$parcelasPagas = $valorFinal -> parcelasDebitadas($dados, $dataReferencia);
+											$vencimento = $valorFinal -> InformacoesData(
+													'd', $dados['dataCompraPagamento']
+												) . "/" . $_SESSION['mes_referencia'];
+										}
+
+										if ($parcelasPagas <= $dados['parcelas'] and $dados['dataCompraPagamento'] <= $dataReferencia and $parcelasPagas > 0) {
+											$saldoTotal += $dados['valor'];
+											$mostrarGastos = true;
+										}
+
+									}
+
+									if ($mostrarGastos) {
 
 										?>
 
@@ -200,7 +257,9 @@ if ($login -> VerificarLogin()) {
 													<input type="text" class="container input-group-text" name="valor"
 													       placeholder="Valor:"
 													       step="0.01"
-													       value="R$ <?= $formatacao -> formatarValor($dados['valor']) ?>">
+													       value="R$ <?= $formatacao -> formatarValor(
+														       $dados['valor']
+													       ) ?>">
 												</td>
 												<td style="width: 8%;">
 													<input type="text" class="container input-group-text"

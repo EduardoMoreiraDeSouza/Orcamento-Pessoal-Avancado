@@ -144,6 +144,8 @@ if ($login -> VerificarLogin()) {
 
 								<?php
 
+								require __DIR__ . "/../backEnd/gerais/ValorFinal.php";
+								$valorFinal = new ValorFinal();
 								$execucao = new ExecucaoCodigoMySql();
 								$execucao -> setCodigoMySql(
 									"SELECT * FROM dbName.receitas WHERE email LIKE '" . $login -> getSessao(
@@ -154,22 +156,15 @@ if ($login -> VerificarLogin()) {
 
 								while ($dados = mysqli_fetch_assoc($resultadoExecucao)) {
 
-									$parcelasPassadas = $dados['parcelas'];
 									$dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> ultimoDiaMes(
 											$_SESSION['mes_referencia'], $_SESSION['ano_referencia']
 										);
 
 									if ($_SESSION['mes_referencia'] != 'todos') {
-										$parcelasPassadas =
-											$execucao -> diferencaMesesData(
-												$dados['dataCompraPagamento'],
-												$dataReferencia
-											);
+										$parcelasPassadas = $valorFinal -> parcelasRecebidas($dados, $dataReferencia);
 									}
 
-									$parcelasPassadas++;
-
-									if ($parcelasPassadas <= $dados['parcelas'] and $dados['dataCompraPagamento'] <= $dataReferencia) {
+									if ($parcelasPassadas <= $dados['parcelas'] and $dados['dataCompraPagamento'] <= $dataReferencia and $parcelasPassadas > 0) {
 
 										$saldoTotal += $dados['valor'];
 										$dataPagamento = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> InformacoesData(
