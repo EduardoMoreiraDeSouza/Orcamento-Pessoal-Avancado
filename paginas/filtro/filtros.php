@@ -14,6 +14,9 @@ if (isset($_POST['ano_referencia'])) {
 	require_once __DIR__ . "/../../backEnd/gerais/FormatacaoDados.php";
 	$formatarDados = new FormatacaoDados();
 	$_SESSION['ano_referencia'] = $formatarDados -> fraseMinuscula($_POST['ano_referencia']);
+
+	if (gettype($_SESSION['ano_referencia']) != 'integer')
+		$_SESSION['ano_referencia'] = 'todos';
 }
 
 else if ($_SESSION['ano_referencia'] == '')
