@@ -53,7 +53,7 @@ class NovoBancoCorretora extends Formulario
 				!$this -> EntradaDadosReceita(
 					$id_bancoCorretora,
 					'Correção do Saldo',
-					'correcaoSaldo',
+					'Correção do Saldo',
 					date('Y-m-d'),
 					$this -> getSaldo(),
 					1
@@ -67,7 +67,7 @@ class NovoBancoCorretora extends Formulario
 					$id_bancoCorretora,
 					'Correção do Saldo',
 					'Débito',
-					'correcaoSaldo',
+					'Correção do Saldo',
 					date('Y-m-d'),
 					$this -> getSaldo() * -1,
 					1

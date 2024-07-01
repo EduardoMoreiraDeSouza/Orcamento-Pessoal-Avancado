@@ -58,6 +58,16 @@ if (isset($_POST['filtrar_bancoCorretora']) and !empty($_POST['filtrar_bancoCorr
 	$_SESSION['codigo_variante'] = " ORDER BY bancoCorretora " . $filtro;
 }
 
+elseif (isset($_POST['filtrar_nome']) and !empty($_POST['filtrar_nome'])) {
+
+	if ($_POST['filtrar_nome'] == 'A-Z')
+		$filtro = 'ASC';
+	else
+		$filtro = 'DESC';
+
+	$_SESSION['codigo_variante'] = " ORDER BY nome " . $filtro;
+}
+
 elseif (isset($_POST['filtrar_valor']) and !empty($_POST['filtrar_valor'])) {
 
 	if ($_POST['filtrar_valor'] == 'Maior')

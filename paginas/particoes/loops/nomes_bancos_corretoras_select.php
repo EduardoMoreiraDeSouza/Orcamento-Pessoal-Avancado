@@ -1,4 +1,4 @@
-<select class="form-select text-center" name="bancoCorretoraId" required>
+<select class="form-select text-center" name="bancoCorretoraId" required disabled>
 
 	<?php
 

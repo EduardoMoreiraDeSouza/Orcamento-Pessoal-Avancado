@@ -63,7 +63,7 @@ div.introducao {
     background: #726f6f;
 }
 
-table {
+table,form {
     width: 100%; !important;
 }
 

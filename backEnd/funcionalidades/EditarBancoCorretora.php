@@ -36,7 +36,7 @@ class EditarBancoCorretora extends Entrar
 				!$this -> EntradaDadosReceita(
 					$this -> getId(),
 					'Correção do Saldo',
-					'correcaoSaldo',
+					'Correção do Saldo',
 					date('Y-m-d'),
 					$this -> getSaldo() - floatval($this -> ValorFinal('bancoCorretora', $this -> getId())),
 					1
@@ -51,7 +51,7 @@ class EditarBancoCorretora extends Entrar
 					$this -> getId(),
 					'Correção do Saldo',
 					'Débito',
-					'correcaoSaldo',
+					'Correção do Saldo',
 					date('Y-m-d'),
 					floatval($this -> ValorFinal('bancoCorretora', $this -> getId())) - $this -> getSaldo(),
 					1

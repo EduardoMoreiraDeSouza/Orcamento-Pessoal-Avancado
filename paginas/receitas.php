@@ -119,12 +119,10 @@ if ($login -> VerificarLogin()) {
 
 								<thead>
 								<tr>
-									<th scope="col">Pagos</th>
+									<th scope="col"></th>
+									<th scope="col">Nome</th>
 									<th scope="col">Banco/Corretora</th>
 									<th scope="col">Valor</th>
-									<th scope="col">Classificacao</th>
-									<th scope="col">Parcelas</th>
-									<th scope="col">Pagamento</th>
 									<th scope="col">Ações</th>
 								</tr>
 								</thead>
@@ -133,11 +131,9 @@ if ($login -> VerificarLogin()) {
 								<form class="form-inline" method="post">
 									<tr class="form-group">
 										<th>*</th>
+										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_nome.php") ?></td>
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_banco_corretora.php") ?></td>
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_valor.php") ?></td>
-										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_classificacao.php") ?></td>
-										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_parcelas.php") ?></td>
-										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_data.php") ?></td>
 										<td><?php include(__DIR__ . "/./particoes/botoes/submit_filtros.php") ?></td>
 									</tr>
 								</form>
@@ -224,6 +220,11 @@ if ($login -> VerificarLogin()) {
 												<th scope="row"><?= $parcelasPagas . "/" . $dados['parcelas'] ?></th
 												<td></td>
 												<td>
+													<input type="text" class="form-control input-group-text"
+													       name="nome" placeholder="Nome:"
+													       value="<?= $dados['nome'] ?>" disabled>
+												</td>
+												<td>
 													<?php include(__DIR__ . "/./particoes/loops/nomes_bancos_corretoras_select.php") ?>
 												</td>
 												<td>
@@ -232,32 +233,7 @@ if ($login -> VerificarLogin()) {
 													       placeholder="Valor:"
 													       value="R$ <?= $formatacao -> formatarValor(
 														       $dados['valor']
-													       ) ?>">
-												</td>
-												<td>
-													<select class="form-select" name="classificacao" required>
-														<option value="Salário" <?= $dados['classificacao'] == 'Salário' ? 'selected' : '' ?>>
-															Salário
-														</option>
-														<option value="Rendimentos" <?= $dados['classificacao'] == 'Rendimentos' ? 'selected' : '' ?>>
-															Rendimentos
-														</option>
-														<option value="Empreendimentos" <?= $dados['classificacao'] == 'Empreendimentos' ? 'selected' : '' ?>>
-															Empreendimentos
-														</option>
-														<option value="Emprestimos" <?= $dados['classificacao'] == 'Emprestimos' ? 'selected' : '' ?>>
-															Emprestimos
-														</option>
-														<option value="Reserva" <?= $dados['classificacao'] == 'Reserva' ? 'selected' : '' ?>>
-															Reserva
-														</option>
-														<option value="Outros" <?= $dados['classificacao'] == 'Outros' ? 'selected' : '' ?>>
-															Outros
-														</option>
-														<option value="correcaoSaldo" <?= $dados['classificacao'] == 'correcaoSaldo' ? 'selected' : '' ?>>
-															Correção do Saldo
-														</option>
-													</select>
+													       ) ?>" disabled>
 												</td>
 												<td>
 													<button style="text-decoration: none; width: 4vh; height: 4vh;"
@@ -292,10 +268,8 @@ if ($login -> VerificarLogin()) {
 
 								<th scope="row">#</th>
 								<td>Total</td>
+								<td></td>
 								<td>R$ <?= $formatacao -> formatarValor($saldoTotal) ?></td>
-								<td></td>
-								<td></td>
-								<td></td>
 								<td></td>
 								</tbody>
 							</table>

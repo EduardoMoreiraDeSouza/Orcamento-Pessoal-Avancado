@@ -13,7 +13,7 @@
                 </svg>
             </div>
 
-            <div class="col-sm" style="margin-left: -28%;">
+            <div class="col-sm" style="margin-left: -28%; width: 20%">
                 <select class="form-control form-control bg-success text-light text-center"
                         name="mes_referencia">
 
@@ -52,7 +52,7 @@
                     </option>
                 </select>
             </div>
-            <input class="rounded-2 form-control bg-success text-light" style="width: 30%; margin-left: -1.8%;"
+            <input class="rounded-2 form-control bg-success text-light" style="width: 10%; margin-left: -1.8%;"
                    type="text" name="ano_referencia" value="<?= $_SESSION['ano_referencia'] ?>">
 
             <div class="col-sm" style="margin-left: -12.7%;">

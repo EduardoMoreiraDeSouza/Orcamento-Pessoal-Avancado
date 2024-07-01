@@ -4,13 +4,8 @@ require __DIR__ . "/../backEnd/verificacoes/VerificarLogin.php";
 $login = new VerificarLogin();
 
 if ($login -> VerificarLogin()) {
-	$_SESSION['pagina_pai'] = 'receitas';
-
 	require __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
-	require __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
-
-	$formatacao = new FormatacaoDados();
-
+	$_SESSION['pagina_pai'] = 'receitas';
 
 	?>
 
@@ -76,9 +71,7 @@ if ($login -> VerificarLogin()) {
 							<a class="nav-link active text-light" aria-current="page"
 							   href="../backEnd/InteracaoFront/sair.php">Sair</a>
 						</li>
-
 					</ul>
-
 				</div>
 			</div>
 		</div>
@@ -92,66 +85,53 @@ if ($login -> VerificarLogin()) {
 					<div class="row-md-12 text-center">
 
 						<h2 class="pt-4">
-							Editar Receita
+							Nova Receita
 						</h2>
 
-						<?php
-
-						$dados = new ObterDadosReceita();
-
-						if (isset($_POST['id']) and !empty($_POST['id'])) {
-							$dados = $dados -> ObterDadosReceita($dados -> getSessao())[0];
-						}
-
-						else {
-							$dados -> Redirecionar($_SESSION['pagina_pai'], true);
-						}
-
-						?>
-
-						<form class="form-inline w-75 container" action="../backEnd/InteracaoFront/editarReceita.php" method="post">
+						<form class="form-inline w-75 container" action="../backEnd/InteracaoFront/novaReceita.php" method="post">
 
 							<div class="form-group">
 								<label for="">Banco / Corretora:</label>
-								<?php include(__DIR__ . "/./particoes/loops/nomes_bancos_corretoras_select.php") ?>
+								<select class="form-select" name="id" required>
+									<option value="" selected>Banco | Corretora</option>
+									<?php include(__DIR__ . '/./particoes/loops/nomes_bancos_corretoras.php') ?>
+								</select>
 							</div>
 
 							<div class="form-group">
 								<label for="">Nome:</label>
 								<input type="text" class="form-control input-group-text" name="nome"
-								       placeholder="Nome:"
-								       value="<?= $dados['nome'] ?>">
+								       placeholder="Nome:" >
 							</div>
 
 							<div class="form-group">
 								<label for="">Valor:</label>
 								<input type="text" class="form-control input-group-text" name="valor"
-								       placeholder="Valor:"
-								       value="R$ <?= $formatacao -> formatarValor($dados['valor']) ?>">
+								       placeholder="Valor:">
 							</div>
 
 							<div class="form-group">
 								<label>Classificação:</label>
 								<select class="form-select text-center" name="classificacao" required>
-									<option value="Salário" <?= $dados['classificacao'] == 'Salário' ? 'selected' : '' ?>>
+									<option value="Salário">
 										Salário
 									</option>
-									<option value="Rendimentos" <?= $dados['classificacao'] == 'Rendimentos' ? 'selected' : '' ?>>
+									<option value="Rendimentos">
 										Rendimentos
 									</option>
-									<option value="Empreendimentos" <?= $dados['classificacao'] == 'Empreendimentos' ? 'selected' : '' ?>>
+									<option value="Empreendimentos">
 										Empreendimentos
 									</option>
-									<option value="Emprestimos" <?= $dados['classificacao'] == 'Emprestimos' ? 'selected' : '' ?>>
+									<option value="Emprestimos">
 										Emprestimos
 									</option>
-									<option value="Reserva" <?= $dados['classificacao'] == 'Reserva' ? 'selected' : '' ?>>
+									<option value="Reserva">
 										Reserva
 									</option>
-									<option value="Outros" <?= $dados['classificacao'] == 'Outros' ? 'selected' : '' ?>>
+									<option value="Outros">
 										Outros
 									</option>
-									<option value="Correção do Saldo" <?= $dados['classificacao'] == 'Correção do Saldo' ? 'selected' : '' ?>>
+									<option value="Correção do Saldo">
 										Correção do Saldo
 									</option>
 								</select>
@@ -160,16 +140,16 @@ if ($login -> VerificarLogin()) {
 							<div class="form-group">
 								<label>Parcelas:</label>
 								<input type="text" class="form-control input-group-text" name="parcelas"
-								       placeholder="Parcelas:" step="0.01" value="<?= $dados['parcelas'] ?>">
+								       placeholder="Parcelas:" step="0.01">
 							</div>
 							<div class="form-group">
 								<label>Data do Pagamento:</label>
 								<input type="date" class="form-control input-group-text text-center"
-								       name="dataCompraPagamento" value="<?= $dados['dataCompraPagamento'] ?>">
+								       name="dataCompraPagamento" value="<?= date('Y-m-d') ?>">
 							</div>
 
-							<button type="submit" class="btn btn-primary" name="id" value="<?= $dados['id_receita'] ?>">
-								Editar
+							<button type="submit" class="btn btn-primary">
+								Nova Receita
 							</button>
 						</form>
 					</div>
