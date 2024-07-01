@@ -48,4 +48,8 @@
     window.addEventListener('resize', (event) => {
         setMinHeight()
     });
+
+    window.addEventListener('click', (event) => {
+            setMinHeight()
+    });
 </script>

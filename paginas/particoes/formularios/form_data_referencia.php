@@ -1,4 +1,4 @@
-<?php include(__DIR__ . "/../../filtros.php"); ?>
+<?php include(__DIR__ . "/../../filtro/filtros.php"); ?>
 
 <form class="mt-2 position-absolute" method="post">
     <div class="container" style="padding: 0">
@@ -13,7 +13,7 @@
                 </svg>
             </div>
 
-            <div class="col-sm" style="margin-left: -30%;">
+            <div class="col-sm" style="margin-left: -28%;">
                 <select class="form-control form-control bg-success text-light text-center"
                         name="mes_referencia">
                     <option <?= $_SESSION['mes_referencia'] == 'todos' ? 'selected' : '' ?> value="todos">
@@ -48,10 +48,10 @@
                     </option>
                 </select>
             </div>
-            <input class="rounded-2 form-control bg-success text-light" style="width: 25%; margin-left: -2%;"
+            <input class="rounded-2 form-control bg-success text-light" style="width: 30%; margin-left: -1.8%;"
                    type="text" name="ano_referencia" value="<?= $_SESSION['ano_referencia'] ?>">
 
-            <div class="col-sm" style="margin-left: -14.7%;">
+            <div class="col-sm" style="margin-left: -12.7%;">
                 <button type="submit" class="btn btn-dark border-light">Ok</button>
             </div>
         </div>
