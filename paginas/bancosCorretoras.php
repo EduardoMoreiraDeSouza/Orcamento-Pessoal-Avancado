@@ -3,24 +3,24 @@
 require __DIR__ . "/../backEnd/verificacoes/VerificarLogin.php";
 $login = new VerificarLogin();
 
-if ($login->VerificarLogin()) {
-		$_SESSION['pagina_pai'] = 'bancosCorretoras';
+if ($login -> VerificarLogin()) {
+	$_SESSION['pagina_pai'] = 'bancosCorretoras';
 
-    require __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
-    require __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
-    require __DIR__ . "/../backEnd/gerais/ValorFinal.php";
+	require __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
+	require __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
+	require __DIR__ . "/../backEnd/gerais/ValorFinal.php";
 
-    $formatacao = new FormatacaoDados();
-    $execucao = new ExecucaoCodigoMySql();
+	$formatacao = new FormatacaoDados();
+	$execucao = new ExecucaoCodigoMySql();
 
-    if (isset($_GET['excluir']) and isset($_GET['id'])) {
-        require __DIR__ . "/../backEnd/funcionalidades/ExcluirBancoCorretora.php";
+	if (isset($_GET['excluir']) and isset($_GET['id'])) {
+		require __DIR__ . "/../backEnd/funcionalidades/ExcluirBancoCorretora.php";
 
-        $exluir = new ExcluirBancoCorretora();
-        $exluir->ExcluirBancoCorretora($_GET['id']);
-        $exluir->Redirecionar('bancosCorretoras', true);
-    }
-    ?>
+		$exluir = new ExcluirBancoCorretora();
+		$exluir -> ExcluirBancoCorretora($_GET['id']);
+		$exluir -> Redirecionar('bancosCorretoras', true);
+	}
+	?>
 
 	<!DOCTYPE html>
 	<html lang="pt-br">
@@ -99,7 +99,7 @@ if ($login->VerificarLogin()) {
 				<div class="row">
 					<div class="row-md-12 text-center ">
 
-                        <?php include(__DIR__ . "/./particoes/formularios/form_data_referencia.php") ?>
+						<?php include(__DIR__ . "/./particoes/formularios/form_data_referencia.php") ?>
 
 						<h2 class="pt-4">
 							Bancos/Corretoras
@@ -108,9 +108,9 @@ if ($login->VerificarLogin()) {
 						<main class="container mb-5">
 							<div class="container row text-start">
 
-                                <?php include(__DIR__ . "/./particoes/formularios/novo_banco_corretora.php") ?>
-                                <?php include(__DIR__ . "/./particoes/formularios/nova_receita.php") ?>
-                                <?php include(__DIR__ . "/./particoes/formularios/novo_debito.php") ?>
+								<?php include(__DIR__ . "/./particoes/formularios/novo_banco_corretora.php") ?>
+								<?php include(__DIR__ . "/./particoes/formularios/nova_receita.php") ?>
+								<?php include(__DIR__ . "/./particoes/formularios/novo_debito.php") ?>
 
 							</div>
 
@@ -136,29 +136,33 @@ if ($login->VerificarLogin()) {
 									</tr>
 								</form>
 
-                                <?php
+								<?php
 
-                                $execucao->setCodigoMySql("SELECT * FROM dbName.bancosCorretoras WHERE email LIKE '" . $login->getSessao() . "' ".$_SESSION['codigo_variante'].";");
-                                $resultadoExecucao = $execucao->ExecutarCodigoMySql();
+								$execucao -> setCodigoMySql(
+									"SELECT * FROM dbName.bancosCorretoras WHERE email LIKE '" . $login -> getSessao(
+									) . "' " . $_SESSION['codigo_variante'] . ";"
+								);
+								$resultadoExecucao = $execucao -> ExecutarCodigoMySql();
 
-                                $quantidade = 0;
-                                $saldoTotal = 0;
+								$quantidade = 0;
+								$saldoTotal = 0;
 
-								if (!intval($_SESSION['ano_referencia']))
-									$_SESSION['ano_referencia'] = date('Y');
-								if (!intval($_SESSION['mes_referencia']))
-									$_SESSION['mes_referencia'] = date('m');
+								$dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> ultimoDiaMes(
+										$_SESSION['mes_referencia'], $_SESSION['ano_referencia']
+									);
 
-                                    $dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao-> ultimoDiaMes($_SESSION['mes_referencia'], $_SESSION['ano_referencia']);
+								while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
 
-                                while ($dadosBancosCorretoras = mysqli_fetch_assoc($resultadoExecucao)) {
+									$quantidade++;
+									$valorFinal = new ValorFinal(
+										'bancoCorretora', $dadosBancosCorretoras['id'], $dataReferencia
+									);
+									$saldo = $valorFinal -> ValorFinal(
+										'bancoCorretora', $dadosBancosCorretoras['id'], $dataReferencia
+									);
+									$saldoTotal += floatval($saldo);
 
-                                    $quantidade++;
-                                    $valorFinal = new ValorFinal('bancoCorretora', $dadosBancosCorretoras['id'], $dataReferencia);
-                                    $saldo = $valorFinal->ValorFinal('bancoCorretora', $dadosBancosCorretoras['id'], $dataReferencia);
-	                                $saldoTotal += floatval($saldo);
-
-                                    ?>
+									?>
 
 									<form action="../backEnd/InteracaoFront/editarBancoCorretora.php" method="POST">
 										<tr>
@@ -172,7 +176,7 @@ if ($login->VerificarLogin()) {
 											<td>
 												<input type="text" class="container input-group-text" name="saldo"
 												       placeholder="Saldo:"
-												       value="R$ <?= $formatacao->formatarValor($saldo) ?>">
+												       value="R$ <?= $formatacao -> formatarValor($saldo) ?>">
 											</td>
 											<td>
 												<button style="text-decoration: none; width: 4vh; height: 4vh;"
@@ -201,12 +205,12 @@ if ($login->VerificarLogin()) {
 										</tr>
 									</form>
 
-                                    <?php
-                                } ?>
+									<?php
+								} ?>
 
 								<th scope="row">#</th>
 								<td>Total</td>
-								<td>R$ <?= $formatacao->formatarValor($saldoTotal) ?></td>
+								<td>R$ <?= $formatacao -> formatarValor($saldoTotal) ?></td>
 								<td></td>
 
 								</tbody>
@@ -220,7 +224,7 @@ if ($login->VerificarLogin()) {
 		</section>
 	</div>
 
-    <?php include(__DIR__ . "/./particoes/rodape/rodape_e_script_js.php") ?>
+	<?php include(__DIR__ . "/./particoes/rodape/rodape_e_script_js.php") ?>
 
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
 	        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">

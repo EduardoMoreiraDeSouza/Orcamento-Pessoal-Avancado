@@ -153,6 +153,7 @@ if ($login -> VerificarLogin()) {
 									) . "' " . $_SESSION['codigo_variante'] . ";"
 								);
 								$resultadoExecucao = $execucao -> ExecutarCodigoMySql();
+
 								$dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> ultimoDiaMes(
 										$_SESSION['mes_referencia'], $_SESSION['ano_referencia']
 									);
@@ -189,11 +190,11 @@ if ($login -> VerificarLogin()) {
 										}
 
 									$limite = floatval(
-											$valorFinal -> ValorFinal(
-												'cartaoCredito', $dadosCartoesCredito['id_bancoCorretora'],
-												$dataReferencia
-											)
-										) ;
+										$valorFinal -> ValorFinal(
+											'cartaoCredito', $dadosCartoesCredito['id_bancoCorretora'],
+											$dataReferencia
+										)
+									);
 
 									$limiteTotal += $limite;
 									$faturaTotal += $fatura;
