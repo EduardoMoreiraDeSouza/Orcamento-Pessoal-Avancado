@@ -17,7 +17,7 @@ if ($login->VerificarLogin()) {
         require __DIR__ . "/../backEnd/funcionalidades/ExcluirBancoCorretora.php";
 
         $exluir = new ExcluirBancoCorretora();
-        $exluir->ExcluirBancoCorretora($_GET['id'], $login->getSessao());
+        $exluir->ExcluirBancoCorretora($_GET['id']);
         $exluir->Redirecionar('bancosCorretoras', true);
     }
     ?>
