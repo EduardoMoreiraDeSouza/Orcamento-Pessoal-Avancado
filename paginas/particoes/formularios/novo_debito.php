@@ -20,6 +20,9 @@
                 <form action="../backEnd/InteracaoFront/novoDebito.php" method="POST"
                       class="form hstack gap-3">
 
+	                <input type="text" class="container input-group-text" name="Nome:"
+	                       placeholder="Nome" required>
+
                     <select class="form-select" name="id" required>
 
                         <option value="" selected>Banco | Corretora</option>

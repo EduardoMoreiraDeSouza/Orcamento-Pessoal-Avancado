@@ -244,6 +244,12 @@ if ($login -> VerificarLogin()) {
 
 												<th scope="row"><?= $parcelasPagas . "/" . $dados['parcelas'] ?></th>
 
+												<input type="text" class="container input-group-text" name="nome"
+												       placeholder="Nome:"
+												       value="R$ <?= $formatacao -> formatarValor(
+													       $dados['nome']
+												       ) ?>">
+
 												<td>
 													<?php include(__DIR__ . "/./particoes/loops/nomes_bancos_corretoras_select.php") ?>
 												</td>
@@ -261,7 +267,6 @@ if ($login -> VerificarLogin()) {
 												<td>
 													<input type="text" class="container input-group-text" name="valor"
 													       placeholder="Valor:"
-													       step="0.01"
 													       value="R$ <?= $formatacao -> formatarValor(
 														       $dados['valor']
 													       ) ?>">
@@ -270,7 +275,7 @@ if ($login -> VerificarLogin()) {
 													<input type="text" class="container input-group-text"
 													       name="parcelas"
 													       placeholder="Parcelas:"
-													       step="0.01" value="<?= $dados['parcelas'] ?>">
+													       value="<?= $dados['parcelas'] ?>">
 												</td>
 												<td>
 													<select class="form-select" name="classificacao" required>

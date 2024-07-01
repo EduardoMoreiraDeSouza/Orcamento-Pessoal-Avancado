@@ -11,6 +11,7 @@ class NovoCredito extends NovoDebito
 
 		$this -> setPaginaPai($_SESSION['pagina_pai']);
 		$this -> setId($this -> id());
+		$this-> setNome($this -> nome());
 		$this -> setClassificacao($this -> classificacao());
 		$this -> setDataCompraPagamento($this -> dataCompraPagamento());
 		$this -> setValor($this -> valor());
@@ -18,6 +19,7 @@ class NovoCredito extends NovoDebito
 
 		if (
 			!$this -> getId() or
+			!$this -> getNome() or
 			!$this -> getClassificacao() or
 			!$this -> getDataCompraPagamento() or
 			!$this -> getValor() or
@@ -37,6 +39,7 @@ class NovoCredito extends NovoDebito
 		if (
 			!$this -> EntradaDadosGastos(
 				$this -> getId(),
+				$this-> getNome(),
 				'Crédito',
 				$this -> getClassificacao(),
 				$this -> getDataCompraPagamento(),

@@ -65,6 +65,7 @@ class NovoBancoCorretora extends Formulario
 			if (
 				!$this -> EntradaDadosGastos(
 					$id_bancoCorretora,
+					'Correção do Saldo',
 					'Débito',
 					'correcaoSaldo',
 					date('Y-m-d'),

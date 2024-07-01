@@ -49,6 +49,7 @@ class EditarBancoCorretora extends Entrar
 			if (
 				!$this -> EntradaDadosGastos(
 					$this -> getId(),
+					'Correção do Saldo',
 					'Débito',
 					'correcaoSaldo',
 					date('Y-m-d'),
