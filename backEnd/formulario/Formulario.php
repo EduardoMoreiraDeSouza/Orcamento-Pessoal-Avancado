@@ -95,7 +95,7 @@ abstract class Formulario extends ValorFinal
 
         elseif ($this->dadosDefinidos()) {
             if (str_contains($this->getDados(), '*'))
-                $this->setDados($this->formatarValorDB($this->getDados()) / $this->parcelas());
+                $this->setDados(number_format($this->formatarValorDB($this->getDados()) / $this->parcelas(), 2, '.', ''));
 
             return $this->formatarValorDB($this->getDados());
         }
