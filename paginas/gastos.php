@@ -293,6 +293,9 @@ if ($login -> VerificarLogin()) {
 															Boas
 															Ações
 														</option>
+														<option value="Boas Ações" <?= $dados['classificacao'] == 'correcaoSaldo' ? 'selected' : '' ?>>
+															Correção do Saldo
+														</option>
 													</select>
 												</td>
 												<td>

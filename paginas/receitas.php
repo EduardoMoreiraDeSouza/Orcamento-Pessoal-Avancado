@@ -255,7 +255,7 @@ if ($login -> VerificarLogin()) {
 															Outros
 														</option>
 														<option value="correcaoSaldo" <?= $dados['classificacao'] == 'correcaoSaldo' ? 'selected' : '' ?>>
-															Correção de Saldo
+															Correção do Saldo
 														</option>
 													</select>
 												</td>
