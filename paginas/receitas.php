@@ -156,27 +156,72 @@ if ($login -> VerificarLogin()) {
 
 								while ($dados = mysqli_fetch_assoc($resultadoExecucao)) {
 
-									$dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> ultimoDiaMes(
-											$_SESSION['mes_referencia'], $_SESSION['ano_referencia']
-										);
+									$mostrarReceita = false;
 
-									if ($_SESSION['mes_referencia'] != 'todos') {
-										$parcelasPassadas = $valorFinal -> parcelasRecebidas($dados, $dataReferencia);
+									if ($_SESSION['mes_referencia'] == 'todos' and $_SESSION['ano_referencia'] != 'todos') {
+										// Mostra todos daquele ano
+										if (
+											$valorFinal -> InformacoesData(
+												'y', $dados['dataCompraPagamento']
+											) == $_SESSION['ano_referencia']
+										) {
+											$mostrarReceita = true;
+											$parcelasPagas = $dados['parcelas'];
+											$dataPagamento = $dados['dataCompraPagamento'];
+											$saldoTotal += $dados['valor'];
+										}
 									}
 
-									if ($parcelasPassadas <= $dados['parcelas'] and $dados['dataCompraPagamento'] <= $dataReferencia and $parcelasPassadas > 0) {
+									elseif ($_SESSION['mes_referencia'] != 'todos' and $_SESSION['ano_referencia'] == 'todos') {
+										// Mostra todos daquele mês
+										if (
+											$valorFinal -> InformacoesData(
+												'm', $dados['dataCompraPagamento']
+											) == $_SESSION['mes_referencia']
+										) {
+											$mostrarReceita = true;
+											$parcelasPagas = $dados['parcelas'];
+											$dataPagamento = $dados['dataCompraPagamento'];
+											$saldoTotal += $dados['valor'];
+										}
+									}
 
+									elseif ($_SESSION['mes_referencia'] == 'todos' and $_SESSION['ano_referencia'] == 'todos') {
+										// Mostra todos os gastos
+										$mostrarReceita = true;
+										$parcelasPagas = $dados['parcelas'];
+										$dataPagamento = $dados['dataCompraPagamento'];
 										$saldoTotal += $dados['valor'];
-										$dataPagamento = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> InformacoesData(
-												'd', $dados['dataCompraPagamento']
+									}
+
+									else {
+
+										$dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> ultimoDiaMes(
+												$_SESSION['mes_referencia'], $_SESSION['ano_referencia']
 											);
+
+										$parcelasPagas = $valorFinal -> parcelasRecebidas($dados, $dataReferencia);
+
+
+										if ($parcelasPagas <= $dados['parcelas'] and $dados['dataCompraPagamento'] <= $dataReferencia and $parcelasPagas > 0) {
+
+											$saldoTotal += $dados['valor'];
+											$dataPagamento = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> InformacoesData(
+													'd', $dados['dataCompraPagamento']
+												);
+											$mostrarReceita = true;
+										}
+
+									}
+
+									if ($mostrarReceita) {
 
 										?>
 
 										<form class="form-inline" action="../backEnd/InteracaoFront/editarReceita.php"
 										      method="POST">
 											<tr>
-												<th scope="row"><?= $parcelasPassadas . "/" . $dados['parcelas'] ?></th
+												<th scope="row"><?= $parcelasPagas . "/" . $dados['parcelas'] ?></th
 												<td></td>
 												<td>
 													<?php include(__DIR__ . "/./particoes/loops/nomes_bancos_corretoras_select.php") ?>

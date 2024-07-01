@@ -16,9 +16,13 @@
             <div class="col-sm" style="margin-left: -28%;">
                 <select class="form-control form-control bg-success text-light text-center"
                         name="mes_referencia">
-                    <option <?= $_SESSION['mes_referencia'] == 'todos' ? 'selected' : '' ?> value="todos">
-                        Todos
-                    </option>
+
+	                <?php if ($_SESSION['pagina_pai'] != 'bancosCorretoras' and $_SESSION['pagina_pai'] != 'credito') {?>
+		                <option <?= $_SESSION['mes_referencia'] == 'todos' ? 'selected' : '' ?> value="todos">
+		                    Todos
+		                </option>
+	                <?php } ?>
+
                     <option <?= $_SESSION['mes_referencia'] == '1' ? 'selected' : '' ?> value="1">1 (Jan)
                     </option>
                     <option <?= $_SESSION['mes_referencia'] == '2' ? 'selected' : '' ?> value="2">2 (Fev)

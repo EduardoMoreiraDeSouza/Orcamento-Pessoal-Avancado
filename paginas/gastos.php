@@ -153,10 +153,12 @@ if ($login -> VerificarLogin()) {
 								require __DIR__ . "/../backEnd/gerais/ValorFinal.php";
 								$valorFinal = new ValorFinal();
 								$execucao = new ExecucaoCodigoMySql();
+
 								$execucao -> setCodigoMySql(
 									"SELECT * FROM dbName.gastos WHERE email LIKE '" . $login -> getSessao(
 									) . "' " . $_SESSION['codigo_variante'] . ";"
 								);
+
 								$resultadoExecucao = $execucao -> ExecutarCodigoMySql();
 								$saldoTotal = 0;
 
@@ -174,6 +176,7 @@ if ($login -> VerificarLogin()) {
 											$mostrarGastos = true;
 											$parcelasPagas = $dados['parcelas'];
 											$vencimento = '*';
+											$saldoTotal += $dados['valor'];
 										}
 									}
 
@@ -187,6 +190,7 @@ if ($login -> VerificarLogin()) {
 											$mostrarGastos = true;
 											$parcelasPagas = $dados['parcelas'];
 											$vencimento = '*';
+											$saldoTotal += $dados['valor'];
 										}
 									}
 
@@ -195,6 +199,7 @@ if ($login -> VerificarLogin()) {
 										$mostrarGastos = true;
 										$parcelasPagas = $dados['parcelas'];
 										$vencimento = '*';
+										$saldoTotal += $dados['valor'];
 									}
 
 									else {
