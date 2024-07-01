@@ -8,17 +8,19 @@ if (!isset($_SESSION['codigo_variante']))
 
 $_SESSION['codigo_variante'] = '';
 
-require_once __DIR__ . "/../../backEnd/gerais/FormatacaoDados.php";
-$formatarDados = new FormatacaoDados();
-
-if ($_SESSION['pagina_pai'] == 'bancosCorretoras' or $_SESSION['pagina_pai'] == 'credito')
-	$_SESSION['ano_referencia'] = date('Y');
-else
-	$_SESSION['ano_referencia'] = $formatarDados -> fraseMinuscula($_POST['ano_referencia']);
+if ($_SESSION['pagina_pai'] == 'bancosCorretoras' or $_SESSION['pagina_pai'] == 'credito') {
+	if (!intval($_SESSION['ano_referencia']))
+		$_SESSION['ano_referencia'] = date('Y');
+	if (!intval($_SESSION['mes_referencia']))
+		$_SESSION['mes_referencia'] = date('m');
+}
 
 // Set Ano de Referencia
 
 if (isset($_POST['ano_referencia'])) {
+	require_once __DIR__ . "/../../backEnd/gerais/FormatacaoDados.php";
+	$formatarDados = new FormatacaoDados();
+	$_SESSION['ano_referencia'] = $formatarDados -> fraseMinuscula($_POST['ano_referencia']);
 }
 
 else if ($_SESSION['ano_referencia'] == '')
