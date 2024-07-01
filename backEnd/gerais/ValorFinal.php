@@ -57,7 +57,7 @@ class ValorFinal extends FormatacaoDados
 						if ($gastos[$gastoAtual]['formaPagamento'] == 'Débito') {
 							$parcelasDebitadas = $this -> parcelasDebitadas($gastos[$gastoAtual], $dataReferencia);
 							if ($parcelasDebitadas > $gastos[$gastoAtual]['parcelas'])
-								$parcelasDebitadas = 0;
+								$parcelasDebitadas = $gastos[$gastoAtual]['parcelas'];
 							$gastosDebitoTotal += $gastos[$gastoAtual]['valor'] * $parcelasDebitadas;
 						}
 					$gastoAtual++;
@@ -84,8 +84,6 @@ class ValorFinal extends FormatacaoDados
 				$this -> ObterDadosBancosCorretoras($id, $this -> getSessao())[0]['bancoCorretora'],
 				$saldoFinal,
 			);
-
-			print "<script>alert('". $receitaTotal . "/" . $gastosDebitoTotal . "')</script>";
 
 			return $saldoFinal;
 		}
