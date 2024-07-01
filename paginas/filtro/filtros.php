@@ -15,7 +15,7 @@ if (isset($_POST['ano_referencia'])) {
 	$formatarDados = new FormatacaoDados();
 	$_SESSION['ano_referencia'] = $formatarDados -> fraseMinuscula($_POST['ano_referencia']);
 
-	if (gettype($_SESSION['ano_referencia']) != 'integer')
+	if (!intval($_SESSION['ano_referencia']))
 		$_SESSION['ano_referencia'] = 'todos';
 }
 
