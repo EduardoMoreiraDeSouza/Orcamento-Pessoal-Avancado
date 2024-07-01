@@ -154,6 +154,11 @@ if ($login -> VerificarLogin()) {
 								);
 								$resultadoExecucao = $execucao -> ExecutarCodigoMySql();
 
+								if (!intval($_SESSION['ano_referencia']))
+									$_SESSION['ano_referencia'] = date('Y');
+								if (!intval($_SESSION['mes_referencia']))
+									$_SESSION['mes_referencia'] = date('m');
+
 								$dataReferencia = $_SESSION['ano_referencia'] . "-" . $_SESSION['mes_referencia'] . "-" . $execucao -> ultimoDiaMes(
 										$_SESSION['mes_referencia'], $_SESSION['ano_referencia']
 									);

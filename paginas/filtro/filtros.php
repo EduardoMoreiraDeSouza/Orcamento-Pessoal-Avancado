@@ -8,13 +8,6 @@ if (!isset($_SESSION['codigo_variante']))
 
 $_SESSION['codigo_variante'] = '';
 
-if ($_SESSION['pagina_pai'] == 'bancosCorretoras' or $_SESSION['pagina_pai'] == 'credito') {
-	if (!intval($_SESSION['ano_referencia']))
-		$_SESSION['ano_referencia'] = date('Y');
-	if (!intval($_SESSION['mes_referencia']))
-		$_SESSION['mes_referencia'] = date('m');
-}
-
 // Set Ano de Referencia
 
 if (isset($_POST['ano_referencia'])) {
