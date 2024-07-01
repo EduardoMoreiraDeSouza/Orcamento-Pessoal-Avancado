@@ -55,6 +55,9 @@ class FormatacaoDados extends VerificarSenha
 		if ($negativo)
 			$valor = (floatval($valor)) * -1;
 
+		if (empty($valor))
+			return 0;
+
 		return number_format($valor, 2, '.', '');
 	}
 

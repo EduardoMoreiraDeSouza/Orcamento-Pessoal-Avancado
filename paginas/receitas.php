@@ -218,7 +218,7 @@ if ($login -> VerificarLogin()) {
 
 										?>
 
-										<form class="form-inline" action="../backEnd/InteracaoFront/editarReceita.php"
+										<form class="form-inline" action="./editarReceitas.php"
 										      method="POST">
 											<tr>
 												<th scope="row"><?= $parcelasPagas . "/" . $dados['parcelas'] ?></th
@@ -258,17 +258,6 @@ if ($login -> VerificarLogin()) {
 															Correção do Saldo
 														</option>
 													</select>
-												</td>
-												<td>
-													<input type="text" class="form-control input-group-text"
-													       name="parcelas"
-													       placeholder="Parcelas:"
-													       step="0.01" value="<?= $dados['parcelas'] ?>">
-												</td>
-												<td>
-													<input type="date" class="form-control input-group-text"
-													       name="dataCompraPagamento"
-													       value="<?= $dataPagamento ?>">
 												</td>
 												<td>
 													<button style="text-decoration: none; width: 4vh; height: 4vh;"
