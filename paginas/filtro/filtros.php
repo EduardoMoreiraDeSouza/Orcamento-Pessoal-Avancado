@@ -37,9 +37,9 @@ else if ($_SESSION['mes_referencia'] == '')
 	$_SESSION['mes_referencia'] = date('m');
 
 if ($_SESSION['pagina_pai'] == 'bancosCorretoras' or $_SESSION['pagina_pai'] == 'credito') {
-	if (gettype($_SESSION['ano_referencia']) != 'integer')
+	if (!intval($_SESSION['ano_referencia']))
 		$_SESSION['ano_referencia'] = date('Y');
-	if (gettype($_SESSION['mes_referencia']) != 'integer')
+	if (!intval($_SESSION['mes_referencia']))
 		$_SESSION['mes_referencia'] = date('m');
 }
 
