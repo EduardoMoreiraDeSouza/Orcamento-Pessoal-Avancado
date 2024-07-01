@@ -12,8 +12,8 @@
         <div class="collapse collapse-horizontal" id="novoDebito">
 
             <p style="font-size: medium; margin: 0;">Não sabe o valor das parcelas?
-                <br/>Coloque o valor total do gasto (Com juros, se tiver), e
-                no final coloque um * (Asterisco) para calcularmos para você!</p>
+                Insira um * (Asterisco) no início e coloque o valor total do gasto (Com
+	            juros, se tiver) Ex.: *100,00</p>
 
             <div class="card card-body border border-dark bg-secondary"
                  style="width: 90%;">

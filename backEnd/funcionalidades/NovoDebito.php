@@ -30,9 +30,6 @@ class NovoDebito extends EditarBancoCorretora
 		)
 			return (bool) $this -> RetornarErro('pai', null);
 
-		if ($this -> getValor() < 0)
-			$this -> setValor($this -> getValor() * -1);
-
 		if (!$this -> ObterDadosBancosCorretoras($this -> getId(), $this -> getSessao()))
 			return (bool) $this -> RetornarErro('pai', 'naoBancoCorretora');
 

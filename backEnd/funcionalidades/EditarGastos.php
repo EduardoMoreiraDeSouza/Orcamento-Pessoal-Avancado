@@ -33,9 +33,6 @@ class EditarGastos extends NovoCredito
 		)
 			return (bool) $this -> RetornarErro('pai', null);
 
-		if ($this -> getValor() <= 0)
-			$this -> setValor($this -> getValor() * -1);
-
 		if (!$this -> ObterDadosBancosCorretoras($this -> getBancoCorretoraId(), $this -> getSessao()))
 			return (bool) $this -> RetornarErro('pai', 'naoBancoCorretora');
 
