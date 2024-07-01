@@ -16,9 +16,12 @@ abstract class Formulario extends ValorFinal
         return false;
     }
 
-    protected function cartaoCredito()
+    protected function nome()
     {
-        $this->setDados(addslashes($_POST['cartaoCredito']));
+        $this->setDados($this-> fraseMaiuscula(addslashes($_POST['nome'])));
+
+		if (strlen($this-> getDados()) <= 0 or strlen($this-> getDados()) > 60)
+			return (bool)$this-> RetornarErro($_SESSION['pagina_pai'], 'nome');
 
         if ($this->dadosDefinidos())
             return $this->getDados();
@@ -78,7 +81,7 @@ abstract class Formulario extends ValorFinal
 
 	protected function bancoCorretoraId()
 	{
-		$this->setDados($this->fraseMaiuscula($this->fraseMinuscula(addslashes($_POST['bancoCorretoraId']))));
+		$this->setDados(addslashes($_POST['bancoCorretoraId']));
 
 		if ($this->dadosDefinidos())
 			return $this->getDados();

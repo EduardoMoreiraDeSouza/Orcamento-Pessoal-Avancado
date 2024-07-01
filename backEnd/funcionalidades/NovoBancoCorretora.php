@@ -4,7 +4,8 @@ require_once __DIR__ . "/../formulario/Formulario.php";
 
 class NovoBancoCorretora extends Formulario
 {
-	private $bancoCorretora;
+	private $nome;
+	private $bancoCorretoraId;
 	private $saldo;
 
 	public function __construct()
@@ -13,11 +14,11 @@ class NovoBancoCorretora extends Formulario
 			return false;
 
 		$this -> setPaginaPai($_SESSION['pagina_pai']);
-		$this -> setBancoCorretora($this -> bancoCorretora());
+		$this -> setBancoCorretoraId($this -> bancoCorretora());
 		$this -> setSaldo($this -> saldo());
 
 		if (
-			!$this -> getBancoCorretora()
+			!$this -> getBancoCorretoraId()
 		)
 			return (bool) $this -> RetornarErro('pai', null);
 
@@ -26,14 +27,14 @@ class NovoBancoCorretora extends Formulario
 		if ($bancos = $this -> ObterDadosBancosCorretoras(null, $this -> getSessao())) {
 			$contador = 0;
 			foreach ($bancos as $ignored) {
-				if ($bancos[$contador]['bancoCorretora'] == $this -> getBancoCorretora())
+				if ($bancos[$contador]['bancoCorretora'] == $this -> getBancoCorretoraId())
 					return (bool) $this -> RetornarErro('pai', 'x2bancosCorretoras');
 			}
 		}
 
 		if (
 			!$this -> EntradaDadosBancosCorretoras(
-				$this -> getBancoCorretora()
+				$this -> getBancoCorretoraId()
 			)
 		)
 			return (bool) $this -> RetornarErro('pai', null);
@@ -41,7 +42,7 @@ class NovoBancoCorretora extends Formulario
 		if ($this -> getSaldo() != 0 and $bancos = $this -> ObterDadosBancosCorretoras(null, $this -> getSessao())) {
 			$contador = 0;
 			foreach ($bancos as $ignored) {
-				if ($bancos[$contador]['bancoCorretora'] == $this -> getBancoCorretora())
+				if ($bancos[$contador]['bancoCorretora'] == $this -> getBancoCorretoraId())
 					$id_bancoCorretora = $bancos[$contador]['id'];
 				$contador++;
 			}
@@ -51,6 +52,7 @@ class NovoBancoCorretora extends Formulario
 			if (
 				!$this -> EntradaDadosReceita(
 					$id_bancoCorretora,
+					'Correção do Saldo',
 					'correcaoSaldo',
 					date('Y-m-d'),
 					$this -> getSaldo(),
@@ -77,14 +79,14 @@ class NovoBancoCorretora extends Formulario
 	}
 
 
-	protected function getBancoCorretora()
+	protected function getBancoCorretoraId()
 	{
-		return $this -> bancoCorretora;
+		return $this -> bancoCorretoraId;
 	}
 
-	protected function setBancoCorretora($bancoCorretora): void
+	protected function setBancoCorretoraId($bancoCorretoraId): void
 	{
-		$this -> bancoCorretora = $bancoCorretora;
+		$this -> bancoCorretoraId = $bancoCorretoraId;
 	}
 
 	protected function getSaldo()
@@ -95,5 +97,15 @@ class NovoBancoCorretora extends Formulario
 	protected function setSaldo($valor)
 	{
 		$this -> saldo = $valor;
+	}
+
+	protected function getNome()
+	{
+		return $this -> nome;
+	}
+
+	protected function setNome($nome): void
+	{
+		$this -> nome = $nome;
 	}
 }

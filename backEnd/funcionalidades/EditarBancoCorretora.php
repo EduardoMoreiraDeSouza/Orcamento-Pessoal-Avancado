@@ -11,11 +11,11 @@ class EditarBancoCorretora extends Entrar
 
 		$this -> setPaginaPai($_SESSION['pagina_pai']);
 		$this -> setId($this -> id());
-		$this -> setBancoCorretora($this -> bancoCorretora());
+		$this -> setBancoCorretoraId($this -> bancoCorretora());
 		$this -> setSaldo($this -> saldo());
 
 		if (
-			!$this -> getBancoCorretora() or
+			!$this -> getBancoCorretoraId() or
 			!$this -> getId() or
 			!$this -> getSaldo()
 		)
@@ -24,7 +24,7 @@ class EditarBancoCorretora extends Entrar
 		if (
 			!$this -> AlterarDadosBancosCorretoras(
 				$this -> getId(),
-				$this -> getBancoCorretora(),
+				$this -> getBancoCorretoraId(),
 				'0'
 			)
 		)
@@ -35,6 +35,7 @@ class EditarBancoCorretora extends Entrar
 			if (
 				!$this -> EntradaDadosReceita(
 					$this -> getId(),
+					'Correção do Saldo',
 					'correcaoSaldo',
 					date('Y-m-d'),
 					$this -> getSaldo() - floatval($this -> ValorFinal('bancoCorretora', $this -> getId())),

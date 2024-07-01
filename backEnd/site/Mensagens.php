@@ -16,6 +16,7 @@ abstract class Mensagens extends ScriptJS
             'senhaPequena' => 'A senha deve conter no mínimo 8 caracteres!',
             'senha' => 'A senha está incorreta!',
             'confirmarSenhaErro' => 'As senhas não são iguais!',
+			'nome' => 'O nome não pode ser vazio nem maior que 60 caracteres!',
 
             'emailFalso' => 'Email inválido!',
 

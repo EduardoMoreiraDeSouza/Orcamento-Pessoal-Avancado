@@ -118,9 +118,17 @@ if ($login -> VerificarLogin()) {
 						?>
 
 						<form class="form-inline w-75 container" action="../backEnd/InteracaoFront/editarReceita.php" method="post">
+
 							<div class="form-group">
 								<label for="">Banco / Corretora:</label>
 								<?php include(__DIR__ . "/./particoes/loops/nomes_bancos_corretoras_select.php") ?>
+							</div>
+
+							<div class="form-group">
+								<label for="">Nome:</label>
+								<input type="text" class="form-control input-group-text" name="nome"
+								       placeholder="Nome:"
+								       value="R$ <?= $formatacao -> formatarValor($dados['valor']) ?>">
 							</div>
 
 							<div class="form-group">

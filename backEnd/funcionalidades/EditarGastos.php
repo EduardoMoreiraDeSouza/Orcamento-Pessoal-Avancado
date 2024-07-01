@@ -5,7 +5,6 @@ require_once __DIR__ . "/./NovoCredito.php";
 class EditarGastos extends NovoCredito
 {
 
-	protected $bancoCorretoraId;
 	protected $formaPagamento;
 	protected $id;
 
@@ -78,15 +77,5 @@ class EditarGastos extends NovoCredito
 	protected function setId($id): void
 	{
 		$this -> id = $id;
-	}
-
-	protected function getBancoCorretoraId()
-	{
-		return $this -> bancoCorretoraId;
-	}
-
-	protected function setBancoCorretoraId($bancoCorretoraId): void
-	{
-		$this -> bancoCorretoraId = $bancoCorretoraId;
 	}
 }

@@ -10,7 +10,8 @@ class EditarReceita extends EditarGastos
 
         $this -> setPaginaPai($_SESSION['pagina_pai']);
         $this -> setId($this-> id());
-        $this -> setBancoCorretora($this -> bancoCorretoraId());
+		$this -> setNome($this-> nome());
+        $this -> setBancoCorretoraId($this -> bancoCorretoraId());
         $this -> setClassificacao($this -> classificacao());
         $this -> setDataCompraPagamento($this -> dataCompraPagamento());
         $this -> setValor($this -> valor());
@@ -18,7 +19,8 @@ class EditarReceita extends EditarGastos
 
         if (
             !$this -> getId() or
-            !$this -> getBancoCorretora() or
+            !$this -> getNome() or
+            !$this -> getBancoCorretoraId() or
             !$this -> getClassificacao() or
             !$this -> getDataCompraPagamento() or
             !$this -> getValor() or
@@ -29,12 +31,13 @@ class EditarReceita extends EditarGastos
         if ($this-> getValor() <= 0)
             return (bool)$this-> RetornarErro('pai', 'valorAbaixoZero');
 
-        if (!$this -> ObterDadosBancosCorretoras($this -> getBancoCorretora(), $this -> getSessao()))
+        if (!$this -> ObterDadosBancosCorretoras($this -> getBancoCorretoraId(), $this -> getSessao()))
             return (bool)$this-> RetornarErro('pai', 'naoBancoCorretora');
 
         if (!$this -> AlterarDadosReceita(
            $this -> getId(),
-           $this -> getBancoCorretora(),
+           $this -> getBancoCorretoraId(),
+           $this -> getNome(),
            $this -> getClassificacao(),
            $this -> getValor(),
            $this-> getParcelas(),
