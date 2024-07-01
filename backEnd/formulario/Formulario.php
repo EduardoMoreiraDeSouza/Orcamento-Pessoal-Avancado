@@ -90,7 +90,7 @@ abstract class Formulario extends ValorFinal
     {
         $this->setDados(addslashes($_POST['valor']));
 
-        if (!$this-> formatarValorDB($this-> getDados()) or $this->formatarValorDB($this->getDados()) < 0)
+        if (!$this-> formatarValorDB($this-> getDados()) or $this -> formatarValorDB($this -> getDados()) < 0)
             return (bool)$this-> RetornarErro('pai', 'valorInvalido');
 
         elseif ($this->dadosDefinidos()) {

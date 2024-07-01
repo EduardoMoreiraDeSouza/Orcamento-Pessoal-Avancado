@@ -36,12 +36,11 @@ class FormatacaoDados extends VerificarSenha
 
     public function formatarValorDB($valor)
     {
+	    $negativo = false;
+
         if (substr_count($valor, ',') > 1 or str_contains(substr($valor, -3, 3), '.')) {
             return (bool)$this-> RetornarErro('pai', 'valorInvalido');
         }
-
-        $negativo = false;
-
         if ($valor < 0 or str_contains($valor, '-'))
             $negativo = true;
 
