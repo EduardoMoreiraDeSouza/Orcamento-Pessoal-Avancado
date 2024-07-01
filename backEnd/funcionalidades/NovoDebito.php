@@ -36,8 +36,6 @@ class NovoDebito extends EditarBancoCorretora
 		if (!$this -> ObterDadosBancosCorretoras($this -> getId(), $this -> getSessao()))
 			return (bool) $this -> RetornarErro('pai', 'naoBancoCorretora');
 
-		$this -> timezone();
-
 		if (
 			!$this -> EntradaDadosGastos(
 				$this -> getId(),

@@ -19,6 +19,7 @@ class Globais{
             return null;
 	    if (!isset($_SESSION['pagina_pai']))
 			$_SESSION['pagina_pai'] = null;
+		$this-> timezone();
 
         return $_SESSION['usuario'];
     }

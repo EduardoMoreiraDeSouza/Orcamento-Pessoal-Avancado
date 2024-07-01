@@ -47,8 +47,6 @@ class NovoBancoCorretora extends Formulario
 			}
 		}
 
-		$this -> timezone();
-
 		if ($this -> getSaldo() > 0) {
 			if (
 				!$this -> EntradaDadosReceita(

@@ -6,8 +6,6 @@ class InformacoesData extends RetornarErro
 {
     public function InformacoesData($informacaoEsperada, $data = null)
     {
-        $this-> timezone();
-
         if ($data == null)
             $data = date("Y-m-d");
 

@@ -31,8 +31,6 @@ class NovoCredito extends NovoDebito
 		if ($this -> getValor() < 0)
 			$this -> setValor($this -> getValor() * -1);
 
-		$this -> timezone();
-
 		if ($this -> ValorFinal('cartaoCredito', $this -> getId()) < $this -> getValor() * $this -> getParcelas())
 			return (bool) $this -> RetornarErro('pai', 'limiteInsuficiente');
 

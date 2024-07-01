@@ -6,9 +6,6 @@ class ValorFinal extends FormatacaoDados
 {
 	public function ValorFinal($tipo, $id, $dataReferencia = null)
 	{
-
-		$this -> timezone();
-
 		if ($tipo == 'cartaoCredito') {
 
 			$dadosCartao = $this -> ObterDadosCartoesCredito($id, $this -> getSessao());
