@@ -16,8 +16,7 @@ class EditarBancoCorretora extends Entrar
 
 		if (
 			!$this -> getBancoCorretoraId() or
-			!$this -> getId() or
-			!$this -> getSaldo()
+			!$this -> getId()
 		)
 			return (bool) $this -> RetornarErro('pai', null);
 
@@ -29,7 +28,6 @@ class EditarBancoCorretora extends Entrar
 			)
 		)
 			return (bool) $this -> RetornarErro('pai', null);
-
 
 		if ($this -> getSaldo() > floatval($this -> ValorFinal('bancoCorretora', $this -> getId()))) {
 			if (
