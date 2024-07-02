@@ -1,4 +1,4 @@
-<select class="form-select" name="classificacao" required>
+<select class="form-select text-center" name="classificacao" required>
     <option value="" selected>Classificação</option>
     <option value="Pessoal">Pessoal</option>
     <option value="Necessário">Necessário</option>

@@ -45,7 +45,7 @@ if ($login -> VerificarLogin()) {
 
 							<div class="form-group mt-2">
 								<label for="">Banco / Corretora:</label>
-								<select class="form-select" name="id" required>
+								<select class="form-select text-center" name="id" required>
 									<option value="" selected>Cartão</option>
 									<?php include(__DIR__ . '/./particoes/loops/nomes_cartoes_credito.php') ?>
 								</select>
