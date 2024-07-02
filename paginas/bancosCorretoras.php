@@ -40,7 +40,7 @@ if ($login -> VerificarLogin()) {
 	</head>
 
 	<body>
-	<nav class="navbar navbar-dark bg-dark fixed-top">
+	<nav class="navbar fixed-top">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="../index.php">< Orçamento Pessoal ></a>
 
@@ -96,12 +96,12 @@ if ($login -> VerificarLogin()) {
 		<section class="banner" id="banner">
 			<div class="overlay"></div>
 			<div class="container chamada-banner introducao">
+
+				<?php include(__DIR__ . "/./particoes/formularios/form_data_referencia.php") ?>
 				<div class="row">
 					<div class="row-md-12 text-center ">
 
-						<?php include(__DIR__ . "/./particoes/formularios/form_data_referencia.php") ?>
-
-						<h2 class="pt-4">
+						<h2 class="pt-4 mb-4">
 							Bancos/Corretoras
 						</h2>
 
@@ -180,7 +180,7 @@ if ($login -> VerificarLogin()) {
 											</td>
 											<td>
 												<button style="text-decoration: none; width: 4vh; height: 4vh;"
-												        class="text-primary bg-transparent rounded-circle border border-primary"
+												        class="text-primary bg-transparent rounded-circle border border-dark"
 												        name="id"
 												        value="<?= $dadosBancosCorretoras['id'] ?>">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -192,7 +192,7 @@ if ($login -> VerificarLogin()) {
 
 												<a href="?excluir=true&id=<?= $dadosBancosCorretoras['id'] ?>"
 												   style="text-decoration: none; margin-left: 0.8vh; width: 4vh; height: 4vh;"
-												   class="text-danger rounded-circle border border-danger">
+												   class="text-danger ">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 													     fill="currentColor" class="bi bi-trash"
 													     viewBox="0 0 16 16">

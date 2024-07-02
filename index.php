@@ -23,7 +23,7 @@ $globais = new Globais;
 </head>
 <body>
 
-<nav class="navbar navbar-dark bg-dark fixed-top">
+<nav class="navbar fixed-top">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="./index.php">< Orçamento Pessoal ></a>
 
@@ -99,10 +99,10 @@ $globais = new Globais;
 		<div class="container chamada-banner introducao">
 			<div class="row">
 				<div class="row-md-12 text-center ">
-					<h2 class="pt-4">
+					 <h1 class="pt-4 mb-4">
 						Orçamento Pessoal
-					</h2>
-					<p>Para que você tenha uma melhor vida financeira.</p>
+					</h1>
+					<p class="apresentacao">Para que você tenha uma melhor vida financeira.</p>
 					<ul class="container" style="list-style-type: none;">
 						<li class="pt-3">
 							<a class="nav-link active text-light entrar" aria-current="page"

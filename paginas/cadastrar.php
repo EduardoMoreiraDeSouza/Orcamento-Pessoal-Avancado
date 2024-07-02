@@ -23,7 +23,7 @@ $globais = new Globais;
 </head>
 <body>
 
-<nav class="navbar navbar-dark bg-dark fixed-top">
+<nav class="navbar fixed-top">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="../index.php">< Orçamento Pessoal ></a>
 
@@ -93,38 +93,38 @@ $globais = new Globais;
 			<div class="row">
 				<div class="row-md-12 text-center ">
 
-					<h2 class="pt-4">
+					 <h1 class="pt-4 mb-4">
 						Orçamento Pessoal
-					</h2>
+					</h1>
 
-					<main class="container w-50 mt-4 p-3 text-start">
+					<main class="container w-50 mt-4 p-3">
 
 						<h3 class="text-center">Cadastrar</h3>
 
 						<form class="mt-2" action="../backEnd/InteracaoFront/cadastrar.php" method="POST">
 
-							<div class="mb-1">
+							<div class="mb-1 text-start">
 								<label for="exampleInputEmail1" class="form-label">E-mail:</label>
-								<input type="text" name="email" class="form-control">
+								<input type="text" name="email" class="form-control container input-group-text">
 							</div>
 
-							<div class="mb-1">
+							<div class="mb-1 text-start">
 								<label for="exampleInputPassword1" class="form-label">Senha:</label>
-								<input type="password" name="senha" class="form-control">
+								<input type="password" name="senha" class="form-control text-center">
 							</div>
 
-							<div class="mb-1">
+							<div class="mb-1 text-start">
 								<label for="exampleInputPassword1" class="form-label">Confirmar Senha:</label>
-								<input type="password" name="confirmarSenha" class="form-control">
+								<input type="password" name="confirmarSenha" class="form-control text-center">
 							</div>
 
-							<button type="submit" class="btn btn-primary container-fluid mt-3 mb-5">Cadastrar</button>
+							<button type="submit" class="botao-primario text-center container-fluid mt-3 mb-5">Cadastrar</button>
 
 						</form>
 
 					</main>
 
-					<a class="nav-link active text-light entrar mb-5" aria-current="page"
+					<a class="nav-link active text-light cadastrar mb-5" aria-current="page"
 					   href="../paginas/entrar.php">
 						Entrar
 					</a>

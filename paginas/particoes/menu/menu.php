@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark bg-dark fixed-top">
+<nav class="navbar fixed-top">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="../index.php">< Orçamento Pessoal ></a>
 
@@ -21,16 +21,16 @@
 				<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 
 						<li class="nav-item h6">
-							<a class="nav-link text-light" href="./paginas/bancosCorretoras.php">Bancos/Corretoras</a>
+							<a class="nav-link text-light" href="./bancosCorretoras.php">Bancos/Corretoras</a>
 						</li>
 						<li class="nav-item h6">
-							<a class="nav-link text-light" href="./paginas/receitas.php">Receitas</a>
+							<a class="nav-link text-light" href="./receitas.php">Receitas</a>
 						</li>
 						<li class="nav-item h6">
-							<a class="nav-link text-light" href="./paginas/gastos.php">Gastos</a>
+							<a class="nav-link text-light" href="./gastos.php">Gastos</a>
 						</li>
 						<li class="nav-item h6">
-							<a class="nav-link text-light" href="./paginas/cartaoCredito.php">Cartões de Crédito</a>
+							<a class="nav-link text-light" href="./cartaoCredito.php">Cartões de Crédito</a>
 						</li>
 						<li class="nav-item h6">
 							<a class="nav-link text-light" href="#">Reserva de Emergência (Em Breve)</a>

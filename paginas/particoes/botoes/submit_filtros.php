@@ -1,1 +1,1 @@
-<button type="submit" class="btn btn-primary" name="filtrar">Ok</button>
+<button type="submit" class="botao-primario-filtro mt-0 mb-0" name="filtrar">Ok</button>

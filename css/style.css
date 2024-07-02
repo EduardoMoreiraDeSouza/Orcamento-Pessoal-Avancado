@@ -1,3 +1,7 @@
+* {
+    font-family: Andale Mono, monospace;
+}
+
 .box {
     position: relative;
 }
@@ -29,8 +33,8 @@ section.banner > .container {
 }
 
 div.introducao {
-    background: rgba(206, 199, 182, .4);
-    text-shadow: 1px 1px 0 black;
+    background: rgba(202, 217, 199, .7);
+    /*text-shadow: 1px 1px 0 black;*/
     width: 90%;
     border-radius: 1vh;
 }
@@ -40,6 +44,16 @@ div.introducao {
     font-size: 5vh;
 }
 
+h1.pt-4 {
+    font-weight: 1000;
+    color: #072620;
+}
+
+p.apresentacao {
+    font-weight: 1000;
+    color: #637343;
+}
+
 .chamada-banner p {
     color: #5a5239;
     font-size: 2.5vh;
@@ -47,7 +61,7 @@ div.introducao {
 }
 
 .chamada-banner a {
-    font-size: 2.2vh;
+    font-size: 2.0vh;
     display: inline-block;
     color: white;
     border-radius: 1vh;
@@ -55,12 +69,12 @@ div.introducao {
 
 .chamada-banner .entrar {
     padding: 0.8vh 15vh;
-    background: #26A69A;
+    background: #F29D52;
 }
 
 .chamada-banner .cadastrar {
-    padding: 0.8vh 13.4vh;
-    background: #726f6f;
+    padding: 0.8vh 15vh;
+    background: #637343;
 }
 
 table,form {
@@ -69,4 +83,108 @@ table,form {
 
 table ol, ul, li {
     width: 100%; !important;
+}
+
+label {
+    font-size: larger;
+    font-weight: 800;
+}
+
+.input-group-text, input[type=date] {
+    font-size: large;
+    font-weight: 600;
+    color: #072620;
+    background-color: white;
+}
+
+.navbar {
+    background-color: #072620;
+    border-bottom: #CAD9C7 1px solid;
+    border-top: #CAD9C7 1px solid;
+}
+
+a.navbar-brand {
+    color: #CAD9C7;
+    font-weight: 1000;
+    font-size: x-large;
+}
+
+.navbar-toggler, .navbar-toggler-icon {
+    background-color: #CAD9C7;
+}
+
+.offcanvas-body {
+    background-color: #637343;
+}
+
+.offcanvas-header {
+    background-color: #A67A46;
+}
+
+a.nav-link {
+    font-weight: 700;
+    font-size: large;
+}
+
+.text-danger {
+    color: #8C3623;
+}
+
+
+option, select, .form-select {
+    font-weight: 700;
+    font-size: large;
+}
+
+.botao-primario {
+    background-color: #8C3623;
+    border: none;
+    width: 50%;
+    font-weight: 1000;
+    color: white;
+    padding: 0.8vh 13.4vh;
+    border-radius: 1vh;
+    font-size: 2vh;
+}
+
+.botao-primario-filtro {
+    background-color: #8C3623;
+    border: none;
+    font-weight: 1000;
+    color: white;
+    padding: 0.8vh 2.0vh;
+    border-radius: 1vh;
+    font-size: 2vh;
+}
+
+.texto-alerta {
+    color: #8C3623;
+    font-size: 2.5vh;
+    text-decoration: underline;
+}
+
+.selecao-mes, .selecao-ano, .selecao-mes:focus, .selecao-ano:focus, .selecao-mes option {
+    background-color: #8C3623;
+    border: none;
+}
+
+.selecao-mes {
+    margin-left: -51%;
+}
+
+.selecao-ano {
+    margin-left: -4%;
+}
+
+.botao-selecao-data {
+    margin-left: -11%;
+    border: none;
+}
+
+.form-selecao-data {
+    padding-top: 0.3%;
+}
+
+h2.pt-4 {
+    font-weight: 1000;
 }

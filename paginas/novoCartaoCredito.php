@@ -37,13 +37,13 @@ if ($login -> VerificarLogin()) {
 				<div class="row">
 					<div class="row-md-12 text-center">
 
-						<h2 class="pt-4">
+						 <h2 class="pt-4 mb-4">
 							Novo Cartão de Crédito
 						</h2>
 
 						<form class="form-inline w-75 container" action="../backEnd/InteracaoFront/novoCartaoCredito.php" method="post">
 
-							<div class="form-group">
+							<div class="form-group mt-2">
 								<label for="">Banco / Corretora:</label>
 								<select class="form-select" name="id" required>
 									<option value="" selected>Banco | Corretora</option>
@@ -51,14 +51,14 @@ if ($login -> VerificarLogin()) {
 								</select>
 							</div>
 
-							<div class="form-group">
+							<div class="form-group mt-2">
 								<label for="">Limite Total:</label>
 								<input type="number" class="container input-group-text" name="valor"
 								       placeholder="Limite:" step="0.01" required>
 							</div>
 
 
-							<div class="form-group">
+							<div class="form-group mt-2">
 								<label>Dia do Fechamento:</label>
 								<input type="number" class="container input-group-text"
 								       name="fechamento"
@@ -66,14 +66,14 @@ if ($login -> VerificarLogin()) {
 							</div>
 
 
-							<div class="form-group">
+							<div class="form-group mt-2">
 								<label>Dia do Vencimento:</label>
 								<input type="number" class="container input-group-text"
 								       name="vencimento"
 								       placeholder="vencimento" max="31" min="1" required>
 							</div>
 
-							<button type="submit" class="btn btn-primary">
+							<button type="submit" class="botao-primario mt-3 mb-5">
 								Criar Novo Cartão
 							</button>
 						</form>

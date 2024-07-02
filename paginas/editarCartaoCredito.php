@@ -42,7 +42,7 @@ if ($login -> VerificarLogin()) {
 				<div class="row">
 					<div class="row-md-12 text-center">
 
-						<h2 class="pt-4">
+						 <h2 class="pt-4 mb-4">
 							Editar Cartão de Crédito
 						</h2>
 
@@ -62,29 +62,28 @@ if ($login -> VerificarLogin()) {
 
 						<form class="form-inline w-75 container" action="../backEnd/InteracaoFront/editarCartaoCredito.php" method="post">
 
-							<div class="form-group">
-								<label for="">Banco / Corretora:</label>
-								<p>Não pode ser alterado!</p>
+							<div class="form-group mt-2">
+								<label for="">Banco / Corretora: (Não pode ser alterado)</label>
 								<select class="form-select text-center" name="bancoCorretoraId" required disabled>
 									<?php include(__DIR__ . "/./particoes/loops/nomes_bancos_corretoras_select.php") ?>
 								</select>
 							</div>
 
-							<div class="form-group">
+							<div class="form-group mt-2">
 								<label for="">Limite Total:</label>
 								<input type="text" class="form-control input-group-text" name="valor"
 								       placeholder="Valor:"
 								       value="R$ <?= $formatacao -> formatarValor($dados['limite']) ?>">
 							</div>
 
-							<div class="form-group">
+							<div class="form-group mt-2">
 								<label>Dia do Fechamento:</label>
 								<input type="number" class="container input-group-text"
 								       name="fechamento"
 								       placeholder="Fechamento:" step="1" max="31" min="1"
 								       value="<?= $dados['fechamento'] ?>">
 							</div>
-							<div class="form-group">
+							<div class="form-group mt-2">
 								<label>Dia do Fechamento:</label>
 								<input type="number" class="container input-group-text"
 								       name="vencimento"
@@ -92,7 +91,7 @@ if ($login -> VerificarLogin()) {
 								       value="<?= $dados['vencimento'] ?>">
 							</div>
 
-							<button type="submit" class="btn btn-primary" name="id" value="<?= $dados['id_bancoCorretora'] ?>">
+							<button type="submit" class="botao-primario mt-3 mb-4" name="id" value="<?= $dados['id_bancoCorretora'] ?>">
 								Editar
 							</button>
 						</form>

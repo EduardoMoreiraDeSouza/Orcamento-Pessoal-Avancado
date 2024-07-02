@@ -23,7 +23,7 @@ $globais = new Globais;
 </head>
 <body>
 
-<nav class="navbar navbar-dark bg-dark fixed-top">
+<nav class="navbar fixed-top">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="../index.php">< Orçamento Pessoal ></a>
 
@@ -96,20 +96,20 @@ $globais = new Globais;
 						Orçamento Pessoal
 					</h1>
 
-					<main class="container mt-5 w-50 p-3 text-start">
+					<main class="container mt-5 w-50 p-3 text-center">
 
 						<h3 class="text-center">Entrar</h3>
 
 						<form class="mt-3" action="../backEnd/InteracaoFront/entrar.php" method="POST">
-							<div class="mb-3">
+							<div class="mb-3 text-start">
 								<label for="exampleInputEmail1" class="form-label">E-mail:</label>
-								<input type="text" name="email" class="form-control">
+								<input type="text" name="email" class="form-control container input-group-text text-center">
 							</div>
-							<div class="mb-3">
+							<div class="mb-3 text-start">
 								<label for="exampleInputPassword1" class="form-label">Senha:</label>
-								<input type="password" name="senha" class="form-control">
+								<input type="password" name="senha" class="form-control text-center">
 							</div>
-							<button type="submit" class="btn btn-primary container-fluid mt-3 mb-5">Entrar</button>
+							<button type="submit" class="text-center botao-primario container-fluid mt-3 mb-5">Entrar</button>
 
 						</form>
 

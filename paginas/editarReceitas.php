@@ -41,7 +41,7 @@ if ($login -> VerificarLogin()) {
 				<div class="row">
 					<div class="row-md-12 text-center">
 
-						<h2 class="pt-4">
+						 <h2 class="pt-4 mb-4">
 							Editar Receita
 						</h2>
 
@@ -61,28 +61,28 @@ if ($login -> VerificarLogin()) {
 
 						<form class="form-inline w-75 container" action="../backEnd/InteracaoFront/editarReceita.php" method="post">
 
-							<div class="form-group">
+							<div class="form-group mt-2">
 								<label for="">Banco / Corretora:</label>
 								<select class="form-select text-center" name="bancoCorretoraId" required>
 									<?php include(__DIR__ . "/./particoes/loops/nomes_bancos_corretoras_select.php") ?>
 								</select>
 							</div>
 
-							<div class="form-group">
+							<div class="form-group mt-2">
 								<label for="">Nome:</label>
 								<input type="text" class="form-control input-group-text" name="nome"
 								       placeholder="Nome:"
 								       value="<?= $dados['nome'] ?>">
 							</div>
 
-							<div class="form-group">
+							<div class="form-group mt-2">
 								<label for="">Valor:</label>
 								<input type="text" class="form-control input-group-text" name="valor"
 								       placeholder="Valor:"
 								       value="R$ <?= $formatacao -> formatarValor($dados['valor']) ?>">
 							</div>
 
-							<div class="form-group">
+							<div class="form-group mt-2">
 								<label>Classificação:</label>
 								<select class="form-select text-center" name="classificacao" required>
 									<option value="Salário" <?= $dados['classificacao'] == 'Salário' ? 'selected' : '' ?>>
@@ -109,18 +109,18 @@ if ($login -> VerificarLogin()) {
 								</select>
 							</div>
 
-							<div class="form-group">
+							<div class="form-group mt-2">
 								<label>Parcelas:</label>
 								<input type="text" class="form-control input-group-text" name="parcelas"
 								       placeholder="Parcelas:" step="0.01" value="<?= $dados['parcelas'] ?>">
 							</div>
-							<div class="form-group">
+							<div class="form-group mt-2">
 								<label>Data do Pagamento:</label>
-								<input type="date" class="form-control input-group-text text-center"
+								<input type="date" class="form-control text-center"
 								       name="dataCompraPagamento" value="<?= $dados['dataCompraPagamento'] ?>">
 							</div>
 
-							<button type="submit" class="btn btn-primary" name="id" value="<?= $dados['id_receita'] ?>">
+							<button type="submit" class="botao-primario mt-3 mb-4" name="id" value="<?= $dados['id_receita'] ?>">
 								Editar
 							</button>
 						</form>

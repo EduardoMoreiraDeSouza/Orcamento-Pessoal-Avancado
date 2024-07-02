@@ -38,7 +38,7 @@ if ($login -> VerificarLogin()) {
 	</head>
 
 	<body>
-	<nav class="navbar navbar-dark bg-dark fixed-top">
+	<nav class="navbar fixed-top">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="../index.php">< Orçamento Pessoal ></a>
 
@@ -99,7 +99,7 @@ if ($login -> VerificarLogin()) {
 
 						<?php include(__DIR__ . "/./particoes/formularios/form_data_referencia.php") ?>
 
-						<h2 class="pt-4">
+						 <h2 class="pt-4 mb-4">
 							Meus Gastos
 						</h2>
 
@@ -131,14 +131,14 @@ if ($login -> VerificarLogin()) {
 									<tr class="form-group">
 										<th>0</th>
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_nome.php") ?></td>
-										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_banco_corretora.php") ?></td>
+										<td>*</td>
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_forma_pagamento.php") ?></td>
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_valor.php") ?></td>
 										<td><?php include(__DIR__ . "/./particoes/botoes/submit_filtros.php") ?></td>
 									</tr>
 								</form>
 
-								<h5 class="text-center text-sm-center">Gastos no crédito serão colocados no mês
+								<h5 class="text-center text-sm-center texto-alerta">Gastos no crédito serão colocados no mês
 									referente à fatura!</h5>
 
 								<?php
@@ -243,13 +243,13 @@ if ($login -> VerificarLogin()) {
 													       value="<?= $dados['nome'] ?>" disabled>
 												</th>
 												<td>
-													<select class="form-select text-center" name="bancoCorretoraId" required disabled>
+													<select class="form-select text-center input-group-text" name="bancoCorretoraId" required disabled>
 														<?php include(__DIR__ . "/./particoes/loops/nomes_bancos_corretoras_select.php") ?>
 													</select>
 												</td>
 
 												<td style="width: 8%;">
-													<select class="form-select" name="formaPagamento" required disabled>
+													<select class="form-select input-group-text" name="formaPagamento" required disabled>
 														<option value="<?= $dados['formaPagamento'] ?>" selected>
 															<?= $dados['formaPagamento'] ?>
 														</option>
@@ -266,7 +266,7 @@ if ($login -> VerificarLogin()) {
 
 												<td>
 													<button style="text-decoration: none; width: 4vh; height: 4vh;"
-													        class="text-primary bg-transparent rounded-circle border border-primary"
+													        class="text-primary bg-transparent rounded-circle border border-dark"
 													        name="id"
 													        value="<?= $dados['id_gasto'] ?>">
 														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -278,7 +278,7 @@ if ($login -> VerificarLogin()) {
 
 													<a href="?excluir=true&id=<?= $dados['id_gasto'] ?>"
 													   style="text-decoration: none; margin-left: 0.8vh; width: 4vh; height: 4vh;"
-													   class="text-danger rounded-circle border border-danger">
+													   class="text-danger ">
 														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 														     fill="currentColor" class="bi bi-trash"
 														     viewBox="0 0 16 16">
@@ -297,8 +297,8 @@ if ($login -> VerificarLogin()) {
 								<th scope="row">#</th>
 								<td>Total</td>
 								<td></td>
-								<td>R$ <?= $formatacao -> formatarValor($saldoTotal) ?></td>
 								<td></td>
+								<td>R$ <?= $formatacao -> formatarValor($saldoTotal) ?></td>
 								<td></td>
 
 								</tbody>

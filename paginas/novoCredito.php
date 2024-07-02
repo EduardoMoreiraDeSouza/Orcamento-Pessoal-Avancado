@@ -37,13 +37,13 @@ if ($login -> VerificarLogin()) {
 				<div class="row">
 					<div class="row-md-12 text-center">
 
-						<h2 class="pt-4">
+						 <h2 class="pt-4 mb-4">
 							Nova Gasto no Crédito
 						</h2>
 
 						<form class="form-inline w-75 container" action="../backEnd/InteracaoFront/novoCredito.php" method="post">
 
-							<div class="form-group">
+							<div class="form-group mt-2">
 								<label for="">Banco / Corretora:</label>
 								<select class="form-select" name="id" required>
 									<option value="" selected>Cartão</option>
@@ -51,35 +51,35 @@ if ($login -> VerificarLogin()) {
 								</select>
 							</div>
 
-							<div class="form-group">
+							<div class="form-group mt-2">
 								<label for="">Nome:</label>
 								<input type="text" class="form-control input-group-text" name="nome"
 								       placeholder="Nome:" >
 							</div>
 
-							<div class="form-group">
+							<div class="form-group mt-2">
 								<label for="">Valor:</label>
 								<input type="text" class="form-control input-group-text" name="valor"
 								       placeholder="Valor:">
 							</div>
 
-							<div class="form-group">
+							<div class="form-group mt-2">
 								<label>Classificação:</label>
 								<?php include(__DIR__ . '/./particoes/classificacao/tipos_gastos.php') ?>
 							</div>
 
-							<div class="form-group">
+							<div class="form-group mt-2">
 								<label>Parcelas:</label>
 								<input type="text" class="form-control input-group-text" name="parcelas"
 								       placeholder="Parcelas:" step="0.01">
 							</div>
-							<div class="form-group">
+							<div class="form-group mt-2">
 								<label>Data do Pagamento:</label>
-								<input type="date" class="form-control input-group-text text-center"
+								<input type="date" class="form-control text-center"
 								       name="dataCompraPagamento" value="<?= date('Y-m-d') ?>">
 							</div>
 
-							<button type="submit" class="btn btn-primary">
+							<button type="submit" class="botao-primario mt-3 mb-5">
 								Creditar
 							</button>
 						</form>
