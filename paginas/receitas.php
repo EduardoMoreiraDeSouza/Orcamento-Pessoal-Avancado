@@ -69,7 +69,7 @@ if ($login -> VerificarLogin()) {
 							<a class="nav-link text-light" href="../paginas/gastos.php">Gastos</a>
 						</li>
 						<li class="nav-item h6">
-							<a class="nav-link text-light" href="../paginas/credito.php">Cartões de Crédito</a>
+							<a class="nav-link text-light" href="../paginas/cartaoCredito.php">Cartões de Crédito</a>
 						</li>
 						<li class="nav-item h6">
 							<a class="nav-link text-light" href="#">Reserva de Emergência (Em Breve)</a>
@@ -225,7 +225,9 @@ if ($login -> VerificarLogin()) {
 													       value="<?= $dados['nome'] ?>" disabled>
 												</td>
 												<td>
-													<?php include(__DIR__ . "/./particoes/loops/nomes_bancos_corretoras_select.php") ?>
+													<select class="form-select text-center" name="bancoCorretoraId" required disabled>
+														<?php include(__DIR__ . "/./particoes/loops/nomes_bancos_corretoras_select.php") ?>
+													</select>
 												</td>
 												<td>
 													<input type="text" class="form-control input-group-text"

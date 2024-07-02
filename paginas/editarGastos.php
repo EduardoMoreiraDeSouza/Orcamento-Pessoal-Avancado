@@ -4,8 +4,12 @@ require __DIR__ . "/../backEnd/verificacoes/VerificarLogin.php";
 $login = new VerificarLogin();
 
 if ($login -> VerificarLogin()) {
-	require __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
 	$_SESSION['pagina_pai'] = 'gastos';
+
+	require __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
+	require __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
+
+	$formatacao = new FormatacaoDados();
 
 	?>
 
@@ -22,7 +26,7 @@ if ($login -> VerificarLogin()) {
 
 		<link href="../css/style.css" rel="stylesheet">
 
-		<title>Orçamento Pessoal - Novo Receita</title>
+		<title>Orçamento Pessoal - Editar Gasto</title>
 
 	</head>
 
@@ -56,7 +60,7 @@ if ($login -> VerificarLogin()) {
 							<a class="nav-link text-light" href="../paginas/gastos.php">Gastos</a>
 						</li>
 						<li class="nav-item h6">
-							<a class="nav-link text-light" href="../paginas/credito.php">Cartões de Crédito</a>
+							<a class="nav-link text-light" href="../paginas/cartaoCredito.php">Cartões de Crédito</a>
 						</li>
 						<li class="nav-item h6">
 							<a class="nav-link text-light" href="#">Reserva de Emergência (Em Breve)</a>
@@ -71,7 +75,9 @@ if ($login -> VerificarLogin()) {
 							<a class="nav-link active text-light" aria-current="page"
 							   href="../backEnd/InteracaoFront/sair.php">Sair</a>
 						</li>
+
 					</ul>
+
 				</div>
 			</div>
 		</div>
@@ -85,49 +91,99 @@ if ($login -> VerificarLogin()) {
 					<div class="row-md-12 text-center">
 
 						<h2 class="pt-4">
-							Nova Gasto
+							Editar Gasto
 						</h2>
 
-						<form class="form-inline w-75 container" action="../backEnd/InteracaoFront/novoDebito.php" method="post">
+						<?php
+
+						$dados = new ObterDadosGastos();
+
+						if (isset($_POST['id']) and !empty($_POST['id'])) {
+							$dados = $dados -> ObterDadosGastos($dados -> getSessao(), $_POST['id'])[0];
+						}
+
+						else {
+							$dados -> Redirecionar($_SESSION['pagina_pai'], true);
+						}
+
+						?>
+
+						<form class="form-inline w-75 container" action="../backEnd/InteracaoFront/editarGastos.php" method="post">
 
 							<div class="form-group">
 								<label for="">Banco / Corretora:</label>
-								<select class="form-select" name="id" required>
-									<option value="" selected>Banco | Corretora</option>
-									<?php include(__DIR__ . '/./particoes/loops/nomes_bancos_corretoras.php') ?>
+								<select class="form-select text-center" name="bancoCorretoraId" required>
+									<?php include(__DIR__ . "/./particoes/loops/nomes_bancos_corretoras_select.php") ?>
 								</select>
 							</div>
 
 							<div class="form-group">
 								<label for="">Nome:</label>
 								<input type="text" class="form-control input-group-text" name="nome"
-								       placeholder="Nome:" >
+								       placeholder="Nome:"
+								       value="<?= $dados['nome'] ?>">
 							</div>
 
 							<div class="form-group">
 								<label for="">Valor:</label>
 								<input type="text" class="form-control input-group-text" name="valor"
-								       placeholder="Valor:">
+								       placeholder="Valor:"
+								       value="R$ <?= $formatacao -> formatarValor($dados['valor']) ?>">
+							</div>
+
+							<div class="form-group">
+								<label for="">Forma de Pagamento:</label>
+								<select class="form-select text-center" name="formaPagamento" required>
+									<option value="Débito" <?= $dados['formaPagamento'] == 'Débito' ? 'selected' : '' ?>>
+										Débito
+									</option>
+									<option value="Crédito" <?= $dados['formaPagamento'] == 'Crédito' ? 'selected' : '' ?>>
+										Crédito
+									</option>
+								</select>
 							</div>
 
 							<div class="form-group">
 								<label>Classificação:</label>
-								<?php include(__DIR__ . '/./particoes/classificacao/tipos_gastos.php') ?>
+								<select class="form-select text-center" name="classificacao" required>
+									<option value="Pessoal" <?= $dados['classificacao'] == 'Pessoal' ? 'selected' : '' ?>>
+										Pessoal
+									</option>
+									<option value="Necessário" <?= $dados['classificacao'] == 'Necessário' ? 'selected' : '' ?>>
+										Necessário
+									</option>
+									<option value="Reserva" <?= $dados['classificacao'] == 'Reserva' ? 'selected' : '' ?>>
+										Reserva
+									</option>
+									<option value="Dívidas" <?= $dados['classificacao'] == 'Dívidas' ? 'selected' : '' ?>>
+										Dívidas
+									</option>
+									<option value="Investimentos" <?= $dados['classificacao'] == 'Investimentos' ? 'selected' : '' ?>>
+										Investimentos
+									</option>
+									<option value="Boas Ações" <?= $dados['classificacao'] == 'Boas Ações' ? 'selected' : '' ?>>
+										Boas
+										Ações
+									</option>
+									<option value="Boas Ações" <?= $dados['classificacao'] == 'Correção do Saldo' ? 'selected' : '' ?>>
+										Correção do Saldo
+									</option>
+								</select>
 							</div>
 
 							<div class="form-group">
 								<label>Parcelas:</label>
 								<input type="text" class="form-control input-group-text" name="parcelas"
-								       placeholder="Parcelas:" step="0.01">
+								       placeholder="Parcelas:" step="0.01" value="<?= $dados['parcelas'] ?>">
 							</div>
 							<div class="form-group">
 								<label>Data do Pagamento:</label>
 								<input type="date" class="form-control input-group-text text-center"
-								       name="dataCompraPagamento" value="<?= date('Y-m-d') ?>">
+								       name="dataCompraPagamento" value="<?= $dados['dataCompraPagamento'] ?>">
 							</div>
 
-							<button type="submit" class="btn btn-primary">
-								Novo Gasto
+							<button type="submit" class="btn btn-primary" name="id" value="<?= $dados['id_gasto'] ?>">
+								Editar
 							</button>
 						</form>
 					</div>

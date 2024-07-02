@@ -4,7 +4,7 @@ require __DIR__ . "/../backEnd/verificacoes/VerificarLogin.php";
 $login = new VerificarLogin();
 
 if ($login -> VerificarLogin()) {
-	$_SESSION['pagina_pai'] = 'credito';
+	$_SESSION['pagina_pai'] = 'cartaoCredito';
 
 	require __DIR__ . "/../backEnd/bancoDados/ExecucaoCodigoMySql.php";
 	require __DIR__ . "/../backEnd/gerais/FormatacaoDados.php";
@@ -17,7 +17,7 @@ if ($login -> VerificarLogin()) {
 
 		$exluir = new ExcluirCartaoCredito();
 		$exluir -> ExcluirCartaoCredito($_GET['id']);
-		$exluir -> Redirecionar('credito', true);
+		$exluir -> Redirecionar('cartaoCredito', true);
 	}
 
 	?>
@@ -122,10 +122,8 @@ if ($login -> VerificarLogin()) {
 								<tr>
 									<th scope="col">#</th>
 									<th scope="col">Cartão</th>
-									<th scope="col">Limite</th>
 									<th scope="col">Limite Restante</th>
 									<th scope="col">Fatura</th>
-									<th scope="col">Fechamento</th>
 									<th scope="col">Vencimento</th>
 									<th scope="col">Ações</th>
 								</tr>
@@ -136,10 +134,8 @@ if ($login -> VerificarLogin()) {
 									<tr class="form-group">
 										<th>*</th>
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_banco_corretora.php") ?></td>
-										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_limite.php") ?></td>
 										<td>*</td>
 										<td>*</td>
-										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_fechamento.php") ?></td>
 										<td><?php include(__DIR__ . "/./particoes/filtros/select_filtrar_vencimento.php") ?></td>
 										<td><?php include(__DIR__ . "/./particoes/botoes/submit_filtros.php") ?></td>
 									</tr>
@@ -201,7 +197,7 @@ if ($login -> VerificarLogin()) {
 
 									?>
 
-									<form action="../backEnd/InteracaoFront/editarCartaoCredito.php" method="POST">
+									<form action="./editarCartaoCredito.php" method="POST">
 										<tr>
 											<th scope="row"><?= $quantidade ?>º</th>
 											<td>
@@ -211,13 +207,6 @@ if ($login -> VerificarLogin()) {
 												       value="<?= $valorFinal -> ObterDadosBancosCorretoras(
 													       $dadosCartoesCredito['id_bancoCorretora'], null
 												       )[0]['bancoCorretora'] ?>" required disabled>
-											</td>
-											<td>
-												<input type="text" class="container input-group-text" name="valor"
-												       placeholder="Limite:"
-												       value="R$ <?= $formatacao -> formatarValor(
-													       $dadosCartoesCredito['limite']
-												       ) ?>">
 											</td>
 											<td>
 												<input type="text" class="container input-group-text" name=""
@@ -231,15 +220,9 @@ if ($login -> VerificarLogin()) {
 											</td>
 											<td style="width: 8%;">
 												<input type="number" class="container input-group-text"
-												       name="fechamento"
-												       placeholder="Fechamento:" step="1" max="31" min="1"
-												       value="<?= $dadosCartoesCredito['fechamento'] ?>">
-											</td>
-											<td style="width: 8%;">
-												<input type="number" class="container input-group-text"
 												       name="vencimento"
 												       placeholder="Vencimento:" step="1" min="1" max="31"
-												       value="<?= $dadosCartoesCredito['vencimento'] ?>">
+												       value="<?= $dadosCartoesCredito['vencimento'] ?>" disabled>
 											</td>
 											<td>
 												<button style="text-decoration: none; width: 4vh; height: 4vh;"
@@ -273,11 +256,9 @@ if ($login -> VerificarLogin()) {
 
 								<th scope="row">#</th>
 								<td>Total</td>
-								<td></td>
 								<td>R$ <?= $formatacao -> formatarValor($limiteTotal) ?></td>
+								<td></td>
 								<td>R$ <?= $formatacao -> formatarValor($faturaTotal) ?></td>
-								<td></td>
-								<td></td>
 								<td></td>
 
 								</tbody>

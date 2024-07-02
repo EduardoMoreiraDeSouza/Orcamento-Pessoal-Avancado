@@ -1,13 +1,11 @@
 <div class="col-auto">
-    <p>
-        <button class="btn btn-dark" type="button" data-bs-toggle="collapse"
+        <a class="btn btn-dark btn-sm" type="button" data-bs-toggle="collapse"
                 data-bs-target="#novoBancoCorretora" aria-expanded="false"
                 aria-controls="collapseWidthExample">
             Novo Banco/Corretora
-        </button>
-    </p>
+        </a>
 
-    <div style="min-height: auto;" class="mb-4">
+    <div style="min-height: auto;" class="mb-4 mt-1">
         <div class="collapse collapse-horizontal" id="novoBancoCorretora">
             <div class="card card-body border border-dark bg-secondary"
                  style="width: 80%;">

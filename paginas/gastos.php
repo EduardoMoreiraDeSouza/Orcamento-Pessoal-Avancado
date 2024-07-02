@@ -67,7 +67,7 @@ if ($login -> VerificarLogin()) {
 							<a class="nav-link text-light" href="../paginas/receitas.php">Receitas</a>
 						</li>
 						<li class="nav-item h6">
-							<a class="nav-link text-light" href="../paginas/credito.php">Cartões de Crédito</a>
+							<a class="nav-link text-light" href="../paginas/cartaoCredito.php">Cartões de Crédito</a>
 						</li>
 						<li class="nav-item h6">
 							<a class="nav-link text-light" href="#">Reserva de Emergência (Em Breve)</a>
@@ -231,7 +231,7 @@ if ($login -> VerificarLogin()) {
 
 										?>
 
-										<form action="../backEnd/InteracaoFront/editarGastos.php" method="POST">
+										<form action="./editarGastos.php" method="POST">
 											<!-- Editar gastos -->
 											<tr>
 
@@ -243,7 +243,9 @@ if ($login -> VerificarLogin()) {
 													       value="<?= $dados['nome'] ?>" disabled>
 												</th>
 												<td>
-													<?php include(__DIR__ . "/./particoes/loops/nomes_bancos_corretoras_select.php") ?>
+													<select class="form-select text-center" name="bancoCorretoraId" required disabled>
+														<?php include(__DIR__ . "/./particoes/loops/nomes_bancos_corretoras_select.php") ?>
+													</select>
 												</td>
 
 												<td style="width: 8%;">
@@ -258,7 +260,7 @@ if ($login -> VerificarLogin()) {
 													       placeholder="Valor:"
 													       value="R$ <?= $formatacao -> formatarValor(
 														       $dados['valor']
-													       ) ?>">
+													       ) ?>" disabled>
 												</td>
 
 

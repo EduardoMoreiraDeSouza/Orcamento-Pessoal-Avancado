@@ -17,7 +17,7 @@
                 <select class="form-control form-control bg-success text-light text-center"
                         name="mes_referencia">
 
-	                <?php if ($_SESSION['pagina_pai'] != 'bancosCorretoras' and $_SESSION['pagina_pai'] != 'credito') {?>
+	                <?php if ($_SESSION['pagina_pai'] != 'bancosCorretoras' and $_SESSION['pagina_pai'] != 'cartaoCredito') {?>
 		                <option <?= $_SESSION['mes_referencia'] == 'todos' ? 'selected' : '' ?> value="todos">
 		                    Todos
 		                </option>
